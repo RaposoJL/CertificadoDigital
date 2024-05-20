@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+ 
+*{ 
+    padding: 0;
+    margin: 0;
+}
+body{
+    background-color: bisque;
+    
+}
+
+.tudo{
+    text-align: center;
+}
+
+header{
+    height: 40px;
+    background-color: #4C3566;
+}
+
+.index_forms{
+    text-align: center;
+    font-family: Oswald;
+}
+
+.index_forms  #index_input_email{
+    border-radius: 10px;
+    width: 500px;
+    margin-top: 1vh;
+    padding: 5px;
+}
+
+.index_forms  #index_input_senha{
+    border-radius: 10px;
+    width: 500px;
+    margin-top: 1vh;
+    padding: 5px;
+}
+
+.index_forms  #index_email{
+    border-radius: 10px;
+    font-size: 20px;
+    margin-top: 1vh;
+}
+
+.index_forms  #index_senha{
+    border-radius: 10px;
+    font-size: 20px;
+    margin-top: 1vh;
+}
+
+.index_forms  #index_enviar{
+    border-radius: 35px;
+    margin-top: 2vh;
+    font-size: 15px;
+    padding: 10px;
+    background-color: #FFEAAA;
+}
+
+.index_forms  #index_enviar:hover{
+    border-radius: 35px;
+    margin-top: 2vh;
+    font-size: 15px;
+    padding: 10px;
+    background-color: #4C3566;
+}
+
+.img_certificado{
+    margin-top: 10vh;
+    margin-bottom: 10px;
+    width: 15%;
+}
