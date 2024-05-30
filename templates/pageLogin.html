@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head meta charset="UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width= device-width, initial-scale=1.0">
+  <title>Certificado Digital</title>
+  <link rel="stylesheet" href="/static/node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="shortcut icon" href="midia/imgs/favicon.ico" type="image/x-icon">
+  <script src="/static/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="/static/node_modules/@popperjs/core/dist/umd/popper.min.js"></script>
+</head>
+
+<body">
+  <main class="container">
+    <div class="text-center">
+      <img src="/static/midia/imgs/index_selo-removebg-preview.png" alt="img_certificado" class="mt-5" id="img_certificado";>
+      <div class="row">
+        <form action="/login" method="post" class="index_forms">
+          <label for="login" class="p-2 mt-3 fs-5 fw-semibold">E-mail:</label><br>
+          <input class="col-sm-8 col-form-label rounded-1 border border-dark" type="text"
+          name="login" placeholder="Insira Seu Email:" required><br>
+          <label for="senha" id="index_senha" class="p-2 mt-3 fs-5 fw-semibold">Senha:</label><br>
+          <input class="col-sm-8 col-form-label border border-dark rounded-1" type="password" id="index_input_senha"
+           name="senha" placeholder="Insira Sua Senha:" required><br>   
+          <input type="submit" value="Entrar" id="index_enviar" class="rounded-4 p-2 mt-4 px-4 fw-bold">
+        </form>
+      </div>
+    </div>
+  </main>
+
+
+
+  <style>
+    body{
+      background-color: #FFEAAA;
+    }
+
+    img{
+      width: 15%;
+    }
+
+    #index_enviar{
+      color: #4C3566;
+      background-color: #FFEAAA;
+    }
+    
+    #index_enviar:hover{
+      color: #FFEAAA;
+      background-color: #4C3566;
+    }
+    
+  </style>
+</body>
+</html>
