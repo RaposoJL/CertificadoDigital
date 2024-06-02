@@ -50,7 +50,10 @@ def paginaCadastrar_post():
 #Pagina Turmas
 @App.get("/turmas")
 def TurmasCadastradas():
-     return render_template("pageTurmas.html")
+        if (verificarLogin(["admin"])):
+            return render_template("pageTurmas.html")
+        else:
+            return redirect(url_for('paginaLogin_get'))
 
 @App.post("/turmas")
 def cadastrarTurma():
