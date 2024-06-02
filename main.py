@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import model.Banco.usuario as usuario
+import openpyxl
 
 App = Flask(__name__)
 App.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -18,7 +19,7 @@ def paginaLogin_get():
 # Pagina login -- Post
 @App.post("/login")
 def paginaLogin_post(): 
-        acesso = usuario.buscarUsuarioLogin(request.form["login"], request.form["senha"])
+        acesso = usuario.LoginUsuario(request.form["login"], request.form["senha"])
         if(acesso != None):
             if (request.form["login"] == acesso[1] and request.form["senha"] == acesso[2]):
                 session['logado'] = True
@@ -46,6 +47,15 @@ def paginaCadastrar_post():
         return render_template("pageCadastro.html", novo_usuario = True)
      
 
+#Pagina Turmas
+@App.get("/turmas")
+def TurmasCadastradas():
+     return render_template("pageTurmas.html")
+
+@App.post("/turmas")
+def cadastrarTurma():
+    planilha = usuario.CadastrarTurma(request.form["planilha"])
+    return planilha
 
 
 
@@ -57,11 +67,7 @@ def paginaCadastrar_post():
 
 
 
-
-
-
-
-
+# Verificar permisão
 def verificarLogin(admin):  
     if (('logado' in session) and (session['logado'] == True) and
         ("nivel" in session)):
