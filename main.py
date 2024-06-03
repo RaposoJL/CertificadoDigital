@@ -57,7 +57,12 @@ def TurmasCadastradas():
 
 @App.post("/turmas")
 def cadastrarTurma():
-    planilha = usuario.CadastrarTurma(request.form["planilha"])
+    planilha = request.form["planilha"]
+    mensagem = usuario.CadastrarTurma(planilha)
+    if(mensagem == True):
+         return "Nova turma cadatrada"
+    else:
+        return "Foi não"
     return planilha
 
 
