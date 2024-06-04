@@ -59,12 +59,7 @@ def TurmasCadastradas():
 def cadastrarTurma():
     planilha = request.form["planilha"]
     mensagem = usuario.CadastrarTurma(planilha)
-    if(mensagem == True):
-         return "Nova turma cadatrada"
-    else:
-        return "Foi não"
-    return planilha
-
+    return mensagem
 
 
 

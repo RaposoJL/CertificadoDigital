@@ -10,6 +10,34 @@
   <script src="/static/node_modules/@popperjs/core/dist/umd/popper.min.js"></script>
 </head>
 
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Certificado Digital</title>
+ <link rel="stylesheet" href="/static/node_modules/bootstrap/dist/css/bootstrap.min.css">
+ <link rel="shortcut icon" href="midia/imgs/favicon.ico" type="image/x-icon">
+ <!-- <script src="bootstrap-5.3.3-dist/js/bootstrap.js"></script> -->
+ <script src="/static/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+ <script src="/static/node_modules/@popperjs/core/dist/umd/popper.min.js"></script>
+</head>
+<body style="background-color: #FFEAAA;">
+ <header style="background-color: #4C3566;">
+   <div class="d-flex flex-wrap justify-content-center py-3 mb-4 container" style="background-color: #4C3566;">
+     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+       <span class="fs-5 text-white">Certificado Digital</span>
+     </a>
+     <ul class="nav nav-underline">
+      <li class="nav-item fs-6"><a href="/turmas" class="nav-link link-light">Turmas</a></li>
+      <li class="nav-item fs-6"><a href="pageCertificado.html" class="nav-link link-light">Certificados</a></li>
+      <li class="nav-item fs-6"><a href="/cadastrar" class="nav-link link-light active">Cadastrar Usuario</a></li>
+    </ul>
+
+   </div>
+ </div>
+ </header>
+
 <body">
   <main class="container">
     <div class="text-center">
@@ -25,15 +53,16 @@
             <p class="mt-3">Fique ciente que o <strong>NOVO USUARIO</strong> tera acesso a todo sistema,<br> podendo 
               <strong>Alterar, Apagar e Criar Turmas e emitir Certificados</strong></p>
             </label>
-            {% if novo_usuario == True %}
+           {% if novo_usuario == True %}
             <p>Usuario Adicionado</p>
             {% else %}
             <p>Usuario ja existe</p>
-            {% endif %}
+            {% endif %} 
           <input type="submit" value="Entrar" id="index_enviar" class="rounded-4 p-2 mt-4 px-4 fw-bold">
         </form>
       </div>
     </div>
+
   </main>
 
 

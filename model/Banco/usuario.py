@@ -37,20 +37,21 @@ def CadastrarUsuario(login, senha):
     conexaoBD.close()
 
 #Cadastrar Turma
+
 def CadastrarTurma(planilha):
     book = openpyxl.load_workbook(planilha)
     ws = book.active
     sheet = book['3º TDS "A"']  
     ws.tables
 
-    num_min = 8
-    num_max = 9
+    num_min = 27
+    num_max = 30
     letra_min = "A"
     letra_max = "L"
     alunos = []
 
 
-    while(num_min <= num_max):
+    while num_min <= num_max:
         min_col = letra_min + str(num_min)
         max_col = letra_max + str(num_min)
         num_min = num_min + 1
@@ -70,6 +71,6 @@ def CadastrarTurma(planilha):
             conexaoBD.commit()
             cursorBD.close()
             conexaoBD.close()
-            return True
         else:
             return False
+    return alunos
