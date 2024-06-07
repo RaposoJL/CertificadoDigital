@@ -1,22 +1,38 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import model.Banco.usuario as usuario
-import openpyxl
+
 
 App = Flask(__name__)
 App.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
-# Pagina Principal
-@App.route("/")
+
+# Pagina Principal - Pagina Turmas - get
+@App.get("/")
 def pagina_principal():
         if (verificarLogin(["admin"])):
-            return render_template("pageHome.html")
+            listaAlunos = usuario.ListarAlunos()
+            return render_template("pageHome.html", alunos = listaAlunos)
         else:
             return redirect(url_for('paginaLogin_get'))
-# Pagina login -- Get
+        
+
+#Pagina Turmas - Post
+@App.post("/")
+def cadastrarTurma():
+    planilha = request.form["planilha"]
+    cadastroTurmas = usuario.CadastrarTurma(planilha)
+    if cadastroTurmas == True:
+        return render_template("pageHome.html", erro = True)
+    else:
+         return render_template("pageHome.html", erro = False)
+
+
+
+# Pagina Login -- Get
 @App.get("/login")
 def paginaLogin_get():
     return render_template("pageLogin.html")
 
-# Pagina login -- Post
+# Pagina Login -- Post
 @App.post("/login")
 def paginaLogin_post(): 
         acesso = usuario.LoginUsuario(request.form["login"], request.form["senha"])
@@ -30,47 +46,29 @@ def paginaLogin_post():
         else:
             return render_template("pageLogin.html", erro=True)
 
+
 # Pagina Cadastro -- Get
 @App.get("/cadastrar")
 def paginaCadastrar_get():
      return render_template("pageCadastro.html")
+
 
 # Pagina Cadastro -- Post
 @App.post("/cadastrar")
 def paginaCadastrar_post():
     login = request.form["login"]
     senha = request.form["senha"]
-    erro = usuario.CadastrarUsuario(login, senha)
-    if(erro == False):
-        return render_template("pageCadastro.html", novo_usuario = False)
-    else:
+    cadastroUsuario = usuario.CadastrarUsuario(login, senha)
+    if(cadastroUsuario == True):
         return render_template("pageCadastro.html", novo_usuario = True)
-     
-
-#Pagina Turmas
-@App.get("/turmas")
-def TurmasCadastradas():
-        if (verificarLogin(["admin"])):
-            return render_template("pageTurmas.html")
-        else:
-            return redirect(url_for('paginaLogin_get'))
-
-@App.post("/turmas")
-def cadastrarTurma():
-    planilha = request.form["planilha"]
-    mensagem = usuario.CadastrarTurma(planilha)
-    return mensagem
+    else:
+        return render_template("pageCadastro.html", novo_usuario = False)
 
 
 
 
 
-
-
-
-
-
-# Verificar permisão
+# Verificar Permisão do Usuario
 def verificarLogin(admin):  
     if (('logado' in session) and (session['logado'] == True) and
         ("nivel" in session)):
