@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificado Digital</title>
+    <link rel="stylesheet" href="/static/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="midia/imgs/favicon.ico" type="image/x-icon">
+    <!-- <script src="bootstrap-5.3.3-dist/js/bootstrap.js"></script> -->
+    <!-- <script src="/static/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+ <script src="/static/node_modules/@popperjs/core/dist/umd/popper.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
+    <link rel="icon" type="image/x-icon" href="/static/midia/imgs/favicon.ico">
+</head>
+
+<body style="background-color: #FFEAAA;">
+    <header style="background-color: #4C3566;">
+        <div class="d-flex py-3 container" style="background-color: #4C3566;">
+            <a href="/"
+                class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                <span class="fs-5 text-white">Certificado Digital</span>
+            </a>
+            <ul class="nav nav-underline">
+                <li class="nav-item"><a href="/certificados" class="nav-link link-light">Certificados</a></li>
+                <li class="nav-item"><a href="/cadastrar" class="nav-link link-light">Cadastrar Usuario</a></li>
+            </ul>
+        </div>
+    </header>
+    <main class="text-center container w-75 mt-5" style="background-color: #fde498;">  
+        <form action="/editar" method="post">
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Nome:</span>
+                <input type="text" class="form-control" placeholder="" aria-label="Username"
+                    aria-describedby="basic-addon1">
+            </div>
+
+            <div class="input-group mb-3" name="nome_pais">
+                <span class="input-group-text" id="basic-addon1">Nome da Mãe:</span>
+                <input type="text" class="form-control" placeholder="" aria-label="Username"
+                    aria-describedby="basic-addon1">
+                <span class="input-group-text" id="basic-addon1">Nome do Pai:</span>
+                <input type="text" class="form-control" placeholder="" aria-label="Username"
+                    aria-describedby="basic-addon1">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Municipio:</span>
+                <input type="text" class="form-control" placeholder="" aria-label="Username"
+                    aria-describedby="basic-addon1">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Nacionalidade:</span>
+                <input type="text" class="form-control" placeholder="" aria-label="Username"
+                    aria-describedby="basic-addon1">
+            </div>
+
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect02">Turma:</label>
+                <select class="form-select" id="inputGroupSelect02">
+                    <option selected>Escolha...</option>
+                    <option value="3TDSA" name="3TDSA">3TDSA</option>
+                    <option value="3TDSB" name="3TDSB">3TDSB</option>
+                    <option value="3MKTA" name="3MKTA">3MKTA</option>
+                    <option value="3MKTB" name="3MKTB">3MKTB</option>
+                </select>
+            </div>
+            
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Data de Nascimento:</span>
+                <input type="date" class="form-control" placeholder="" aria-label="Username"
+                    aria-describedby="basic-addon1">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">CPF:</span>
+                <input type="text" class="form-control" placeholder="" aria-label="Username"
+                    aria-describedby="basic-addon1">
+                <span class="input-group-text" id="basic-addon1">RG:</span>
+                <input type="text" class="form-control" placeholder="" aria-label="Username"
+                    aria-describedby="basic-addon1">
+            </div>
+
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect02">Curso:</label>
+                <select class="form-select" id="inputGroupSelect02">
+                    <option selected>Escolha...</option>
+                    <option value="3TDSA" name="3TDSA">Técnico em Desenvolvimento de Sistemas</option>
+                    <option value="3TDSA" name="3TDSA">Técnico em Marketing</option>
+                </select>
+            </div>
+            
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Data de Conclusão de Curso:</span>
+                <input type="date" class="form-control" aria-label="Username"
+                    aria-describedby="basic-addon1">
+            </div>
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>

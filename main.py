@@ -9,8 +9,11 @@ App.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 @App.get("/")
 def pagina_principal():
         if (verificarLogin(["admin"])):
-            listaAlunos = usuario.ListarAlunos()
-            return render_template("pageHome.html", alunos = listaAlunos)
+            listaAlunos = usuario.ListarAlunos(request.args.get("seletor"))
+            if listaAlunos == None:
+                return render_template("pageHome.html")     
+            else:
+                return render_template("pageHome.html", alunos = listaAlunos)
         else:
             return redirect(url_for('paginaLogin_get'))
         
@@ -63,6 +66,16 @@ def paginaCadastrar_post():
         return render_template("pageCadastro.html", novo_usuario = True)
     else:
         return render_template("pageCadastro.html", novo_usuario = False)
+
+
+#Pagina Editar -- Get
+@App.get("/editar")
+def paginaEditarAluno():
+    uptadeAluno = usuario.EditarAluno()
+    return render_template("pageEditar.html")
+
+
+
 
 
 

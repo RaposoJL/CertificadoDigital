@@ -80,17 +80,65 @@ def CadastrarTurma(planilha):
 
 
 #ListarAlunos
-def ListarAlunos(opcao):
+def ListarAlunos(seletor):
     lista = []
     conexaoBD = conexao.iniciaConexao()
-    if opcao == "3TDSA":
+    if seletor == "*":
+        query = "SELECT * FROM bdalunos"
+
+        cursorBD = conexaoBD.cursor()
+        cursorBD.execute(query)
+        for aluno in cursorBD:
+            lista.append(aluno)
+        cursorBD.close()
+        conexaoBD.close()
+        return lista
+    if seletor == "3TDSA":
         query = "SELECT * FROM bdalunos WHERE turma = '3ºTDSA';"
 
         cursorBD = conexaoBD.cursor()
         cursorBD.execute(query)
         for aluno in cursorBD:
             lista.append(aluno)
-
         cursorBD.close()
         conexaoBD.close()
         return lista
+    
+    if seletor == "3TDSB":
+        query = "SELECT * FROM bdalunos WHERE turma = '3ºTDSB';"
+
+        cursorBD = conexaoBD.cursor()
+        cursorBD.execute(query)
+        for aluno in cursorBD:
+            lista.append(aluno)
+        cursorBD.close()
+        conexaoBD.close()
+        if lista != None:
+            return lista
+        
+    
+    if seletor == "3MKTA":
+        query = "SELECT * FROM bdalunos WHERE turma = '3ºTDSB';"
+
+        cursorBD = conexaoBD.cursor()
+        cursorBD.execute(query)
+        for aluno in cursorBD:
+            lista.append(aluno)
+        cursorBD.close()
+        conexaoBD.close()
+        return lista
+    
+    if seletor == "3MKTB":
+        query = "SELECT * FROM bdalunos WHERE turma = '3ºTDSB';"
+
+        cursorBD = conexaoBD.cursor()
+        cursorBD.execute(query)
+        for aluno in cursorBD:
+            lista.append(aluno)
+        cursorBD.close()
+        conexaoBD.close()
+        return lista
+
+#Editar Aluno
+def EditarAluno():
+    pass
