@@ -118,7 +118,7 @@ def ListarAlunos(seletor):
         
     
     if seletor == "3MKTA":
-        query = "SELECT * FROM bdalunos WHERE turma = '3ºTDSB';"
+        query = "SELECT * FROM bdalunos WHERE turma = '3MKTA';"
 
         cursorBD = conexaoBD.cursor()
         cursorBD.execute(query)
@@ -129,7 +129,7 @@ def ListarAlunos(seletor):
         return lista
     
     if seletor == "3MKTB":
-        query = "SELECT * FROM bdalunos WHERE turma = '3ºTDSB';"
+        query = "SELECT * FROM bdalunos WHERE turma = '3MKTB';"
 
         cursorBD = conexaoBD.cursor()
         cursorBD.execute(query)
@@ -139,6 +139,41 @@ def ListarAlunos(seletor):
         conexaoBD.close()
         return lista
 
-#Editar Aluno
-def EditarAluno():
-    pass
+#Exibir Info Alunos -- Editar Alunos
+def ExibirAluno(id_uptade):
+    conexaoBD = conexao.iniciaConexao()
+    query = "SELECT * FROM bdalunos WHERE id = " + str(id_uptade) +";"
+    cursorBD = conexaoBD.cursor()
+
+    cursorBD.execute(query)
+    infoAluno = cursorBD.fetchone()
+    cursorBD.close()
+    conexaoBD.close()
+    return infoAluno 
+
+#Alterar Info Alunos -- Editar Alunos
+def EditarAluno(id_uptade, nome, nomeMae, nomePai, municipioAluno, nacionalidadeAluno, turmaAluno,cpfAluno,rgAluno, cursoAluno):
+    conexaoBD = conexao.iniciaConexao()
+    query = "UPDATE bdalunos SET nome_completo = %s, nome_mae = %s, nome_pai = %s, municipio = %s, nacionalidade = %s, turma = %s, CPF = %s, rg = %s, curso = %s WHERE id = %s;"
+    parametros = (nome, nomeMae, nomePai, municipioAluno, nacionalidadeAluno, turmaAluno, cpfAluno, rgAluno, cursoAluno, id_uptade)
+    cursorBD = conexaoBD.cursor()
+
+    cursorBD.execute(query, parametros)
+    conexaoBD.commit()
+    cursorBD.close()
+    conexaoBD.close()
+
+#Deletar Aluno
+def DeletarAluno(id_Delete):
+    conexaoBD = conexao.iniciaConexao()
+    query = 'DELETE FROM bdalunos WHERE id = %s;'
+    parametro = [id_Delete]
+    cursorBD = conexaoBD.cursor()
+
+    cursorBD.execute(query, parametro)
+    conexaoBD.commit()
+    cursorBD.close()
+    conexaoBD.close()
+
+    
+    

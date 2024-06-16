@@ -18,6 +18,7 @@ def pagina_principal():
             return redirect(url_for('paginaLogin_get'))
         
 
+#CRUD ALUNOS-------------------------------------
 #Pagina Turmas - Post
 @App.post("/")
 def cadastrarTurma():
@@ -29,7 +30,44 @@ def cadastrarTurma():
          return render_template("pageHome.html", erro = False)
 
 
+#Pagina Editar -- Get
+@App.get("/editar")
+def paginaEditarAluno_get():
+    id_uptade = request.args.get("id_uptade")
+    uptadeAluno = usuario.ExibirAluno(id_uptade)
+    return render_template("pageEditar.html", aluno = uptadeAluno)
 
+
+#Pagina Editar -- Post
+@App.post("/editar")
+def paginaEditarAluno_post():
+    id_uptade = request.form["id_uptade"]
+    nome = request.form["nomeAluno"]
+    nomePai = request.form["nome_paiAluno"]
+    nomeMae = request.form["nome_maeAluno"]
+    municipioAluno = request.form["municipioAluno"]
+    nacionalidadeAluno = request.form["nacionalidadeAluno"]
+    turmaAluno = request.form["turmaAluno"]
+    cpfAluno = request.form["cpfAluno"]
+    rgAluno = request.form["rgAluno"]
+    cursoAluno = request.form["cursoAluno"]
+    atualizar = usuario.EditarAluno(id_uptade, nome, nomeMae, nomePai, municipioAluno, nacionalidadeAluno, turmaAluno, cpfAluno, rgAluno, cursoAluno)
+    return redirect(url_for('paginaEditarAluno_get', id_uptade = id_uptade))
+
+
+#Delete Aluno
+@App.get("/delete")
+def DeletarAluno():
+    id_Delete = request.args.get("id_delete")
+    delete = usuario.DeletarAluno(id_Delete)
+    return redirect(url_for('pagina_principal'))
+
+
+
+
+
+
+# CRUD USUARIO-----------------------------------------
 # Pagina Login -- Get
 @App.get("/login")
 def paginaLogin_get():
@@ -68,19 +106,12 @@ def paginaCadastrar_post():
         return render_template("pageCadastro.html", novo_usuario = False)
 
 
-#Pagina Editar -- Get
-@App.get("/editar")
-def paginaEditarAluno():
-    uptadeAluno = usuario.EditarAluno()
-    return render_template("pageEditar.html")
 
 
 
 
 
-
-
-
+#VERIFICAÇÃO DE PERMISÃO
 # Verificar Permisão do Usuario
 def verificarLogin(admin):  
     if (('logado' in session) and (session['logado'] == True) and

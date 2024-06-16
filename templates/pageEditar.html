@@ -32,77 +32,80 @@
             </ul>
         </div>
     </header>
-    <main class="text-center container w-75 mt-5" style="background-color: #fde498;">  
+    <main class="text-center container w-75 mt-5" style="background-color: #fde498;">
         <form action="/editar" method="post">
+            <input type="hidden" name="id_uptade" value={{aluno[12]}}>
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">Nome:</span>
-                <input type="text" class="form-control" placeholder="" aria-label="Username"
+                <input type="text" class="form-control" value="{{aluno[1]}}" name="nomeAluno"
                     aria-describedby="basic-addon1">
             </div>
 
             <div class="input-group mb-3" name="nome_pais">
-                <span class="input-group-text" id="basic-addon1">Nome da Mãe:</span>
-                <input type="text" class="form-control" placeholder="" aria-label="Username"
-                    aria-describedby="basic-addon1">
                 <span class="input-group-text" id="basic-addon1">Nome do Pai:</span>
-                <input type="text" class="form-control" placeholder="" aria-label="Username"
+                <input type="text" class="form-control" value="{{aluno[2]}}" name="nome_maeAluno"
+                    aria-describedby="basic-addon1">
+                <span class="input-group-text" id="basic-addon1">Nome da Mãe:</span>
+                <input type="text" class="form-control" value="{{aluno[3]}}" name="nome_paiAluno" 
                     aria-describedby="basic-addon1">
             </div>
 
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">Municipio:</span>
-                <input type="text" class="form-control" placeholder="" aria-label="Username"
+                <input type="text" class="form-control" value="{{aluno[4]}}" name="municipioAluno"
                     aria-describedby="basic-addon1">
             </div>
 
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">Nacionalidade:</span>
-                <input type="text" class="form-control" placeholder="" aria-label="Username"
+                <input type="text" class="form-control" value="{{aluno[5]}}" name="nacionalidadeAluno"
                     aria-describedby="basic-addon1">
             </div>
 
             <div class="input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect02">Turma:</label>
-                <select class="form-select" id="inputGroupSelect02">
-                    <option selected>Escolha...</option>
-                    <option value="3TDSA" name="3TDSA">3TDSA</option>
-                    <option value="3TDSB" name="3TDSB">3TDSB</option>
-                    <option value="3MKTA" name="3MKTA">3MKTA</option>
-                    <option value="3MKTB" name="3MKTB">3MKTB</option>
+                <select class="form-select" id="inputGroupSelect02" name="turmaAluno">
+                    <option selected>{{aluno[13]}}</option>
+                    <option value="3TDSA" name="3ºTDSA">3ºTDSA</option>
+                    <option value="3TDSB" name="3ºTDSB">3ºTDSB</option>
+                    <option value="3MKTA" name="3ºMKTA">3ºMKTA</option>
+                    <option value="3MKTB" name="3ºMKTB">3ºMKTB</option>
                 </select>
             </div>
-            
-            <div class="input-group mb-3">
+
+            <!-- <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">Data de Nascimento:</span>
-                <input type="date" class="form-control" placeholder="" aria-label="Username"
+                <input type="date" class="form-control" value=""
                     aria-describedby="basic-addon1">
-            </div>
+            </div> -->
 
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">CPF:</span>
-                <input type="text" class="form-control" placeholder="" aria-label="Username"
+                <input type="text" class="form-control" value="{{aluno[7]}}" name="cpfAluno"
                     aria-describedby="basic-addon1">
                 <span class="input-group-text" id="basic-addon1">RG:</span>
-                <input type="text" class="form-control" placeholder="" aria-label="Username"
+                <input type="text" class="form-control" value="{{aluno[8]}}" name="rgAluno"
                     aria-describedby="basic-addon1">
             </div>
 
             <div class="input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect02">Curso:</label>
-                <select class="form-select" id="inputGroupSelect02">
-                    <option selected>Escolha...</option>
-                    <option value="3TDSA" name="3TDSA">Técnico em Desenvolvimento de Sistemas</option>
-                    <option value="3TDSA" name="3TDSA">Técnico em Marketing</option>
+                <select class="form-select" id="inputGroupSelect02" name="cursoAluno">
+                    <option selected>{{aluno[10]}}</option>
+                    <option value="Técnico em Desenvolvimento de Sistemas" name="TDS">Técnico em Desenvolvimento de
+                        Sistemas</option>
+                    <option value="Técnico em Marketing" name="MKT">Técnico em Marketing</option>
                 </select>
             </div>
-            
-            <div class="input-group mb-3">
+
+            <!-- <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">Data de Conclusão de Curso:</span>
-                <input type="date" class="form-control" aria-label="Username"
+                <input type="date" class="form-control"
                     aria-describedby="basic-addon1">
-            </div>
-            </div>
+            </div> -->
+            <input type="submit" value="Atualizar">
         </form>
+        <a href="/">Voltar para Lista Alunos</a>
     </main>
 </body>
 

@@ -32,67 +32,65 @@
     </div>
   </header>
 
-  <form action="/" method="get" name="listar" class="d-flex">
-    <div class="form-floating">
-      <select class="form-select" id="seletor" name="seletor" aria-label="Floating label select example">
-        <option value="*" name="*">Todas</option>
-        <option value="3TDSA" name="3TDSA">3TDSA</option>
-        <option value="3TDSB" name="3TDSB">3TDSB</option>
-        <option value="3MKTA" name="3MKTA">3MKTA</option>
-        <option value="3MKTB" name="3MKTB">3MKTB</option>
-      </select>
-      <input type="submit" value="Filtrar">
-      <label for="floatingSelect">Qual Turma?</label>
+  
+  <main>
+    <form action="/" method="get" name="listar" class="">
+      <div class="row form-floating">
+        <select class="col-11 p-3 fs-5 text" id="seletor" name="seletor" aria-label="Floating label select example">
+          <option value="*" name="*" selected>Todas</option>
+          <option value="3TDSA" name="3TDSA">3TDSA</option>
+          <option value="3TDSB" name="3TDSB">3TDSB</option>
+          <option value="3MKTA" name="3MKTA">3MKTA</option>
+          <option value="3MKTB" name="3MKTB">3MKTB</option>
+        </select>
+        <input type="submit" value="Filtrar" class="col-1">
+      </div>
+    </form>
+    <p class="d-inline-flex gap-1">
+    <div class="ps-3" id="collapseExample" style="width: 75%;">
+      <table class="table table-warning table-bordered table-responsive">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Instituição</th>
+            <th scope="col">Nome</th>
+            <th scope="col">CPF</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          {% for aluno in alunos %}
+          <tr>
+            <th scope="row">{{aluno[12]}}</th>
+            <td>{{aluno[0]}}</td>
+            <td>{{aluno[1]}}</td>
+            <td>{{aluno[7]}} <a href={{ url_for("paginaEditarAluno_get", id_uptade=aluno[12] )
+                }}><button>Editar</button></a>
+              <a href={{ url_for("DeletarAluno", id_delete=aluno[12] ) }}><button>Deletar</button></a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
-  </form>
-  <p class="d-inline-flex gap-1">
-    <a class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-      aria-expanded="false" aria-controls="collapseExample">
-      Alunos Cadastrados
-    </a>
-  </p>
-  <div class="collapse ps-3" id="collapseExample" style="width: 75%;">
-    <table class="table table-warning table-bordered table-responsive">
-      <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Instituição</th>
-          <th scope="col">Nome</th>
-          <th scope="col">CPF</th>
-        </tr>
-      </thead>
-      <tbody class="table-group-divider">
-        {% for aluno in alunos %}
-        <tr>
-          <th scope="row">{{aluno[12]}}</th>
-          <td>{{aluno[0]}}</td>
-          <td>{{aluno[1]}}</td>
-          <td>{{aluno[7]}} <a href="/editar"><button>Editar</button></a></td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-  </div>
-
-  <form action="/" method="post" name="cadastrar">
-    <label for="planilha"></label>
-    <div class="mb-3">
-      <label for="formFile" class="form-label">Default file input example</label>
-      <input class="form-control w-25" type="file" id="formFile"
-        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="planilha">
     </div>
-    <input type="submit" value="Enviar">
-  </form>
-  {% if nonePlaninha == True %}
-  <p>Por favor, selecione alguma planinha</p>
-  {% endif %}
 
-  {% if erro == True %}
-  <p>Alunos Adicionados</p>
-  {% elif erro == False %}
-  <p>Erro ao Cadastrar Alunos</p>
-  {% endif %}
+    <form action="/" method="post" name="cadastrar">
+      <div class="mb-3">
+        <input class="form-control w-25" type="file" id="formFile"
+          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="planilha">
+      </div>
+      <input type="submit" value="Enviar">
+    </form>
+    {% if nonePlaninha == True %}
+    <p>Por favor, selecione alguma planinha</p>
+    {% endif %}
+
+    {% if erro == True %}
+    <p>Alunos Adicionados</p>
+    {% elif erro == False %}
+    <p>Erro ao Cadastrar Alunos</p>
+    {% endif %}
+  </main>
 </body>
 
 </html>
