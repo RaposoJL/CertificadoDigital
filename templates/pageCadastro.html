@@ -48,29 +48,39 @@
     </div>
   </header>
 
-  <body">
+  <body>
     <main class="container">
+      
       <div class="text-center">
         <img src="/static/midia/imgs/index_selo-removebg-preview.png" alt="img_certificado" class="mt-5"
-          id="img_certificado" ;>
+        id="img_certificado" ;>
         <div class="row">
           <form action="/cadastrar" method="post" class="index_forms">
             <label for="login" class="p-2 mt-3 fs-5 fw-semibold">Login:</label><br>
             <input class="col-sm-8 col-form-label rounded-1 border border-dark" type="text" name="login"
-              placeholder="Insira Seu Login:" required><br>
+            placeholder="Insira Seu Login:" required><br>
             <label for="senha" id="index_senha" class="p-2 mt-3 fs-5 fw-semibold">Senha:</label><br>
             <input class="col-sm-8 col-form-label border border-dark rounded-1" type="password" id="index_input_senha"
               name="senha" placeholder="Insira Sua Senha:" required><br>
-            <p class="mt-3">Fique ciente que o <strong>NOVO USUÁRIO</strong> terá acesso a todo sistema,<br> podendo
-              <strong>Alterar, Apagar, Criar Turmas e emitir Certificados</strong>
-            </p>
+              <p class="mt-4">Fique ciente que o <strong>NOVO USUÁRIO</strong> terá acesso a todo sistema,<br> podendo
+                <strong>Alterar, Apagar, Criar Turmas e emitir Certificados</strong>
+              </p>
             </label>
-            {% if novo_usuario == True %}
-            <p>Usuario Adicionado</p>
-            {% elif novo_usuario == False %}
-            <p>Usuario ja existe</p>
-            {% endif %}
             <input type="submit" value="Cadastrar" id="index_enviar" class="rounded-4 p-2 mt-1 px-4 fw-bold">
+            
+            {% if novo_usuario == True %}
+            <div class="position-relative">
+              <div class="alert alert-success alert-dismissible fade show w-50 container text-center" role="alert">
+                <strong>Usuario Adicionado!</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>  
+            </div>
+            {% elif novo_usuario == False %}
+            <div class="alert alert-danger alert-dismissible fade show w-25 container me-3 mb-4 text-center position-absolute bottom-0 end-0" role="alert">
+              <strong>Usuario Existente</strong> Verifique seu Login e Senha
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>  
+            {% endif %}
           </form>
         </div>
       </div>

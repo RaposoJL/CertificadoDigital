@@ -94,7 +94,7 @@ def ListarAlunos(seletor):
         conexaoBD.close()
         return lista
     if seletor == "3TDSA":
-        query = "SELECT * FROM bdalunos WHERE turma = '3ºTDSA';"
+        query = "SELECT * FROM bdalunos WHERE turma = '3TDSA';"
 
         cursorBD = conexaoBD.cursor()
         cursorBD.execute(query)
@@ -105,7 +105,7 @@ def ListarAlunos(seletor):
         return lista
     
     if seletor == "3TDSB":
-        query = "SELECT * FROM bdalunos WHERE turma = '3ºTDSB';"
+        query = "SELECT * FROM bdalunos WHERE turma = '3TDSB';"
 
         cursorBD = conexaoBD.cursor()
         cursorBD.execute(query)
