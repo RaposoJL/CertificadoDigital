@@ -10,14 +10,22 @@ App.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 @App.get("/")
 def pagina_principal():
         if (verificarLogin(["admin"])):
-            listaAlunos = usuario.ListarAlunos(request.args.get("seletor"))
-            if listaAlunos == None:
-                return render_template("pageHome.html")     
+            seletorAtual = request.args.get("seletor")
+            if seletorAtual == None:
+                seletor = "*"
+                listaAlunos = usuario.ListarAlunos(seletor)
+                paginacao = Paginação(listaAlunos)
+                
+                return render_template("pageHome.html", alunos = paginacao[0], total_pages = paginacao[1], page = paginacao[2])
             else:
-                return render_template("pageHome.html", alunos = listaAlunos)
+                seletor = seletorAtual
+                listaAlunos = usuario.ListarAlunos(seletor)
+                paginacao = Paginação(listaAlunos)
+                
+                return render_template("pageHome.html", alunos = paginacao[0], total_pages= paginacao[1], page = paginacao[2])
         else:
             return redirect(url_for('paginaLogin_get'))
-        
+
 
 #CRUD ALUNOS-------------------------------------
 #Pagina Turmas - Post
@@ -128,5 +136,17 @@ def verificarLogin(admin):
         return False
     else:
         return False
+
+# Paginação do Site
+def Paginação(listaAlunos):
+    page = request.args.get('page', 1, type=int)
+    per_page = 16
+    start = (page - 1) * per_page
+    end = start + per_page
+    total_pages = (len(listaAlunos) + per_page - 1) // per_page
+                
+    items_on_page = listaAlunos[start:end]
+    return items_on_page, total_pages, page
+
 
 App.run(debug=True)

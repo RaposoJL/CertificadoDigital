@@ -176,7 +176,7 @@ def Deletar(id_Delete):
     cursorBD.close()
     conexaoBD.close()
 
-
+#Gerar Certificado Individual
 def GerarCertificado(documento, id_certificado):
     conexaoBD = conexao.iniciaConexao()
     query = "SELECT * FROM bdalunos WHERE id = " + str(id_certificado) +";"

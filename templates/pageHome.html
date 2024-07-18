@@ -57,8 +57,8 @@
             <th scope="col">CPF</th>
           </tr>
         </thead>
+        {% for aluno in alunos %}
         <tbody class="table-group-divider">
-          {% for aluno in alunos %}
           <tr>
             <th scope="row">{{aluno[12]}}</th>
             <td>{{aluno[0]}}</td>
@@ -72,10 +72,39 @@
           {% endfor %}
         </tbody>
       </table>
-    </div>
-    </div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          {% if page > 1 %}
+          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page=page-1) }}">Previous</a></li>
+          {% endif %}
+          {% if page == 1 %}
+          <li class="page-item"><a class="page-link active" href="{{ url_for('pagina_principal', page= page) }}">{{page}}</a></li>
+          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page + 1) }}">{{page + 1}}</a></li>
+          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page + 2  ) }}">{{page + 2}}</a></li>
+          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page + 3  ) }}">{{page + 3}}</a></li>
+          {% elif page == (total_pages - 1) %}
+          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page - 1) }}">{{page - 1}}</a></li>
+          <li class="page-item"><a class="page-link active" href="{{ url_for('pagina_principal', page= page) }}">{{page}}</a></li>
+          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page = page + 1) }}">{{page + 1}}</a></li>
+          {% elif page == total_pages %}
+          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page - 1) }}">{{page - 1}}</a></li>
+          <li class="page-item"><a class="page-link active" href="{{ url_for('pagina_principal', page= page) }}">{{page}}</a></li>
+          {% else %}
+          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page - 1) }}">{{page - 1}}</a></li>
+          <li class="page-item"><a class="page-link active" href="{{ url_for('pagina_principal', page= page) }}">{{page}}</a></li>
+          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page = page + 1) }}">{{page + 1}}</a></li>
+          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page + 2  ) }}">{{page + 2}}</a></li>
+          {% endif %}
+          {% if page < total_pages %}
+          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page=page+1) }}">Next</a></li>
+          {% endif %}
+            </ul>
+          </nav>
 
-    <form action="/" method="post" name="cadastrar">
+    </div>
+  </div>
+  
+    <form action="/" method="post" name="cadastrar" class="mt-5">
       <div class="mb-3">
         <input class="form-control w-25" type="file" id="formFile"
           accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="planilha">
