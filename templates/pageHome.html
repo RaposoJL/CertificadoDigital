@@ -66,6 +66,7 @@
             <td>{{aluno[7]}} <a href={{ url_for("paginaEditarAluno_get", id_uptade=aluno[12] )
                 }}><img src="/static/midia/imgs/edit_24dp_FILL0_wght400_GRAD0_opsz24.svg" alt="Edit SVG"></a>
               <a href={{ url_for("DeletarAluno", id_delete=aluno[12] ) }}><img src="/static/midia/imgs/delete_24dp_FILL0_wght400_GRAD0_opsz24.svg" alt="Edit SVG"></a>
+              <a href={{ url_for("GerarCertificado", id_certificado=aluno[12]) }}><img src="/static/midia/imgs/workspace_premium_24dp_4C3566_FILL0_wght400_GRAD0_opsz24.svg" alt="Edit SVG"></a>
             </td>
           </tr>
           {% endfor %}

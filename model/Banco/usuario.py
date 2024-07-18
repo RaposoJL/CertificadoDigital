@@ -1,5 +1,6 @@
 import model.Banco.BD as conexao
 import openpyxl
+from docx import Document
 
 #Login
 def LoginUsuario(login, senha):
@@ -164,7 +165,7 @@ def EditarAluno(id_uptade, nome, nomeMae, nomePai, municipioAluno, nacionalidade
     conexaoBD.close()
 
 #Deletar Aluno
-def DeletarAluno(id_Delete):
+def Deletar(id_Delete):
     conexaoBD = conexao.iniciaConexao()
     query = 'DELETE FROM bdalunos WHERE id = %s;'
     parametro = [id_Delete]
@@ -175,5 +176,48 @@ def DeletarAluno(id_Delete):
     cursorBD.close()
     conexaoBD.close()
 
+
+def GerarCertificado(documento, id_certificado):
+    conexaoBD = conexao.iniciaConexao()
+    query = "SELECT * FROM bdalunos WHERE id = " + str(id_certificado) +";"
+    cursorBD = conexaoBD.cursor()
+
+    cursorBD.execute(query)
+    infoAluno = cursorBD.fetchone()
+    cursorBD.close()
+    conexaoBD.close()
     
     
+    # Carregar o documento existente
+    doc = Document(documento)
+    substituicoes = {
+        '#instituição#': infoAluno[0],
+        '#curso#': infoAluno[10],
+        '#nome#':  infoAluno[1],
+        '#nomeMae#':  infoAluno[2],
+        '#nomePai#':  infoAluno[3],
+        '#municipio#':  infoAluno[4],
+        '#uf#':  infoAluno[9],
+        '#nacionalidade#':  infoAluno[5],
+        '#diaNas#':  infoAluno[6],
+        '#mesNas#': ".",
+        '#anoNas#': ".",
+        '#cpf#':  infoAluno[7],
+        '#rg#':  infoAluno[0],
+        '#uf#':  infoAluno[9],
+        '#diaCon#':  infoAluno[11],
+        '#mesCon#': ".",
+        '#anoCon#': ".",
+        '#mesNas#': ".",
+    }
+
+
+    # Substituir as palavras em parágrafos
+    for para in doc.paragraphs:
+        for palavra_antiga, palavra_nova in substituicoes.items():
+            if palavra_antiga in para.text: 
+                para.text = para.text.replace(palavra_antiga, palavra_nova)
+
+
+    # Salvar o documento modificado]
+    doc.save(infoAluno[1]+ ".docx")

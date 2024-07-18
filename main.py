@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import model.Banco.usuario as usuario
+from docx import Document
 
 
 App = Flask(__name__)
@@ -33,9 +34,12 @@ def cadastrarTurma():
 #Pagina Editar -- Get
 @App.get("/editar")
 def paginaEditarAluno_get():
-    id_uptade = request.args.get("id_uptade")
-    uptadeAluno = usuario.ExibirAluno(id_uptade)
-    return render_template("pageEditar.html", aluno = uptadeAluno)
+    if (verificarLogin(["admin"])):
+        id_uptade = request.args.get("id_uptade")
+        uptadeAluno = usuario.ExibirAluno(id_uptade)
+        return render_template("pageEditar.html", aluno = uptadeAluno)
+    else:
+        return redirect(url_for('paginaLogin_get'))
 
 
 #Pagina Editar -- Post
@@ -58,13 +62,16 @@ def paginaEditarAluno_post():
 #Delete Aluno
 @App.get("/delete")
 def DeletarAluno():
-    id_Delete = request.args.get("id_delete")
-    delete = usuario.DeletarAluno(id_Delete)
+    id_Delete =request.args.get("id_delete")
+    usuario.Deletar(id_Delete)
     return redirect(url_for('pagina_principal'))
 
 
-
-
+@App.get("/certificado")
+def GerarCertificado():
+    id_certificado = request.args.get("id_certificado")
+    usuario.GerarCertificado('PI.docx', id_certificado)
+    return redirect(url_for('pagina_principal'))
 
 
 # CRUD USUARIO-----------------------------------------
@@ -72,6 +79,7 @@ def DeletarAluno():
 @App.get("/login")
 def paginaLogin_get():
     return render_template("pageLogin.html")
+
 
 # Pagina Login -- Post
 @App.post("/login")
@@ -91,7 +99,10 @@ def paginaLogin_post():
 # Pagina Cadastro -- Get
 @App.get("/cadastrar")
 def paginaCadastrar_get():
-     return render_template("pageCadastro.html")
+    if (verificarLogin(["admin"])):
+        return render_template("pageCadastro.html")
+    else:
+        return redirect(url_for('paginaLogin_get'))
 
 
 # Pagina Cadastro -- Post
@@ -104,11 +115,6 @@ def paginaCadastrar_post():
         return render_template("pageCadastro.html", novo_usuario = True)
     else:
         return render_template("pageCadastro.html", novo_usuario = False)
-
-
-
-
-
 
 
 #VERIFICAÇÃO DE PERMISÃO
