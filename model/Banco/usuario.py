@@ -1,6 +1,7 @@
 import model.Banco.BD as conexao
 import openpyxl
 from docx import Document
+import os
 
 #Login
 def LoginUsuario(login, senha):
@@ -220,4 +221,44 @@ def GerarCertificado(documento, id_certificado):
 
 
     # Salvar o documento modificado]
-    doc.save(infoAluno[1]+ ".docx")
+    pastaCertificados = os.path.abspath("Certificados/" + infoAluno[1] + ".docx")
+    doc.save(pastaCertificados)
+
+
+def GerarTodosCertificados(listaAlunos, seletor, documento):
+    if seletor == "*":
+        for aluno in listaAlunos:
+            # Carregar o documento existente
+            doc = Document(documento)
+            substituicoes = {
+                '#instituição#': aluno[0],
+                '#curso#': aluno[10],
+                '#nome#':  aluno[1],
+                '#nomeMae#':  aluno[2],
+                '#nomePai#':  aluno[3],
+                '#municipio#':  aluno[4],
+                '#uf#':  aluno[9],
+                '#nacionalidade#':  aluno[5],
+                '#diaNas#':  aluno[6],
+                '#mesNas#': ".",
+                '#anoNas#': ".",
+                '#cpf#':  aluno[7],
+                '#rg#':  aluno[0],
+                '#uf#':  aluno[9],
+                '#diaCon#':  aluno[11],
+                '#mesCon#': ".",
+                '#anoCon#': ".",
+                '#mesNas#': ".",
+            }
+
+
+            # Substituir as palavras em parágrafos
+            for para in doc.paragraphs:
+                for palavra_antiga, palavra_nova in substituicoes.items():
+                    if palavra_antiga in para.text: 
+                        para.text = para.text.replace(palavra_antiga, palavra_nova)
+
+
+            # Salvar o documento modificado]
+            pastaCertificados = os.path.abspath("Certificados/" + aluno[1] + ".docx")
+            doc.save(pastaCertificados)

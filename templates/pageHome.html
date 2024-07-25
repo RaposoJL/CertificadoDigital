@@ -32,11 +32,12 @@
     </div>
   </header>
 
-  
+
   <main>
-    <form action="/" method="get" name="listar" class="">
+
+    <form action="/" method="get" name="listar">
       <div class="row form-floating">
-        <select class="col-11 p-3 fs-5 text" id="seletor" name="seletor" aria-label="Floating label select example">
+        <select class="col-11 fs-5 text" id="seletor" name="seletor" aria-label="Floating label select">
           <option value="*" name="*" selected>Todas</option>
           <option value="3TDSA" name="3TDSA">3TDSA</option>
           <option value="3TDSB" name="3TDSB">3TDSB</option>
@@ -46,8 +47,8 @@
         <input type="submit" value="Filtrar" class="col-1">
       </div>
     </form>
-    <p class="d-inline-flex gap-1">
-    <div class="ps-3" id="collapseExample" style="width: 75%;">
+
+    <div class="ps-3 py-5" id="collapseExample" style="width: 75%;">
       <table class="table table-warning table-bordered table-responsive">
         <thead>
           <tr>
@@ -63,54 +64,112 @@
             <th scope="row">{{aluno[12]}}</th>
             <td>{{aluno[0]}}</td>
             <td>{{aluno[1]}}</td>
-            <td>{{aluno[7]}} <a href={{ url_for("paginaEditarAluno_get", id_uptade=aluno[12] )
-                }}><img src="/static/midia/imgs/edit_24dp_FILL0_wght400_GRAD0_opsz24.svg" alt="Edit SVG"></a>
-              <a href={{ url_for("DeletarAluno", id_delete=aluno[12] ) }}><img src="/static/midia/imgs/delete_24dp_FILL0_wght400_GRAD0_opsz24.svg" alt="Edit SVG"></a>
-              <a href={{ url_for("GerarCertificado", id_certificado=aluno[12]) }}><img src="/static/midia/imgs/workspace_premium_24dp_4C3566_FILL0_wght400_GRAD0_opsz24.svg" alt="Edit SVG"></a>
+            <td>{{aluno[7]}} <a href={{ url_for("paginaEditarAluno_get", id_uptade=aluno[12] ) }}
+                title="Editar Aluno"><img src="/static/midia/imgs/edit_24dp_FILL0_wght400_GRAD0_opsz24.svg"
+                  alt="Edit SVG"></a>
+              <a href={{ url_for("DeletarAluno", id_delete=aluno[12] ) }} title="Deleter Aluno"><img
+                  src="/static/midia/imgs/delete_24dp_FILL0_wght400_GRAD0_opsz24.svg" alt="Edit SVG"></a>
+              <a href={{ url_for("GerarCertificado", id_certificado=aluno[12] ) }} title="Gerar Certificado"><img
+                  src="/static/midia/imgs/workspace_premium_24dp_4C3566_FILL0_wght400_GRAD0_opsz24.svg"
+                  alt="Edit SVG"></a>
             </td>
           </tr>
-          {% endfor %}
         </tbody>
+        {% endfor %}
       </table>
       <nav aria-label="Page navigation example">
         <ul class="pagination">
           {% if page > 1 %}
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page=page-1) }}">Previous</a></li>
+          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page=page-1) }}">Previous</a>
+          </li>
           {% endif %}
           {% if page == 1 %}
-          <li class="page-item"><a class="page-link active" href="{{ url_for('pagina_principal', page= page) }}">{{page}}</a></li>
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page + 1) }}">{{page + 1}}</a></li>
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page + 2  ) }}">{{page + 2}}</a></li>
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page + 3  ) }}">{{page + 3}}</a></li>
+          <li class="page-item"><a class="page-link active"
+              href="{{ url_for('pagina_principal', page= page) }}">{{page}}</a></li>
+          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page + 1) }}">{{page +
+              1}}</a></li>
+          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page + 2  ) }}">{{page +
+              2}}</a></li>
+          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page + 3  ) }}">{{page +
+              3}}</a></li>
           {% elif page == (total_pages - 1) %}
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page - 1) }}">{{page - 1}}</a></li>
-          <li class="page-item"><a class="page-link active" href="{{ url_for('pagina_principal', page= page) }}">{{page}}</a></li>
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page = page + 1) }}">{{page + 1}}</a></li>
+          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page - 1) }}">{{page -
+              1}}</a></li>
+          <li class="page-item"><a class="page-link active"
+              href="{{ url_for('pagina_principal', page= page) }}">{{page}}</a></li>
+          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page = page + 1) }}">{{page +
+              1}}</a></li>
           {% elif page == total_pages %}
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page - 1) }}">{{page - 1}}</a></li>
-          <li class="page-item"><a class="page-link active" href="{{ url_for('pagina_principal', page= page) }}">{{page}}</a></li>
+          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page - 1) }}">{{page -
+              1}}</a></li>
+          <li class="page-item"><a class="page-link active"
+              href="{{ url_for('pagina_principal', page= page) }}">{{page}}</a></li>
           {% else %}
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page - 1) }}">{{page - 1}}</a></li>
-          <li class="page-item"><a class="page-link active" href="{{ url_for('pagina_principal', page= page) }}">{{page}}</a></li>
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page = page + 1) }}">{{page + 1}}</a></li>
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page + 2  ) }}">{{page + 2}}</a></li>
+          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page - 1) }}">{{page -
+              1}}</a></li>
+          <li class="page-item"><a class="page-link active"
+              href="{{ url_for('pagina_principal', page= page) }}">{{page}}</a></li>
+          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page = page + 1) }}">{{page +
+              1}}</a></li>
+          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page + 2  ) }}">{{page +
+              2}}</a></li>
           {% endif %}
-          {% if page < total_pages %}
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page=page+1) }}">Next</a></li>
-          {% endif %}
-            </ul>
-          </nav>
+          {% if page < total_pages %} <li class="page-item"><a class="page-link"
+              href="{{ url_for('pagina_principal', page=page+1) }}">Next</a></li>
+            {% endif %}
+        </ul>
+      </nav>
 
     </div>
-  </div>
-  
-    <form action="/" method="post" name="cadastrar" class="mt-5">
-      <div class="mb-3">
-        <input class="form-control w-25" type="file" id="formFile"
-          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="planilha">
+    </div>
+
+    <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+      <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center show text-white" id="bd-theme"
+        type="button" data-bs-toggle="dropdown" style="background-color: #4C3566;">
+        Ação
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end shadow"
+        style="position: absolute; inset: auto 0px 0px auto; margin: 0px; transform: translate(41px, -44px);"
+        data-popper-placement="top-end">
+        <li>
+          <a href="{{ url_for( 'GerarTodosCertificados', seletor=seletor ) }}"
+            class="link-body-emphasis text-decoration-none">
+            <button type="button" class="dropdown-item d-flex align-items-center" aria-pressed="false">
+              Gerar Todos os Certificados
+            </button>
+          </a>
+        </li>
+        <li>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Launch demo modal
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="/" method="post" name="cadastrar" class="mt-5">
+              <div class="mb-3">
+                <input class="form-control" type="file" id="formFile"
+                  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="planilha">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <input type="submit" value="Enviar" class="btn btn-primary">
+              </form>
+          </div>
+        </div>
       </div>
-      <input type="submit" value="Enviar">
-    </form>
+    </div>
+
     {% if nonePlaninha == True %}
     <p>Por favor, selecione alguma planinha</p>
     {% endif %}

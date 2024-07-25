@@ -16,15 +16,22 @@ def pagina_principal():
                 listaAlunos = usuario.ListarAlunos(seletor)
                 paginacao = Paginação(listaAlunos)
                 
-                return render_template("pageHome.html", alunos = paginacao[0], total_pages = paginacao[1], page = paginacao[2])
+                return render_template("pageHome.html", alunos = paginacao[0], total_pages = paginacao[1], page = paginacao[2], seletor = seletor)
             else:
                 seletor = seletorAtual
                 listaAlunos = usuario.ListarAlunos(seletor)
                 paginacao = Paginação(listaAlunos)
                 
-                return render_template("pageHome.html", alunos = paginacao[0], total_pages= paginacao[1], page = paginacao[2])
+                return render_template("pageHome.html", alunos = paginacao[0], total_pages= paginacao[1], page = paginacao[2], seletor = seletor)
         else:
             return redirect(url_for('paginaLogin_get'))
+
+@App.get("/gerarCertificado")
+def GerarTodosCertificados():
+    seletor = request.args.get("seletor")
+    listaAlunos = usuario.ListarAlunos(seletor)
+    usuario.GerarTodosCertificados(listaAlunos, seletor, 'PI.docx')
+    return redirect(url_for('pagina_principal'))
 
 
 #CRUD ALUNOS-------------------------------------
@@ -140,7 +147,7 @@ def verificarLogin(admin):
 # Paginação do Site
 def Paginação(listaAlunos):
     page = request.args.get('page', 1, type=int)
-    per_page = 16
+    per_page = 11
     start = (page - 1) * per_page
     end = start + per_page
     total_pages = (len(listaAlunos) + per_page - 1) // per_page
