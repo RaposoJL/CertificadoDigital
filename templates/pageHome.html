@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Certificado Digital</title>
   <link rel="stylesheet" href="/static/node_modules/bootstrap/dist/css/bootstrap.min.css">
   <link rel="shortcut icon" href="midia/imgs/favicon.ico" type="image/x-icon">
@@ -19,36 +19,38 @@
   <link rel="icon" type="image/x-icon" href="/static/midia/imgs/favicon.ico">
 </head>
 
-<body style="background-color: #FFEAAA;">
+<body style="background-color: #FFEAAA; margin: 0px; padding: 0px;">
   <header style="background-color: #4C3566;">
     <div class="d-flex py-3 container" style="background-color: #4C3566;">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
         <span class="fs-5 text-white">Certificado Digital</span>
       </a>
       <ul class="nav nav-underline">
-        <li class="nav-item"><a href="/certificados" class="nav-link link-light">Certificados</a></li>
-        <li class="nav-item"><a href="/cadastrar" class="nav-link link-light">Cadastrar Usuario</a></li>
+        <li class="nav-item mx-1 my-1"><a href="/certificados" class="nav-link link-light">Certificados</a></li>
+        <li class="nav-item mx-1 my-1"><a href="/cadastrar" class="nav-link link-light">Cadastrar Usuario</a></li>
+        <li class="nav-item mx-1 my-1"><a href="/Sobre" class="nav-link link-light">Sobre</a></li>
       </ul>
     </div>
   </header>
-
-
+  
+  
   <main>
 
     <form action="/" method="get" name="listar">
-      <div class="row form-floating">
-        <select class="col-11 fs-5 text" id="seletor" name="seletor" aria-label="Floating label select">
+      <div class="form-floating">
+        <select class="fs-5 p-1" id="seletor" name="seletor" aria-label="Floating label select">
           <option value="*" name="*" selected>Todas</option>
           <option value="3TDSA" name="3TDSA">3TDSA</option>
           <option value="3TDSB" name="3TDSB">3TDSB</option>
           <option value="3MKTA" name="3MKTA">3MKTA</option>
           <option value="3MKTB" name="3MKTB">3MKTB</option>
         </select>
-        <input type="submit" value="Filtrar" class="col-1">
+        <button type="submit" class="bg-transparent border border-0 m-0"><img src="/static/midia/icons/filter_alt_32dp_4C3566_FILL0_wght400_GRAD0_opsz40.svg" alt="Filtrar Alunos"></button>
       </div>
     </form>
 
-    <div class="ps-3 py-5" id="collapseExample" style="width: 75%;">
+    
+    <div class="ps-3 py-5 w-75" id="collapseExample">
       <table class="table table-warning table-bordered table-responsive">
         <thead>
           <tr>
@@ -65,12 +67,12 @@
             <td>{{aluno[0]}}</td>
             <td>{{aluno[1]}}</td>
             <td>{{aluno[7]}} <a href={{ url_for("paginaEditarAluno_get", id_uptade=aluno[12] ) }}
-                title="Editar Aluno"><img src="/static/midia/imgs/edit_24dp_FILL0_wght400_GRAD0_opsz24.svg"
+                title="Editar Aluno"><img src="/static/midia/icons/edit_24dp_FILL0_wght400_GRAD0_opsz24.svg"
                   alt="Edit SVG"></a>
               <a href={{ url_for("DeletarAluno", id_delete=aluno[12] ) }} title="Deleter Aluno"><img
-                  src="/static/midia/imgs/delete_24dp_FILL0_wght400_GRAD0_opsz24.svg" alt="Edit SVG"></a>
+                  src="/static/midia/icons/delete_24dp_FILL0_wght400_GRAD0_opsz24.svg" alt="Edit SVG"></a>
               <a href={{ url_for("GerarCertificado", id_certificado=aluno[12] ) }} title="Gerar Certificado"><img
-                  src="/static/midia/imgs/workspace_premium_24dp_4C3566_FILL0_wght400_GRAD0_opsz24.svg"
+                  src="/static/midia/icons/workspace_premium_24dp_4C3566_FILL0_wght400_GRAD0_opsz24.svg"
                   alt="Edit SVG"></a>
             </td>
           </tr>
@@ -79,44 +81,64 @@
       </table>
       <nav aria-label="Page navigation example">
         <ul class="pagination">
-          {% if page > 1 %}
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page=page-1) }}">Previous</a>
+
+          {% for count in range(6)%}
+
+          {% if page != 1 and count == 0 %}
+          <li class="page-item">
+            <a class="page-link" href="{{ url_for('pagina_principal', page=page-1) }}">Previous</a>
+          </li>
+          {% elif page+1 != total_pages and count == 5 %}
+          <li class="page-item">
+            <a class="page-link" href="{{ url_for('pagina_principal', page=page+1) }}">Next</a>
+          </li>
+          {% elif count > 0 and count < 5 %}
+<!-- asdfasdf -->
+          {% if page == 1 %}
+          <!-- asdfasdf -->
+          {% if count == page %}
+          <li class="page-item">
+            <a class="page-link active" href="{{ url_for('pagina_principal', page= count) }}">{{count}}</a>
+          </li>
+          {% else %}
+          <li class="page-item">
+            <a class="page-link" href="{{ url_for('pagina_principal', page= count) }}">{{count}}</a>
           </li>
           {% endif %}
-          {% if page == 1 %}
-          <li class="page-item"><a class="page-link active"
-              href="{{ url_for('pagina_principal', page= page) }}">{{page}}</a></li>
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page + 1) }}">{{page +
-              1}}</a></li>
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page + 2  ) }}">{{page +
-              2}}</a></li>
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page + 3  ) }}">{{page +
-              3}}</a></li>
-          {% elif page == (total_pages - 1) %}
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page - 1) }}">{{page -
-              1}}</a></li>
-          <li class="page-item"><a class="page-link active"
-              href="{{ url_for('pagina_principal', page= page) }}">{{page}}</a></li>
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page = page + 1) }}">{{page +
-              1}}</a></li>
-          {% elif page == total_pages %}
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page - 1) }}">{{page -
-              1}}</a></li>
-          <li class="page-item"><a class="page-link active"
-              href="{{ url_for('pagina_principal', page= page) }}">{{page}}</a></li>
+
           {% else %}
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page - 1) }}">{{page -
-              1}}</a></li>
-          <li class="page-item"><a class="page-link active"
-              href="{{ url_for('pagina_principal', page= page) }}">{{page}}</a></li>
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page = page + 1) }}">{{page +
-              1}}</a></li>
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page + 2  ) }}">{{page +
-              2}}</a></li>
+          {% set final = (page >= (total_pages-3)) %} 
+          {% if not final %}
+          {% set opcaoNumero =  (count+(page-1)) %}
+          
+          {% if opcaoNumero == page %}
+          <li class="page-item">
+            <a class="page-link active" href="{{ url_for('pagina_principal', page= opcaoNumero) }}">{{opcaoNumero}}</a>
+          </li>
+          {% else %}
+          <li class="page-item">
+            <a class="page-link" href="{{ url_for('pagina_principal', page= opcaoNumero) }}">{{opcaoNumero}}</a>
+          </li>
           {% endif %}
-          {% if page < total_pages %} <li class="page-item"><a class="page-link"
-              href="{{ url_for('pagina_principal', page=page+1) }}">Next</a></li>
-            {% endif %}
+          {% else %}
+          {% set opcaoNumero =  ((total_pages-5)+count) %}
+          {% if opcaoNumero == page %}
+          <li class="page-item">
+            <a class="page-link active" href="{{ url_for('pagina_principal', page= opcaoNumero) }}">{{opcaoNumero}}</a>
+          </li>
+          {% else %}
+          <li class="page-item">
+            <a class="page-link" href="{{ url_for('pagina_principal', page= opcaoNumero) }}">{{opcaoNumero}}</a>
+          </li>
+          {% endif %}
+
+          {% endif %}
+
+          {% endif %}
+<!-- asdfasdf -->
+
+          {% endif %} 
+          {% endfor %} 
         </ul>
       </nav>
 
@@ -140,8 +162,8 @@
           </a>
         </li>
         <li>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Launch demo modal
+          <button type="button" class="btn btn-primary bg-transparent text-body border border-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Cadastrar Alunos
           </button>
         </li>
       </ul>
@@ -151,20 +173,19 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Escolha a Planilha:</h1>
           </div>
           <div class="modal-body">
-            <form action="/" method="post" name="cadastrar" class="mt-5">
-              <div class="mb-3">
+            <form action="/cadastroTurma" method="get" name="cadastrar" class="">
+              <div class="">
                 <input class="form-control" type="file" id="formFile"
                   accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="planilha">
-                </div>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <input type="submit" value="Enviar" class="btn btn-primary">
-              </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <input type="submit" value="Enviar" class="btn btn-primary">
+            </form>
           </div>
         </div>
       </div>

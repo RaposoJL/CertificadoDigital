@@ -1,7 +1,8 @@
 import model.Banco.BD as conexao
 import openpyxl
 from docx import Document
-import os
+import os 
+import shutil
 
 #Login
 def LoginUsuario(login, senha):
@@ -44,41 +45,37 @@ def CadastrarUsuario(login, senha):
 
 #Cadastrar Turma
 def CadastrarTurma(planilha):
-    book = openpyxl.load_workbook(planilha)
-    ws = book.active
-    sheet = book['3º TDS "A"']  
-    ws.tables
-
-    num_min = 6
-    num_max = 30
-    letra_min = "A"
-    letra_max = "M"
-    alunos = []
-
-
-    while num_min <= num_max:
-        min_col = letra_min + str(num_min)
-        max_col = letra_max + str(num_min)
-        num_min = num_min + 1
-        alunos.clear()
-        cell_range = sheet[min_col+':'+ max_col]
-        for row in cell_range:
-            for cell in row:
-                alunos.append(cell.value)
-
-        if (alunos != None):
-            conexaoBD = conexao.iniciaConexao()
-            query = "INSERT INTO bdalunos (instituicao, nome_completo, cpf, rg, orgao_expedidor, municipio, nacionalidade, data_nascimento, curso, data_conclusão, nome_pai, nome_mae, turma) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
-            parametros = (alunos[0], alunos[1], alunos[2],alunos[3], alunos[4], alunos[5], alunos[6], alunos[7], str(alunos[8]), str(alunos[9]), alunos[10], alunos[11], alunos[12])
-
-            cursorBD = conexaoBD.cursor()
-            cursorBD.execute(query, parametros)
-            conexaoBD.commit()
-            cursorBD.close()
-            conexaoBD.close()
-        else:
-            return False
-    return True
+    if planilha:
+        book = openpyxl.load_workbook(planilha)
+        ws = book.active
+        sheet = book['3º TDS "A"']  
+        ws.tables
+        num_min = 6
+        num_max = 30
+        letra_min = "A"
+        letra_max = "M"
+        alunos = []
+        while num_min <= num_max:
+            min_col = letra_min + str(num_min)
+            max_col = letra_max + str(num_min)
+            num_min = num_min + 1
+            alunos.clear()
+            cell_range = sheet[min_col+':'+ max_col]
+            for row in cell_range:
+                for cell in row:
+                    alunos.append(cell.value)
+            if (alunos != None):
+                conexaoBD = conexao.iniciaConexao()
+                query = "INSERT INTO bdalunos (instituicao, nome_completo, cpf, rg, orgao_expedidor, municipio, nacionalidade, data_nascimento, curso, data_conclusão, nome_pai, nome_mae, turma) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+                parametros = (alunos[0], alunos[1], alunos[2],alunos[3], alunos[4], alunos[5], alunos[6], alunos[7], str(alunos[8]), str(alunos[9]), alunos[10], alunos[11], alunos[12])
+                cursorBD = conexaoBD.cursor()
+                cursorBD.execute(query, parametros)
+                conexaoBD.commit()
+                cursorBD.close()
+                conexaoBD.close()
+        return True
+    else:
+        return False
 
 
 #ListarAlunos
@@ -218,47 +215,52 @@ def GerarCertificado(documento, id_certificado):
         for palavra_antiga, palavra_nova in substituicoes.items():
             if palavra_antiga in para.text: 
                 para.text = para.text.replace(palavra_antiga, palavra_nova)
+                
 
 
     # Salvar o documento modificado]
-    pastaCertificados = os.path.abspath("Certificados/" + infoAluno[1] + ".docx")
+    pastaCertificados = os.path.abspath("static/Certificados/" + infoAluno[1] + ".docx")
     doc.save(pastaCertificados)
+    return infoAluno[1] + ".docx"
 
 
-def GerarTodosCertificados(listaAlunos, seletor, documento):
-    if seletor == "*":
-        for aluno in listaAlunos:
-            # Carregar o documento existente
-            doc = Document(documento)
-            substituicoes = {
-                '#instituição#': aluno[0],
-                '#curso#': aluno[10],
-                '#nome#':  aluno[1],
-                '#nomeMae#':  aluno[2],
-                '#nomePai#':  aluno[3],
-                '#municipio#':  aluno[4],
-                '#uf#':  aluno[9],
-                '#nacionalidade#':  aluno[5],
-                '#diaNas#':  aluno[6],
-                '#mesNas#': ".",
-                '#anoNas#': ".",
-                '#cpf#':  aluno[7],
-                '#rg#':  aluno[0],
-                '#uf#':  aluno[9],
-                '#diaCon#':  aluno[11],
-                '#mesCon#': ".",
-                '#anoCon#': ".",
-                '#mesNas#': ".",
-            }
+def GerarTodosCertificados(seletor, documento):
+    listaAlunos = ListarAlunos(seletor)
+    for aluno in listaAlunos:
+        # Carregar o documento existente
+        doc = Document(documento)
+        substituicoes = {
+            '#instituição#': aluno[0],
+            '#curso#': aluno[10],
+            '#nome#':  aluno[1],
+            '#nomeMae#':  aluno[2],
+            '#nomePai#':  aluno[3],
+            '#municipio#':  aluno[4],
+            '#uf#':  aluno[9],
+            '#nacionalidade#':  aluno[5],
+            '#diaNas#':  aluno[6],
+            '#mesNas#': ".",
+            '#anoNas#': ".",
+            '#cpf#':  aluno[7],
+            '#rg#':  aluno[0],
+            '#uf#':  aluno[9],
+            '#diaCon#':  aluno[11],
+            '#mesCon#': ".",
+            '#anoCon#': ".",
+            '#mesNas#': ".",
+            '#cidade#': "Caruaru"
+        }
 
 
-            # Substituir as palavras em parágrafos
-            for para in doc.paragraphs:
-                for palavra_antiga, palavra_nova in substituicoes.items():
-                    if palavra_antiga in para.text: 
-                        para.text = para.text.replace(palavra_antiga, palavra_nova)
+        # Substituir as palavras em parágrafos
+        for para in doc.paragraphs:
+            for palavra_antiga, palavra_nova in substituicoes.items():
+                if palavra_antiga in para.text: 
+                    para.text = para.text.replace(palavra_antiga, palavra_nova)
+    
 
-
-            # Salvar o documento modificado]
-            pastaCertificados = os.path.abspath("Certificados/" + aluno[1] + ".docx")
-            doc.save(pastaCertificados)
+        # Salvar o documento modificado]
+        pastaCertificados = os.path.abspath("static/Certificados/" + aluno[1] + ".docx")
+        doc.save(pastaCertificados)
+    shutil.make_archive(os.path.abspath("static/Certificados/Certificados"), 'zip', os.path.abspath("static/Certificados/"))
+    return "Certificados.zip"
