@@ -82,7 +82,7 @@ def CadastrarTurma(planilha):
 def ListarAlunos(seletor):
     lista = []
     conexaoBD = conexao.iniciaConexao()
-    if seletor == "*":
+    if seletor == "*" or seletor == "":
         query = "SELECT * FROM bdalunos"
 
         cursorBD = conexaoBD.cursor()
@@ -92,7 +92,7 @@ def ListarAlunos(seletor):
         cursorBD.close()
         conexaoBD.close()
         return lista
-    if seletor == "3TDSA":
+    elif seletor == "3TDSA":
         query = "SELECT * FROM bdalunos WHERE turma = '3TDSA';"
 
         cursorBD = conexaoBD.cursor()
@@ -103,7 +103,7 @@ def ListarAlunos(seletor):
         conexaoBD.close()
         return lista
     
-    if seletor == "3TDSB":
+    elif seletor == "3TDSB":
         query = "SELECT * FROM bdalunos WHERE turma = '3TDSB';"
 
         cursorBD = conexaoBD.cursor()
@@ -116,7 +116,7 @@ def ListarAlunos(seletor):
             return lista
         
     
-    if seletor == "3MKTA":
+    elif seletor == "3MKTA":
         query = "SELECT * FROM bdalunos WHERE turma = '3MKTA';"
 
         cursorBD = conexaoBD.cursor()
@@ -127,7 +127,7 @@ def ListarAlunos(seletor):
         conexaoBD.close()
         return lista
     
-    if seletor == "3MKTB":
+    elif seletor == "3MKTB":
         query = "SELECT * FROM bdalunos WHERE turma = '3MKTB';"
 
         cursorBD = conexaoBD.cursor()
@@ -198,15 +198,10 @@ def GerarCertificado(documento, id_certificado):
         '#uf#':  infoAluno[9],
         '#nacionalidade#':  infoAluno[5],
         '#diaNas#':  infoAluno[6],
-        '#mesNas#': ".",
-        '#anoNas#': ".",
         '#cpf#':  infoAluno[7],
         '#rg#':  infoAluno[0],
         '#uf#':  infoAluno[9],
         '#diaCon#':  infoAluno[11],
-        '#mesCon#': ".",
-        '#anoCon#': ".",
-        '#mesNas#': ".",
     }
 
 

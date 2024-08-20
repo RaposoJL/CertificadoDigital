@@ -9,7 +9,7 @@ App.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 # Pagina Principal - Pagina Turmas - get
 @App.get("/")
-def pagina_principal():
+def paginaPrincipal():
         if (verificarLogin(["admin"])):
             seletorAtual = request.args.get("seletor")
             if seletorAtual == None:
@@ -26,13 +26,19 @@ def pagina_principal():
         else:
             return redirect(url_for('paginaLogin_get'))
 
-@App.get("/Sobre")
-def paginaSobre():
-    return render_template("pageSobre.html")
+@App.get("/certificados")
+def paginaCertificados():
+    return render_template("pageCertificado.html")
 
+#Baixar Planilha Base
 @App.get("/baixarPlaninhaBase")
 def baixarPlaninha():
     return redirect(url_for('static', filename='midia/PlanilhaBase.xlsx'))
+
+#Pagina Sobre
+@App.get("/Sobre")
+def paginaSobre():
+    return render_template("pageSobre.html")
 
 #CRUD ALUNOS-------------------------------------
 #Pagina Turmas - Post
@@ -42,7 +48,7 @@ def cadastrarTurma():
     cadastroTurmas = usuario.CadastrarTurma(planilha)
     if planilha != None:
         if cadastroTurmas == True:
-            return redirect(url_for('pagina_principal', cadastro = True))
+            return redirect(url_for('paginaPrincipal', cadastro = True))
         else:
             abort(406)
     else:
@@ -81,7 +87,7 @@ def paginaEditarAluno_post():
 def DeletarAluno():
     id_Delete =request.args.get("id_delete")
     usuario.Deletar(id_Delete)
-    return redirect(url_for('pagina_principal'))
+    return redirect(url_for('paginaPrincipal'))
 
 #Gerar Certificado dos Alunos
 @App.get("/certificado")
@@ -92,7 +98,7 @@ def GerarCertificado():
 
 #Gerar os Certificados de Todos os Alunos
 @App.get("/gerarCertificado")
-def GerarTodosCertificados():
+def GerarTodosCertificados():   
     seletor = request.args.get("seletor")
     filename = usuario.GerarTodosCertificados(seletor, 'PI.docx')
     return redirect(url_for('static', filename=f'Certificados/{filename}'))
@@ -112,7 +118,7 @@ def paginaLogin_post():
             if (request.form["login"] == acesso[1] and request.form["senha"] == acesso[2]):
                 session['logado'] = True
                 session['nivel'] = "admin"
-                return redirect(url_for('pagina_principal'))
+                return redirect(url_for('paginaPrincipal'))
             else:   
                 return render_template("pageLogin.html", erro=True)
         else:
