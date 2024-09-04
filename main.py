@@ -1,48 +1,50 @@
-from flask import Flask, render_template, request, redirect, url_for, session, abort
+from flask import Flask, render_template, request, redirect, url_for, session, abort, flash
 import model.Banco.usuario as usuario
 from docx import Document
 import os 
+import shutil
 
+def files_path04(path):
+    certificadosCriados = []
+    for p, _, files in os.walk(os.path.abspath(path)):
+        for file in files:
+            idCertificado = (file[:-5].split('-'))
+            certificadosCriados.append(idCertificado[0])
+
+    return certificadosCriados
+            
 
 App = Flask(__name__)
 App.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
+
+# START pageHome -------------------------------------------------------------------------------------------------
 # Pagina Principal - Pagina Turmas - get
 @App.get("/")
-def pagina_principal():
+def paginaPrincipal():
         if (verificarLogin(["admin"])):
-            seletorAtual = request.args.get("seletor")
-            if seletorAtual == None:
-                seletor = "*"
-                listaAlunos = usuario.ListarAlunos(seletor)
-                paginacao = Paginação(listaAlunos)
-                return render_template("pageHome.html", alunos = paginacao[0], total_pages = paginacao[1], page = paginacao[2], seletor = seletor, cadastroTrue = False)
-            else:
-                seletor = seletorAtual
-                listaAlunos = usuario.ListarAlunos(seletor)
-                paginacao = Paginação(listaAlunos)
-                
-                return render_template("pageHome.html", alunos = paginacao[0], total_pages= paginacao[1], page = paginacao[2], seletor = seletor)
+            seletor = request.args.get("seletor")
+            listaAlunos = usuario.ListarAlunos(seletor)
+            paginacao = Paginação(listaAlunos)
+            total = len(listaAlunos)
+
+            return render_template("pageHome.html", alunos = paginacao[0], total_pages= paginacao[1], page = paginacao[2], seletor = seletor, totalAlunos = total, teste = files_path04("static/Certificados"))
         else:
             return redirect(url_for('paginaLogin_get'))
+        
 
-@App.get("/Sobre")
-def paginaSobre():
-    return render_template("pageSobre.html")
-
-@App.get("/baixarPlaninhaBase")
-def baixarPlaninha():
-    return redirect(url_for('static', filename='midia/PlanilhaBase.xlsx'))
-
-#CRUD ALUNOS-------------------------------------
-#Pagina Turmas - Post
-@App.get("/cadastroTurma")
+#
+@App.post("/cadastroTurma")
 def cadastrarTurma():
-    planilha= request.args.get("planilha")
+    planilha = request.files['planilha'] 
+    planilha.save(planilha.filename)   
     cadastroTurmas = usuario.CadastrarTurma(planilha)
+    os.remove(planilha.filename)
+
     if planilha != None:
         if cadastroTurmas == True:
-            return redirect(url_for('pagina_principal', cadastro = True))
+            flash("Turma Adicionada com Sucesso!")
+            return redirect(url_for('paginaPrincipal'))
         else:
             abort(406)
     else:
@@ -81,23 +83,92 @@ def paginaEditarAluno_post():
 def DeletarAluno():
     id_Delete =request.args.get("id_delete")
     usuario.Deletar(id_Delete)
-    return redirect(url_for('pagina_principal'))
+    flash("Aluno Deletado com Sucesso!")
+    return redirect(url_for('paginaPrincipal'))
 
 #Gerar Certificado dos Alunos
 @App.get("/certificado")
 def GerarCertificado():
     id_certificado = request.args.get("id_certificado")
     filename = usuario.GerarCertificado('PI.docx', id_certificado)
-    return redirect(url_for('static', filename=f'Certificados/{filename}'))
+    flash("Certificado Gerado com Sucesso!")
+    return redirect(url_for('paginaPrincipal'))
+
 
 #Gerar os Certificados de Todos os Alunos
 @App.get("/gerarCertificado")
-def GerarTodosCertificados():
+def GerarTodosCertificados():   
     seletor = request.args.get("seletor")
     filename = usuario.GerarTodosCertificados(seletor, 'PI.docx')
     return redirect(url_for('static', filename=f'Certificados/{filename}'))
 
-# CRUD USUARIO-----------------------------------------
+# END pageHome -------------------------------------------------------------------------------------------------------------
+
+#START pageSobre------------------------------------------------------------------------------------------------------------------------------------
+#Baixar Planilha Base
+@App.get("/baixarPlaninhaBase")
+def baixarPlaninha():
+    return redirect(url_for('static', filename='midia/PlanilhaBase.xlsx'))
+
+#Pagina Sobre
+@App.get("/Sobre")
+def paginaSobre():
+    return render_template("pageSobre.html")
+#END pageSobrre------------------------------------------------------------------------------------------------------------------------
+
+
+#START pageCadastroUsuario--------------------------------------------------------------------------------------------------------------------
+# Pagina Cadastro -- Get
+@App.get("/cadastrar")
+def paginaCadastrar_get():
+    if (verificarLogin(["admin"])):
+        return render_template("pageCadastroUsuario.html")
+    else:
+        return redirect(url_for('paginaLogin_get'))
+
+
+# Pagina Cadastro -- Post
+@App.post("/cadastrar")
+def paginaCadastrar_post():
+    login = request.form["login"]
+    senha = request.form["senha"]
+    cadastroUsuario = usuario.CadastrarUsuario(login, senha)
+    if(cadastroUsuario == True):
+        return render_template("pageCadastroUsuario.html", novo_usuario = True)
+    else:
+        return render_template("pageCadastroUsuario.html", novo_usuario = False)
+
+#END pageCadastroUsuario---------------------------------------------------------------------------------------------------------------
+
+
+#START pageCertificados------------------------------------------------------------------------------------------------------------------------------------
+@App.get("/certificados")
+def paginaCertificados():
+    certificados = files_path04("static/Certificados")
+    certificadosAlunos =  usuario.certificados(certificados)
+    return render_template("pageCertificado.html", certificados = certificadosAlunos)
+
+
+@App.get("/baixarCertificado")
+def baixarCertificado():
+    idCertificado = request.args.get("idCertificado")
+    nomeCertificado = request.args.get("nomeCertificado")
+    pastaCertificado = "Certificados/" + idCertificado + "-" + nomeCertificado + ".docx"
+    return redirect(url_for('static', filename= pastaCertificado))
+
+
+@App.get("/deletarCertificado")
+def deletarCertificado():
+    idCertificado = request.args.get("idCertificado")
+    nomeCertificado = request.args.get("nomeCertificado")
+    pastaCertificado = "static/Certificados/" + idCertificado + "-" + nomeCertificado + ".docx"
+    os.remove(pastaCertificado)
+    flash("Certificado Deletado com Sucesso!")
+    return redirect(url_for('paginaCertificados'))
+
+#END pageCertificados------------------------------------------------------------------------------------------------------------------------------------------------
+
+# START pageLogin -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Pagina Login -- Get
 @App.get("/login")
 def paginaLogin_get():
@@ -112,32 +183,14 @@ def paginaLogin_post():
             if (request.form["login"] == acesso[1] and request.form["senha"] == acesso[2]):
                 session['logado'] = True
                 session['nivel'] = "admin"
-                return redirect(url_for('pagina_principal'))
+                return redirect(url_for('paginaPrincipal'))
             else:   
                 return render_template("pageLogin.html", erro=True)
         else:
             return render_template("pageLogin.html", erro=True)
 
+# END pageLogin -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# Pagina Cadastro -- Get
-@App.get("/cadastrar")
-def paginaCadastrar_get():
-    if (verificarLogin(["admin"])):
-        return render_template("pageCadastro.html")
-    else:
-        return redirect(url_for('paginaLogin_get'))
-
-
-# Pagina Cadastro -- Post
-@App.post("/cadastrar")
-def paginaCadastrar_post():
-    login = request.form["login"]
-    senha = request.form["senha"]
-    cadastroUsuario = usuario.CadastrarUsuario(login, senha)
-    if(cadastroUsuario == True):
-        return render_template("pageCadastro.html", novo_usuario = True)
-    else:
-        return render_template("pageCadastro.html", novo_usuario = False)
 
 
 #VERIFICAÇÃO DE PERMISÃO
