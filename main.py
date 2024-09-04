@@ -33,8 +33,28 @@ def paginaPrincipal():
             return redirect(url_for('paginaLogin_get'))
         
 
+<<<<<<< HEAD
 #
 @App.post("/cadastroTurma")
+=======
+@App.get("/certificados")
+def paginaCertificados():
+    return render_template("pageCertificado.html")
+
+#Baixar Planilha Base
+@App.get("/baixarPlaninhaBase")
+def baixarPlaninha():
+    return redirect(url_for('static', filename='midia/PlanilhaBase.xlsx'))
+
+#Pagina Sobre
+@App.get("/Sobre")
+def paginaSobre():
+    return render_template("pageSobre.html")
+
+#CRUD ALUNOS-------------------------------------
+#Pagina Turmas - Post
+@App.get("/cadastroTurma")
+>>>>>>> 5e5b0f0ba90d0072375d70659cf6b3e0771de3e6
 def cadastrarTurma():
     planilha = request.files['planilha'] 
     planilha.save(planilha.filename)   
@@ -43,8 +63,12 @@ def cadastrarTurma():
 
     if planilha != None:
         if cadastroTurmas == True:
+<<<<<<< HEAD
             flash("Turma Adicionada com Sucesso!")
             return redirect(url_for('paginaPrincipal'))
+=======
+            return redirect(url_for('paginaPrincipal', cadastro = True))
+>>>>>>> 5e5b0f0ba90d0072375d70659cf6b3e0771de3e6
         else:
             abort(406)
     else:
@@ -83,7 +107,10 @@ def paginaEditarAluno_post():
 def DeletarAluno():
     id_Delete =request.args.get("id_delete")
     usuario.Deletar(id_Delete)
+<<<<<<< HEAD
     flash("Aluno Deletado com Sucesso!")
+=======
+>>>>>>> 5e5b0f0ba90d0072375d70659cf6b3e0771de3e6
     return redirect(url_for('paginaPrincipal'))
 
 #Gerar Certificado dos Alunos

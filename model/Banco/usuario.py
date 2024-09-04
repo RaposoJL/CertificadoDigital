@@ -66,7 +66,11 @@ def CadastrarTurma(planilha):
 def ListarAlunos(seletor):
     lista = []
     conexaoBD = conexao.iniciaConexao()
+<<<<<<< HEAD
     if seletor == "*" or seletor == None:
+=======
+    if seletor == "*" or seletor == "":
+>>>>>>> 5e5b0f0ba90d0072375d70659cf6b3e0771de3e6
         query = "SELECT * FROM bdalunos"
 
         cursorBD = conexaoBD.cursor()

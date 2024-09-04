@@ -32,6 +32,7 @@
       </ul>
     </div>
   </header>
+<<<<<<< HEAD
 
 
   <main class="d-flex justify-content-center">
@@ -72,6 +73,13 @@
         </ul>
       </div>
 
+=======
+
+
+  <main>
+
+    <div class="ps-3 py-5 w-75" id="collapseExample">
+>>>>>>> 5e5b0f0ba90d0072375d70659cf6b3e0771de3e6
       <table class="table table-warning table-bordered table-responsive">
         <thead>
           <tr>
@@ -115,22 +123,39 @@
 
           {% if page != 1 and count == 0 %}
           <li class="page-item">
+<<<<<<< HEAD
             <a class="page-link fw-bold" href="{{ url_for('paginaPrincipal', page=page-1) }}" style="color: #4C3566;">Previous</a>
           </li>
           {% elif page+1 != total_pages and count == 5 %}
           <li class="page-item">
             <a class="page-link fw-bold" href="{{ url_for('paginaPrincipal', page=page+1) }}" style="color: #4C3566;">Next</a>
+=======
+            <a class="page-link" href="{{ url_for('paginaPrincipal', page=page-1) }}">Previous</a>
+          </li>
+          {% elif page+1 != total_pages and count == 5 %}
+          <li class="page-item">
+            <a class="page-link" href="{{ url_for('paginaPrincipal', page=page+1) }}">Next</a>
+>>>>>>> 5e5b0f0ba90d0072375d70659cf6b3e0771de3e6
           </li>
           {% elif count > 0 and count < 5 %} <!-- asdfasdf -->
             {% if page == 1 %}
             <!-- asdfasdf -->
             {% if count == page %}
+<<<<<<< HEAD
             <li class="page-item " style="color: #4C3566;">
               <a class="page-link active" href="{{ url_for('paginaPrincipal', page= count) }} " style="background-color: #4C3566; border-color: #4C3566;">{{count}}</a>
             </li>
             {% else %}
             <li class="page-item">
               <a class="page-link" href="{{ url_for('paginaPrincipal', page= count) }}" style="color: #4C3566;">{{count}}</a>
+=======
+            <li class="page-item">
+              <a class="page-link active" href="{{ url_for('paginaPrincipal', page= count) }}">{{count}}</a>
+            </li>
+            {% else %}
+            <li class="page-item">
+              <a class="page-link" href="{{ url_for('paginaPrincipal', page= count) }}">{{count}}</a>
+>>>>>>> 5e5b0f0ba90d0072375d70659cf6b3e0771de3e6
             </li>
             {% endif %}
 
@@ -142,11 +167,19 @@
             {% if opcaoNumero == page %}
             <li class="page-item">
               <a class="page-link active"
+<<<<<<< HEAD
                 href="{{ url_for('paginaPrincipal', page= opcaoNumero) }}" style="background-color: #4C3566; border-color: #4C3566;">{{opcaoNumero}}</a>
             </li>
             {% else %}
             <li class="page-item">
               <a class="page-link" href="{{ url_for('paginaPrincipal', page= opcaoNumero) }}" style="color: #4C3566;">{{opcaoNumero}}</a>
+=======
+                href="{{ url_for('paginaPrincipal', page= opcaoNumero) }}">{{opcaoNumero}}</a>
+            </li>
+            {% else %}
+            <li class="page-item">
+              <a class="page-link" href="{{ url_for('paginaPrincipal', page= opcaoNumero) }}">{{opcaoNumero}}</a>
+>>>>>>> 5e5b0f0ba90d0072375d70659cf6b3e0771de3e6
             </li>
             {% endif %}
             {% else %}
@@ -154,11 +187,19 @@
             {% if opcaoNumero == page %}
             <li class="page-item">
               <a class="page-link active"
+<<<<<<< HEAD
                 href="{{ url_for('paginaPrincipal', page= opcaoNumero) }}" style="background-color: #4C3566; border-color: #4C3566;">{{opcaoNumero}}</a>
             </li>
             {% else %}
             <li class="page-item">
               <a class="page-link" href="{{ url_for('paginaPrincipal', page= opcaoNumero) }}" style="color: #4C3566;">{{opcaoNumero}}</a>
+=======
+                href="{{ url_for('paginaPrincipal', page= opcaoNumero) }}">{{opcaoNumero}}</a>
+            </li>
+            {% else %}
+            <li class="page-item">
+              <a class="page-link" href="{{ url_for('paginaPrincipal', page= opcaoNumero) }}">{{opcaoNumero}}</a>
+>>>>>>> 5e5b0f0ba90d0072375d70659cf6b3e0771de3e6
             </li>
             {% endif %}
 
@@ -185,8 +226,11 @@
     </div>
     </div>
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 5e5b0f0ba90d0072375d70659cf6b3e0771de3e6
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -211,6 +255,28 @@
 
     <div class="position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle d-flex">
 
+<<<<<<< HEAD
+=======
+      <div class="btn-group dropup">
+        <button type="button" class="btn btn-secondary dropdown-toggle bg-transparent border border-0" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 0%; margin: 0%;" title="Filtrar Alunos">
+          <img src="/static/midia/icons/filter_alt_32dp_4C3566_FILL0_wght400_GRAD0_opsz40.svg"
+            alt="Filtrar Alunos"></button>
+        </button>
+        <ul class="dropdown-menu p-3" style="width: 500px;">
+          <h1 class="fs-3">Filtrar Alunos</h1>
+          <form action="/" method="get" name="listar">
+            <select class="form-select form-select-lg" aria-label="Default select example" id="seletor" name="seletor" >
+              <option value="*" name="*" selected>Todas</option>
+              <option value="3TDSA" name="3TDSA">3TDSA</option>
+              <option value="3TDSB" name="3TDSB">3TDSB</option>
+              <option value="3MKTA" name="3MKTA">3MKTA</option>
+              <option value="3MKTB" name="3MKTB">3MKTB</option>
+            </select>
+            <input type="submit" value="Filtrar" class="rounded-4 p-2 mt-3 px-4 fw-bold ">
+          </form>
+        </ul>
+      </div>
+>>>>>>> 5e5b0f0ba90d0072375d70659cf6b3e0771de3e6
 
 
       
