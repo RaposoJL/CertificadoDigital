@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Certificado Digital</title>
   <link rel="stylesheet" href="/static/node_modules/bootstrap/dist/css/bootstrap.min.css">
   <link rel="shortcut icon" href="midia/imgs/favicon.ico" type="image/x-icon">
@@ -19,35 +19,59 @@
   <link rel="icon" type="image/x-icon" href="/static/midia/imgs/favicon.ico">
 </head>
 
-<body style="background-color: #FFEAAA;">
+<body style="background-color: #FFEAAA; margin: 0px; padding: 0px;">
   <header style="background-color: #4C3566;">
     <div class="d-flex py-3 container" style="background-color: #4C3566;">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
         <span class="fs-5 text-white">Certificado Digital</span>
       </a>
       <ul class="nav nav-underline">
-        <li class="nav-item"><a href="/certificados" class="nav-link link-light">Certificados</a></li>
-        <li class="nav-item"><a href="/cadastrar" class="nav-link link-light">Cadastrar Usuario</a></li>
+        <li class="nav-item mx-1 my-1"><a href="/certificados" class="nav-link link-light">Certificados</a></li>
+        <li class="nav-item mx-1 my-1"><a href="/cadastrar" class="nav-link link-light">Cadastrar Usuario</a></li>
+        <li class="nav-item mx-1 my-1"><a href="/Sobre" class="nav-link link-light">Sobre</a></li>
       </ul>
     </div>
   </header>
 
-  
-  <main>
-    <form action="/" method="get" name="listar" class="">
-      <div class="row form-floating">
-        <select class="col-11 p-3 fs-5 text" id="seletor" name="seletor" aria-label="Floating label select example">
-          <option value="*" name="*" selected>Todas</option>
-          <option value="3TDSA" name="3TDSA">3TDSA</option>
-          <option value="3TDSB" name="3TDSB">3TDSB</option>
-          <option value="3MKTA" name="3MKTA">3MKTA</option>
-          <option value="3MKTB" name="3MKTB">3MKTB</option>
-        </select>
-        <input type="submit" value="Filtrar" class="col-1">
+
+  <main class="d-flex justify-content-center">
+    <div class="px-5 py-5 w-75 text-center" id="collapseExample">
+
+      <div class="btn-group dropdown">
+        <h1 class="fs-2 m-4">
+          {% if seletor == None or seletor == "*" %}
+          {{caminho}}
+          {{totalAlunos}} Aluno(s) Cadastrado(s):
+          {% elif seletor == "3TDSA" %}
+          {{totalAlunos}} Aluno(s) Cadastrado(s) no 3ºTDS"A":
+          {% elif seletor == "3TDSB" %}
+          {{totalAlunos}} Aluno(s) Cadastrado(s) no 3ºTDS"B":
+          {% elif seletor == "3MKTA" %}
+          {{totalAlunos}} Aluno(s) Cadastrado(s) no 3MºKT"A":
+          {% elif seletor == "3MKTB" %}
+          {{totalAlunos}} Aluno(s) Cadastrado(s) no 3ºMKT"B":
+          {% endif %}
+
+          {% if alunos == None or alunos ==  0 %}
+          Nenhum Aluno Adicionado
+          {% endif %}
+        </h1>
+        <img src="/static/midia/icons/filter_alt_32dp_4C3566_FILL0_wght400_GRAD0_opsz40.svg" alt="Filtrar Alunos" type="button" class="btn btn-secondary bg-transparent border border-0 m-0 p-0" data-bs-toggle="dropdown" aria-expanded="false">
+        <ul class="dropdown-menu p-3" style="width: 500px;">
+          <h1 class="fs-3">Filtrar Alunos</h1>
+          <form action="/" method="get" name="listar">
+            <select class="form-select form-select-lg" aria-label="Default select example" id="seletor" name="seletor" >
+              <option value="*" name="*" selected>Todas</option>
+              <option value="3TDSA" name="3TDSA">3TDSA</option>
+              <option value="3TDSB" name="3TDSB">3TDSB</option>
+              <option value="3MKTA" name="3MKTA">3MKTA</option>
+              <option value="3MKTB" name="3MKTB">3MKTB</option>
+            </select>
+            <input type="submit" value="Filtrar" class="rounded-4 p-2 mt-3 px-4 fw-bold ">
+          </form>
+        </ul>
       </div>
-    </form>
-    <p class="d-inline-flex gap-1">
-    <div class="ps-3" id="collapseExample" style="width: 75%;">
+
       <table class="table table-warning table-bordered table-responsive">
         <thead>
           <tr>
@@ -57,69 +81,203 @@
             <th scope="col">CPF</th>
           </tr>
         </thead>
+
         {% for aluno in alunos %}
         <tbody class="table-group-divider">
           <tr>
             <th scope="row">{{aluno[12]}}</th>
             <td>{{aluno[0]}}</td>
             <td>{{aluno[1]}}</td>
-            <td>{{aluno[7]}} <a href={{ url_for("paginaEditarAluno_get", id_uptade=aluno[12] )
-                }}><img src="/static/midia/imgs/edit_24dp_FILL0_wght400_GRAD0_opsz24.svg" alt="Edit SVG"></a>
-              <a href={{ url_for("DeletarAluno", id_delete=aluno[12] ) }}><img src="/static/midia/imgs/delete_24dp_FILL0_wght400_GRAD0_opsz24.svg" alt="Edit SVG"></a>
-              <a href={{ url_for("GerarCertificado", id_certificado=aluno[12]) }}><img src="/static/midia/imgs/workspace_premium_24dp_4C3566_FILL0_wght400_GRAD0_opsz24.svg" alt="Edit SVG"></a>
+            <td>{{aluno[7]}} <a href={{ url_for("paginaEditarAluno_get", id_Aluno=aluno[12] ) }}
+                title="Editar Aluno"><img src="/static/midia/icons/edit_24dp_FILL0_wght400_GRAD0_opsz24.svg"
+                  alt="Edit SVG"></a>
+              <a href={{ url_for("DeletarAluno", id_Aluno=aluno[12] ) }} title="Deleter Aluno"><img
+                  src="/static/midia/icons/delete_24dp_FILL0_wght400_GRAD0_opsz24.svg" alt="Edit SVG" class=" type="button" data-bs-toggle="modal" data-bs-target="#DeletarAluno"  id="bd-theme" type="button" data-bs-toggle="dropdown" "></a>
+              <a href={{ url_for("GerarCertificado", id_Aluno=aluno[12] ) }} title="Gerar Certificado"><img
+                  src="/static/midia/icons/workspace_premium_24dp_4C3566_FILL0_wght400_GRAD0_opsz24.svg"
+                  alt="Edit SVG"></a>
             </td>
           </tr>
-          {% endfor %}
         </tbody>
+        {% endfor %}
       </table>
-      <nav aria-label="Page navigation example">
+      
+      <nav aria-label="Page navigation example" 
+      {% if page == 1 %}
+      style="margin-left: 45%;"
+      {% else %}
+      style="margin-left: 42%;"
+      {% endif %}
+      >
         <ul class="pagination">
-          {% if page > 1 %}
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page=page-1) }}">Previous</a></li>
-          {% endif %}
-          {% if page == 1 %}
-          <li class="page-item"><a class="page-link active" href="{{ url_for('pagina_principal', page= page) }}">{{page}}</a></li>
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page + 1) }}">{{page + 1}}</a></li>
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page + 2  ) }}">{{page + 2}}</a></li>
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page + 3  ) }}">{{page + 3}}</a></li>
-          {% elif page == (total_pages - 1) %}
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page - 1) }}">{{page - 1}}</a></li>
-          <li class="page-item"><a class="page-link active" href="{{ url_for('pagina_principal', page= page) }}">{{page}}</a></li>
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page = page + 1) }}">{{page + 1}}</a></li>
-          {% elif page == total_pages %}
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page - 1) }}">{{page - 1}}</a></li>
-          <li class="page-item"><a class="page-link active" href="{{ url_for('pagina_principal', page= page) }}">{{page}}</a></li>
-          {% else %}
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page - 1) }}">{{page - 1}}</a></li>
-          <li class="page-item"><a class="page-link active" href="{{ url_for('pagina_principal', page= page) }}">{{page}}</a></li>
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page = page + 1) }}">{{page + 1}}</a></li>
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page= page + 2  ) }}">{{page + 2}}</a></li>
-          {% endif %}
-          {% if page < total_pages %}
-          <li class="page-item"><a class="page-link" href="{{ url_for('pagina_principal', page=page+1) }}">Next</a></li>
-          {% endif %}
-            </ul>
-          </nav>
+
+          {% for count in range(6)%}
+
+          {% if page != 1 and count == 0 %}
+          <li class="page-item">
+            <a class="page-link fw-bold" href="{{ url_for('paginaPrincipal', page=page-1) }}" style="color: #4C3566;">Previous</a>
+          </li>
+          {% elif page+1 != total_pages and count == 5 %}
+          <li class="page-item">
+            <a class="page-link fw-bold" href="{{ url_for('paginaPrincipal', page=page+1) }}" style="color: #4C3566;">Next</a>
+          </li>
+          {% elif count > 0 and count < 5 %} <!-- asdfasdf -->
+            {% if page == 1 %}
+            <!-- asdfasdf -->
+            {% if count == page %}
+            <li class="page-item " style="color: #4C3566;">
+              <a class="page-link active" href="{{ url_for('paginaPrincipal', page= count) }} " style="background-color: #4C3566; border-color: #4C3566;">{{count}}</a>
+            </li>
+            {% else %}
+            <li class="page-item">
+              <a class="page-link" href="{{ url_for('paginaPrincipal', page= count) }}" style="color: #4C3566;">{{count}}</a>
+            </li>
+            {% endif %}
+
+            {% else %}
+            {% set final = (page >= (total_pages-3)) %}
+            {% if not final %}
+            {% set opcaoNumero = (count+(page-1)) %}
+
+            {% if opcaoNumero == page %}
+            <li class="page-item">
+              <a class="page-link active"
+                href="{{ url_for('paginaPrincipal', page= opcaoNumero) }}" style="background-color: #4C3566; border-color: #4C3566;">{{opcaoNumero}}</a>
+            </li>
+            {% else %}
+            <li class="page-item">
+              <a class="page-link" href="{{ url_for('paginaPrincipal', page= opcaoNumero) }}" style="color: #4C3566;">{{opcaoNumero}}</a>
+            </li>
+            {% endif %}
+            {% else %}
+            {% set opcaoNumero = ((total_pages-5)+count) %}
+            {% if opcaoNumero == page %}
+            <li class="page-item">
+              <a class="page-link active"
+                href="{{ url_for('paginaPrincipal', page= opcaoNumero) }}" style="background-color: #4C3566; border-color: #4C3566;">{{opcaoNumero}}</a>
+            </li>
+            {% else %}
+            <li class="page-item">
+              <a class="page-link" href="{{ url_for('paginaPrincipal', page= opcaoNumero) }}" style="color: #4C3566;">{{opcaoNumero}}</a>
+            </li>
+            {% endif %}
+
+            {% endif %}
+
+            {% endif %}
+            <!-- asdfasdf -->
+
+            {% endif %}
+            {% endfor %}
+        </ul>
+      </nav>
+
+      
+      {% with errors = get_flashed_messages(category_filter=["concluido"]) %}
+      {% if errors %}
+      <div class="alert-message block-message error">
+        <ul>
+          {% for msg in errors %}
+          <div class="alert alert-success alert-dismissible fade show w-25 container text-center mx-3 position-absolute top-0 end-0" style="margin-top: 5%;" role="alert">
+            {{ msg }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      {% endwith %}
+
+
+      {% with messages = get_flashed_messages(category_filter=["erroDeletarAluno"]) %}
+      {% if messages %}
+      <ul class=flashes>
+        {% for message in messages %}
+        <div class="alert-message block-message error">
+          <div class="alert alert-danger alert-dismissible fade fade show w-25 container text-center mx-3 position-absolute top-0 end-0" style="margin-top: 5%;" role="alert">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% endwith %}
 
     </div>
-  </div>
-  
-    <form action="/" method="post" name="cadastrar" class="mt-5">
-      <div class="mb-3">
-        <input class="form-control w-25" type="file" id="formFile"
-          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="planilha">
-      </div>
-      <input type="submit" value="Enviar">
-    </form>
-    {% if nonePlaninha == True %}
-    <p>Por favor, selecione alguma planinha</p>
-    {% endif %}
+    </div>
 
-    {% if erro == True %}
-    <p>Alunos Adicionados</p>
-    {% elif erro == False %}
-    <p>Erro ao Cadastrar Alunos</p>
-    {% endif %}
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Escolha a Planilha:</h1>
+          </div>
+          <div class="modal-body">
+            <form action="/cadastroTurma" method="post" name="cadastrar" enctype="multipart/form-data">
+              <div>
+                <input class="form-control" type="file" id="formFile"
+                  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="planilha" required>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <input type="submit" value="Enviar" class="btn btn-primary">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle d-flex">
+      <div class="dropdown">
+        <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center show text-white" id="bd-theme"
+          type="button" data-bs-toggle="dropdown" style="background-color: #4C3566;">
+          Alunos
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end shadow"
+          style="position: absolute; inset: auto 0px 0px auto; margin: 0px;;"
+          data-popper-placement="top-end">
+          <li>
+            <a href="{{ url_for( 'GerarTodosCertificados', seletor=seletor ) }}"
+              class="link-body-emphasis text-decoration-none">
+              <button type="button" class="dropdown-item d-flex align-items-center" aria-pressed="false">
+                Gerar Todos os Certificados
+              </button>
+            </a>
+          </li>
+          <li>
+            <button type="button" class="btn btn-primary bg-transparent text-body border border-0"
+              data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Cadastrar Alunos
+            </button>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+              
+    <div class="modal fade" id="DeletarAluno" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Usuarios Cadatrados:</h1>
+          </div>
+          <div class="modal-body">
+
+          </div>
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </main>
 </body>
 

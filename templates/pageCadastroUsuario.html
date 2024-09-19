@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head meta charset="UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width= device-width, initial-scale=1.0">
+  <title>Certificado Digital</title>
+  <link rel="stylesheet" href="/static/node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="shortcut icon" href="midia/imgs/favicon.ico" type="image/x-icon">
+  <!-- <script src="bootstrap-5.3.3-dist/js/bootstrap.js"></script> -->
+  <!-- <script src="/static/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+ <script src="/static/node_modules/@popperjs/core/dist/umd/popper.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+    crossorigin="anonymous"></script>
+  <link rel="icon" type="image/x-icon" href="/static/midia/imgs/favicon.ico">
+</head>
+
+
+<body style="background-color: #FFEAAA;">
+  <header style="background-color: #4C3566;">
+    <div class="d-flex flex-wrap justify-content-center py-3 mb-4 container" style="background-color: #4C3566;">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <span class="fs-5 text-white">Certificado Digital</span>
+      </a>
+      <ul class="nav nav-underline">
+        <li class="nav-item mx-1 my-1"><a href="/certificados" class="nav-link link-light">Certificados</a></li>
+        <li class="nav-item mx-1 my-1"><a href="/cadastrar" class="nav-link link-light active">Cadastrar Usuario</a>
+        </li>
+        <li class="nav-item mx-1 my-1"><a href="/Sobre" class="nav-link link-light">Sobre</a></li>
+      </ul>
+
+    </div>
+    </div>
+  </header>
+
+  <body>
+    <main class="container">
+
+      <div class="text-center">
+        <img src="/static/midia/imgs/LogoCompleta.png" alt="img_certificado" class="mt-5"
+          style="height: 350px; width: 350px;" id="img_certificado" ;>
+        <div class="row">
+          <form action="/cadastrar" method="post" class="index_forms">
+            <label for="login" class="p-2 mt-3 fs-5 fw-semibold">Nome de Usuario:</label><br>
+            <input class="col-sm-8 col-form-label rounded-1 border border-dark" type="text" name="login"
+              placeholder="Insira Seu Nome de Usuario:" required><br>
+            <label for="senha" id="index_senha" class="p-2 mt-3 fs-5 fw-semibold">Senha:</label><br>
+            <input class="col-sm-8 col-form-label border border-dark rounded-1" type="password" id="index_input_senha"
+              name="senha" placeholder="Insira Sua Senha:" required><br>
+            <p class="mt-4">Fique ciente que o <strong>NOVO USUÁRIO</strong> terá acesso a todo sistema,<br> podendo
+              <strong>Alterar, Apagar, Criar Turmas e emitir Certificados</strong>
+            </p>
+            </label>
+            <input type="submit" value="Cadastrar" id="index_enviar" class="rounded-4 p-2 mt-1 px-4 fw-bold">
+
+          </form>
+        </div>
+      </div>
+
+
+      {% with messages = get_flashed_messages(category_filter=["CadastroUsuario"]) %}
+      {% if messages %}
+      <ul class=flashes>
+        {% for message in messages %}
+        {% if message == "Usuario Cadastrado!" %}
+        <div class="alert-message block-message error">
+          <div class="alert alert-success alert-dismissible fade show w-25 container text-center mx-3 position-absolute top-0 end-0" role="alert" style="margin-top: 5%;">
+            <strong>{{message}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        </div>
+        {% else %}
+        <div class="alert-message block-message error">
+          <div class="alert alert-danger alert-dismissible fade show w-25 container text-center mx-3 position-absolute top-0 end-0" role="alert" style="margin-top: 5%;">
+            <strong>{{message}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </ul>
+      {% endif %}
+
+      {% endwith %}
+
+      {% with messages = get_flashed_messages(category_filter=["deleteUsuario"]) %}
+      {% if messages %}
+      <ul class=flashes>
+        {% for message in messages %}
+        <div class="alert-message block-message error">
+          <div class="alert alert-success alert-dismissible fade fade show w-25 container text-center mx-3 position-absolute top-0 end-0" style="margin-top: 5%;" role="alert">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% endwith %}
+
+
+
+
+      
+      <div class="position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle d-flex">
+          <button class="btn btn-bd-primary py-2 d-flex align-items-center show text-white border border-0" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"  id="bd-theme" type="button" data-bs-toggle="dropdown" style="background-color: #4C3566;">
+            Usuarios Cadastrados
+          </button>
+      </div>
+      
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Usuarios Cadatrados:</h1>
+            </div>
+            <div class="modal-body">
+              {% for usuario in usuariosCadastrados %}  
+              <div>
+                <div class="d-flex justify-content-between">
+                  <p class="mx-2">{{usuario[1]}}</p>
+                  <div>
+                    <a href={{ url_for("DeletarUsuario", id_Usuario=usuario[0] ) }} title="Deleter Aluno"><img
+                      src="/static/midia/icons/delete_24dp_FILL0_wght400_GRAD0_opsz24.svg" style="width: 25%;">Remover</a>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      
+    </main>
+
+    <style>
+      body {
+        background-color: #FFEAAA;
+      }
+
+      img {
+        width: 15%;
+      }
+
+      #index_enviar {
+        color: #4C3566;
+        background-color: #FFEAAA;
+      }
+
+      #index_enviar:hover {
+        color: #FFEAAA;
+        background-color: #4C3566;
+      }
+    </style>
+  </body>
+
+</html>

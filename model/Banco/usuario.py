@@ -1,8 +1,10 @@
 import model.Banco.BD as conexao
 import openpyxl
 from docx import Document
+import os 
+import shutil
 
-#Login
+#Login - pageLogin
 def LoginUsuario(login, senha):
     conexaoBD = conexao.iniciaConexao()
     query = "SELECT * FROM usuarios WHERE login = %s and senha = %s;"
@@ -16,75 +18,80 @@ def LoginUsuario(login, senha):
     return listaResultado
 
 
-
-#Cadastrar Novo Ususario
+#Cadastrar Novo Ususario - pageCadastrar
 def CadastrarUsuario(login, senha):
-    conexaoBD = conexao.iniciaConexao()
-    query = "SELECT * FROM usuarios WHERE login = %s and senha = %s;"
-    parametros = (login,senha) 
+    try:
+        conexaoBD = conexao.iniciaConexao()
+        cursorBD = conexaoBD.cursor()
 
-    cursorBD = conexaoBD.cursor()
-    cursorBD.execute(query, parametros)
-    listaResultado = cursorBD.fetchone()
-
-    if(listaResultado == None):
         cadastrar = "INSERT INTO usuarios (login, senha) VALUES (%s, %s);"
+        parametros = (login, senha) 
         cursorBD.execute(cadastrar, parametros)
         conexaoBD.commit()
         cursorBD.close()
         conexaoBD.close()
         return True
-    else:
-        cursorBD.close()
-        conexaoBD.close()
+    except:
         return False
-    
+
+def DeletarUsuario(id_Usuario):
+    conexaoBD = conexao.iniciaConexao()
+    query = 'DELETE FROM usuarios WHERE id = %s;'
+    parametro = [id_Usuario]
+    cursorBD = conexaoBD.cursor()
+
+    cursorBD.execute(query, parametro)
+    conexaoBD.commit()
+    cursorBD.close()
+    conexaoBD.close()
 
 
-#Cadastrar Turma
+
+#Ver Usuarios========================================
+def ExibirUsuarios():
+    listaUsuarios = []
+    conexaoBD = conexao.iniciaConexao()
+    query = "SELECT * FROM usuarios"
+
+    cursorBD = conexaoBD.cursor()
+    cursorBD.execute(query)
+    for aluno in cursorBD:
+        listaUsuarios.append(aluno)
+    cursorBD.close()
+    conexaoBD.close()
+    return listaUsuarios
+
+#Cadastrar Turma - Tem que mudar umas coisas
 def CadastrarTurma(planilha):
-    book = openpyxl.load_workbook(planilha)
-    ws = book.active
-    sheet = book['3º TDS "A"']  
-    ws.tables
+    try:
+        wb = openpyxl.load_workbook(planilha)
+        sheet = wb['3TDSA']
 
-    num_min = 6
-    num_max = 30
-    letra_min = "A"
-    letra_max = "M"
-    alunos = []
+        alunos = []
+        for row in sheet.iter_rows(min_row = 2, values_only=True):
+            alunos.append(row)
 
+        wb.close()
 
-    while num_min <= num_max:
-        min_col = letra_min + str(num_min)
-        max_col = letra_max + str(num_min)
-        num_min = num_min + 1
-        alunos.clear()
-        cell_range = sheet[min_col+':'+ max_col]
-        for row in cell_range:
-            for cell in row:
-                alunos.append(cell.value)
-
-        if (alunos != None):
+        for aluno in alunos:
             conexaoBD = conexao.iniciaConexao()
             query = "INSERT INTO bdalunos (instituicao, nome_completo, cpf, rg, orgao_expedidor, municipio, nacionalidade, data_nascimento, curso, data_conclusão, nome_pai, nome_mae, turma) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
-            parametros = (alunos[0], alunos[1], alunos[2],alunos[3], alunos[4], alunos[5], alunos[6], alunos[7], str(alunos[8]), str(alunos[9]), alunos[10], alunos[11], alunos[12])
-
+            parametro = (aluno[0], aluno[1], aluno[2],aluno[3], aluno[4], aluno[5], aluno[6], aluno[7], (aluno[8]), str(aluno[9]), aluno[10], aluno[11], aluno[12])
             cursorBD = conexaoBD.cursor()
-            cursorBD.execute(query, parametros)
+            cursorBD.execute(query, parametro)
             conexaoBD.commit()
             cursorBD.close()
             conexaoBD.close()
-        else:
-            return False
-    return True
+        return True
+    except:
+        return False
 
 
-#ListarAlunos
+#ListarAlunos - 
 def ListarAlunos(seletor):
     lista = []
     conexaoBD = conexao.iniciaConexao()
-    if seletor == "*":
+    if seletor == None or seletor == "*":
         query = "SELECT * FROM bdalunos"
 
         cursorBD = conexaoBD.cursor()
@@ -94,7 +101,7 @@ def ListarAlunos(seletor):
         cursorBD.close()
         conexaoBD.close()
         return lista
-    if seletor == "3TDSA":
+    elif seletor == "3TDSA":
         query = "SELECT * FROM bdalunos WHERE turma = '3TDSA';"
 
         cursorBD = conexaoBD.cursor()
@@ -105,7 +112,7 @@ def ListarAlunos(seletor):
         conexaoBD.close()
         return lista
     
-    if seletor == "3TDSB":
+    elif seletor == "3TDSB":
         query = "SELECT * FROM bdalunos WHERE turma = '3TDSB';"
 
         cursorBD = conexaoBD.cursor()
@@ -118,7 +125,7 @@ def ListarAlunos(seletor):
             return lista
         
     
-    if seletor == "3MKTA":
+    elif seletor == "3MKTA":
         query = "SELECT * FROM bdalunos WHERE turma = '3MKTA';"
 
         cursorBD = conexaoBD.cursor()
@@ -129,7 +136,7 @@ def ListarAlunos(seletor):
         conexaoBD.close()
         return lista
     
-    if seletor == "3MKTB":
+    elif seletor == "3MKTB":
         query = "SELECT * FROM bdalunos WHERE turma = '3MKTB';"
 
         cursorBD = conexaoBD.cursor()
@@ -140,10 +147,11 @@ def ListarAlunos(seletor):
         conexaoBD.close()
         return lista
 
+#AÇOES
 #Exibir Info Alunos -- Editar Alunos
-def ExibirAluno(id_uptade):
+def ExibirAluno(id_Aluno):
     conexaoBD = conexao.iniciaConexao()
-    query = "SELECT * FROM bdalunos WHERE id = " + str(id_uptade) +";"
+    query = "SELECT * FROM bdalunos WHERE id = " + str(id_Aluno) +";"
     cursorBD = conexaoBD.cursor()
 
     cursorBD.execute(query)
@@ -153,10 +161,10 @@ def ExibirAluno(id_uptade):
     return infoAluno 
 
 #Alterar Info Alunos -- Editar Alunos
-def EditarAluno(id_uptade, nome, nomeMae, nomePai, municipioAluno, nacionalidadeAluno, turmaAluno,cpfAluno,rgAluno, cursoAluno):
+def EditarAluno(id_Aluno, nome, nomeMae, nomePai, municipioAluno, nacionalidadeAluno, turmaAluno,cpfAluno,rgAluno, cursoAluno):
     conexaoBD = conexao.iniciaConexao()
     query = "UPDATE bdalunos SET nome_completo = %s, nome_mae = %s, nome_pai = %s, municipio = %s, nacionalidade = %s, turma = %s, CPF = %s, rg = %s, curso = %s WHERE id = %s;"
-    parametros = (nome, nomeMae, nomePai, municipioAluno, nacionalidadeAluno, turmaAluno, cpfAluno, rgAluno, cursoAluno, id_uptade)
+    parametros = (nome, nomeMae, nomePai, municipioAluno, nacionalidadeAluno, turmaAluno, cpfAluno, rgAluno, cursoAluno, id_Aluno)
     cursorBD = conexaoBD.cursor()
 
     cursorBD.execute(query, parametros)
@@ -165,10 +173,10 @@ def EditarAluno(id_uptade, nome, nomeMae, nomePai, municipioAluno, nacionalidade
     conexaoBD.close()
 
 #Deletar Aluno
-def Deletar(id_Delete):
+def Deletar(id_Aluno):
     conexaoBD = conexao.iniciaConexao()
     query = 'DELETE FROM bdalunos WHERE id = %s;'
-    parametro = [id_Delete]
+    parametro = [id_Aluno]
     cursorBD = conexaoBD.cursor()
 
     cursorBD.execute(query, parametro)
@@ -176,10 +184,12 @@ def Deletar(id_Delete):
     cursorBD.close()
     conexaoBD.close()
 
+#CERTIFICADOS ==================================================================================
+
 #Gerar Certificado Individual
-def GerarCertificado(documento, id_certificado):
+def GerarCertificado(documento, id_Aluno):
     conexaoBD = conexao.iniciaConexao()
-    query = "SELECT * FROM bdalunos WHERE id = " + str(id_certificado) +";"
+    query = "SELECT * FROM bdalunos WHERE id = " + str(id_Aluno) +";"
     cursorBD = conexaoBD.cursor()
 
     cursorBD.execute(query)
@@ -190,6 +200,7 @@ def GerarCertificado(documento, id_certificado):
     
     # Carregar o documento existente
     doc = Document(documento)
+    
     substituicoes = {
         '#instituição#': infoAluno[0],
         '#curso#': infoAluno[10],
@@ -200,15 +211,10 @@ def GerarCertificado(documento, id_certificado):
         '#uf#':  infoAluno[9],
         '#nacionalidade#':  infoAluno[5],
         '#diaNas#':  infoAluno[6],
-        '#mesNas#': ".",
-        '#anoNas#': ".",
         '#cpf#':  infoAluno[7],
         '#rg#':  infoAluno[0],
         '#uf#':  infoAluno[9],
         '#diaCon#':  infoAluno[11],
-        '#mesCon#': ".",
-        '#anoCon#': ".",
-        '#mesNas#': ".",
     }
 
 
@@ -217,7 +223,63 @@ def GerarCertificado(documento, id_certificado):
         for palavra_antiga, palavra_nova in substituicoes.items():
             if palavra_antiga in para.text: 
                 para.text = para.text.replace(palavra_antiga, palavra_nova)
+                
 
 
     # Salvar o documento modificado]
-    doc.save(infoAluno[1]+ ".docx")
+    pastaCertificados = os.path.abspath("static/Certificados/" + str(infoAluno[12]) + "-" + infoAluno[1] +".docx")
+    doc.save(pastaCertificados)
+
+
+def GerarTodosCertificados(seletor, documento):
+    listaAlunos = ListarAlunos(seletor)
+    
+    for aluno in listaAlunos:
+        doc = Document(documento)
+        substituicoes = {
+            '#instituição#': listaAlunos[0],
+            '#curso#': listaAlunos[10],
+            '#nome#':  listaAlunos[1],
+            '#nomeMae#':  listaAlunos[2],
+            '#nomePai#':  listaAlunos[3],
+            '#municipio#':  listaAlunos[4],
+            '#uf#':  listaAlunos[9],
+            '#nacionalidade#':  listaAlunos[5],
+            '#diaNas#':  listaAlunos[6],
+            '#cpf#':  listaAlunos[7],
+            '#rg#':  listaAlunos[0],
+            '#uf#':  listaAlunos[9],
+            '#diaCon#':  listaAlunos[11],
+        }
+
+
+        # Substituir as palavras em parágrafos
+        for para in doc.paragraphs:
+            for palavra_antiga, palavra_nova in substituicoes.items():
+                if palavra_antiga in para.text: 
+                    para.text = para.text.replace(palavra_antiga, palavra_nova)
+    
+
+        # Salvar o documento modificado]
+        pastaCertificados = os.path.abspath("static/Certificados/" + aluno[1] + ".docx")
+        doc.save(pastaCertificados)
+        
+    shutil.make_archive(os.path.abspath("static/Certificados/Certificados"), 'zip', os.path.abspath("static/Certificados/"))
+    return "Certificados.zip"
+
+
+def certificados(certificadosCriados):
+    lista = []
+    conexaoBD = conexao.iniciaConexao()
+    cursorBD = conexaoBD.cursor()
+    
+    for idCertificado in certificadosCriados:
+        query = "SELECT * FROM bdalunos WHERE id = " + str(idCertificado)
+        cursorBD.execute(query)
+        lista.append(cursorBD.fetchone())
+
+    cursorBD.close()
+    conexaoBD.close()
+    return lista
+
+#Açoes pageCertificados---
