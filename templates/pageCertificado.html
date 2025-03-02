@@ -19,54 +19,184 @@
   <link rel="icon" type="image/x-icon" href="/static/midia/imgs/favicon.ico">
 </head>
 
+
 <body style="background-color: #FFEAAA; margin: 0px; padding: 0px;">
   <header style="background-color: #4C3566;">
     <div class="d-flex py-3 container" style="background-color: #4C3566;">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <img src="/static/midia/imgs/logo_pro_tcc.png" alt="Logo_Certificado_Digital" style="height: 50px; width: 50px; margin-right: 15px;">
         <span class="fs-5 text-white">Certificado Digital</span>
       </a>
       <ul class="nav nav-underline">
+        <li class="nav-item mx-1 my-1"><a href="/" class="nav-link link-light">Home</a></li>
         <li class="nav-item mx-1 my-1"><a href="/certificados" class="nav-link link-light active">Certificados</a></li>
-        <li class="nav-item mx-1 my-1"><a href="/cadastrar" class="nav-link link-light">Cadastrar Usuario</a></li>
-        <li class="nav-item mx-1 my-1"><a href="/Sobre" class="nav-link link-light">Sobre</a></li>
+        <li class="nav-item mx-1 my-1"><a href="/cadastrarUsuario" class="nav-link link-light">Cadastrar Usuario</a></li>
+        <li class="nav-item mx-1 my-1"><a href="/ajuda" class="nav-link link-light">Ajuda</a></li>
+        <li class="nav-item mx-1 my-1"><a href="/configurar" class="nav-link link-light">Configurar Dados</a></li>
       </ul>
+      <div class="position-absolute top-0 end-0 lh-1" style="margin-right: 90px; margin-top: 22px;">
+        <p class="fw-semibold mb-1 text-white">{{session['usuario']}}</p>
+        <a href="/logout" style="color: #FFEAAA;">Sair</a>
+      </div>
     </div>
   </header>
+
   {% if certificados|length == 0 %}
   <h1 class="text-center mt-5" style="color: #4C3566;">Nenhum Certificado Criado</h1>
   {% else %}
   <h1 class="text-center mt-5" style="color: #4C3566;">{{certificados|length}} Certificados Gerados:</h1>
-  <main class="row" style="margin-left: 8%; margin-right: 0%;">
-    {% for certificado in certificados %}
-    <div class="rounded-4 mx-5 my-5 p-5 text-white text-center d-flex" style="background-color: #4C3566; width: 25%;">
-        <div>
-          <img src="/static/midia/imgs/logo_pro_tcc.png" alt="Logo Certificado Digital" class="mb-3" style="height: 65px;">
-          <h2 class="fs-3">{{certificado[1]}}</h1>
-            <h2 class="fs-5">{{certificado[13]}}</h1>
-            </div>
-            <div class="" style="margin-left:25%;">
-              <a href={{ url_for("deletarCertificado", id_Aluno = certificado[12],  nomeCertificado = certificado[1]) }} title="Baixar Aluno">
-                <img src="/static/midia/icons/delete_38dp_FFEAAA_FILL0_wght400_GRAD0_opsz40.svg" alt="Edit SVG">
-              </a>
-              <p>Deletar</p>
-              <a href={{ url_for("baixarCertificado", id_Aluno = certificado[12], nomeCertificado = certificado[1]) }} title="Baixar Aluno">
-                <img src="/static/midia/icons/download_38dp_FFEAAA_FILL0_wght400_GRAD0_opsz40.svg" alt="Edit SVG">
-              </a>
-              <p>Baixar</p>
-            </div>
-          </div>
+  <main class="row mt-4" style="margin-left: 25%; margin-right:25%;">
+
+    <table class="table table-warning table-bordered table-responsive">
+
+      {% for certificado in certificados %}
+      <tbody class="">
+        <tr>
+          <th scope="row"> 
+            <div class="d-flex">
+              <div class="me-auto p-2 fs-5">{{certificado[1]}} {{certificado[13]}}</div>
+                <div class="px-3">
+                  <a href={{ url_for("baixarCertificado", id_Aluno = certificado[12], nomeCertificado = certificado[1]) }} 
+                  title="Baixar Certificado"><img src="/static/midia/icons/PageCertificados/download_32dp_4C3566_FILL0_wght400_GRAD0_opsz40.svg" alt="Baixar Certificado"></a>
+                  <a href={{ url_for("deletarCertificado", id_Aluno = certificado[12], nomeCertificado = certificado[1]) }} 
+                  title="Baixar Certificado"><img src="/static/midia/icons/PageCertificados/delete_32dp_E8EAED_FILL0_wght400_GRAD0_opsz40.svg" alt="Baixar Certificado"></a>
+                </div>
+              </div>
+            </th>
+        </tr>
+      </tbody>
       {% endfor %}
+    </table>
+  {% endif %}
+    
+  <nav aria-label="Page navigation example" 
+  {% if page == 1 %}
+  style="margin-left: 45%;"
+  {% else %}
+  style="margin-left: 42%;"
+  {% endif %}
+  >
+  <ul class="pagination">
+
+    {% if total_pages == 1 %}
+    {% else %}
+    {% for count in range(6)%}
+    
+    {% if page != 1 and count == 0 %}
+    <li class="page-item">
+      <a class="page-link fw-bold" href="{{ url_for('paginaCertificados', page=page-1) }}" style="color: #4C3566;">Previous</a>
+    </li>
+    {% elif page+1 != total_pages and count == 5 %}
+    <li class="page-item">
+      <a class="page-link fw-bold" href="{{ url_for('paginaCertificados', page=page+1) }}" style="color: #4C3566;">Next</a>
+    </li>
+    {% elif count > 0 and count < 5 %}
+    {% if page == 1 %}
+
+    {% if count == page %}
+    <li class="page-item " style="color: #4C3566;">
+      <a class="page-link active" href="{{ url_for('paginaCertificados', page= count) }} " style="background-color: #4C3566; border-color: #4C3566;">{{count}}</a>
+    </li>
+    {% else %}
+    <li class="page-item">
+      <a class="page-link" href="{{ url_for('paginaCertificados', page= count) }}" style="color: #4C3566;">{{count}}</a>
+    </li>
+    {% endif %}
+
+    {% else %}
+    {% set final = (page >= (total_pages-3)) %}
+    {% if not final %}
+    {% set opcaoNumero = (count+(page-1)) %}
+    
+    {% if opcaoNumero == page %}
+    <li class="page-item">
+      <a class="page-link active"
+      href="{{ url_for('paginaCertificados', page= opcaoNumero) }}" style="background-color: #4C3566; border-color: #4C3566;">{{opcaoNumero}}</a>
+    </li>
+    {% else %}
+    <li class="page-item">
+      <a class="page-link" href="{{ url_for('paginaCertificados', page= opcaoNumero) }}" style="color: #4C3566;">{{opcaoNumero}}</a>
+    </li>
+    {% endif %}
+    {% else %}
+    {% set opcaoNumero = ((total_pages-5)+count) %}
+    {% if opcaoNumero == page %}
+    <li class="page-item">
+      <a class="page-link active"
+      href="{{ url_for('paginaCertificados', page= opcaoNumero) }}" style="background-color: #4C3566; border-color: #4C3566;">{{opcaoNumero}}</a>
+    </li>
+    {% else %}
+    <li class="page-item">
+      <a class="page-link" href="{{ url_for('paginaCertificados', page= opcaoNumero) }}" style="color: #4C3566;">{{opcaoNumero}}</a>
+    </li>
     {% endif %}
     
-    {% with messages = get_flashed_messages() %}
+    {% endif %}
+    
+    {% endif %}
+
+    
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+  </ul>
+</nav>
+
+
+
+  <div class="bd-mode-toggle" >
+    <div class="position-absolute bottom-0 end-0 m-3 dropdown">
+      <button class="btn btn-bd-primary py-3 px-4 dropdown-toggle d-flex align-items-center show text-white" id="bd-theme"
+        type="button" data-bs-toggle="dropdown" style="background-color: #4C3566">
+        Menu
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end shadow"
+        style="position: absolute; inset: auto 0px 0px auto; margin: 0px;;"
+        data-popper-placement="top-end">
+        <li>
+          <a href="{{ url_for( 'deletarTodosCertificados') }}"
+            class="link-body-emphasis text-decoration-none">
+            <button type="button" class="dropdown-item d-flex align-items-center" aria-pressed="false">
+              Apagar Todos os Certificados
+            </button>
+          </a>
+        </li>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+
+
+
+
+
+    {% with messages = get_flashed_messages(category_filter=["concluido"]) %}
     {% if messages %}
     <ul class=flashes>
     {% for message in messages %}
-    <div class="alert alert-success alert-dismissible fade show w-25 container text-center mx-3 position-absolute bottom-0 end-0" role="alert" style="margin-top: 5%;">
+    <div class="alert alert-success alert-dismissible fade show w-25 container text-center mx-3 position-absolute top-0 end-0" role="alert" style="margin-top: 5%;">
       <strong>{{message}}</strong>
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div> 
     {% endfor %}
+    {% endif %}
+    {% endwith %}
+    
+    {% with messages = get_flashed_messages(category_filter=["erro"]) %}
+    {% if messages %}
+    <ul class=flashes>
+      {% for message in messages %}
+      <div class="alert-message block-message error">
+        <div class="alert alert-danger alert-dismissible fade show w-25 container text-center mx-3 position-fixed top-0 end-0" style="margin-top: 5%;" role="alert">
+          {{message}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+      {% endfor %}
+    </ul>
     {% endif %}
     {% endwith %}
   </main>

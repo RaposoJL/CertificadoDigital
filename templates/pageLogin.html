@@ -40,7 +40,7 @@
 
       </div>
     </div>
-
+    <!-- Erro de Login -->
     {% with messages = get_flashed_messages(category_filter=["erroLogin"]) %}
     {% if messages %}
     <ul class=flashes>
@@ -55,9 +55,24 @@
     </ul>
     </div>
     {% endif %}
-
     {% endwith %}
-
+    
+    <!-- Logout bem Sucedido -->
+    {% with messages = get_flashed_messages(category_filter=["Logout"]) %}
+    {% if messages %}
+    <ul class=flashes>
+      {% for message in messages %}
+      <div class="alert-message block-message error">
+        <div class="alert alert-success alert-dismissible fade fade show w-50 container text-center mt-4" role="alert">
+          <strong>{{message}}</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+      {% endfor %}
+    </ul>
+    </div>
+    {% endif %}
+    {% endwith %}
   </main>
 
 

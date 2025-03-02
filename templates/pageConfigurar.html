@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head meta charset="UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width= device-width, initial-scale=1.0">
+  <title>Certificado Digital</title>
+  <link rel="stylesheet" href="/static/node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="shortcut icon" href="midia/imgs/favicon.ico" type="image/x-icon">
+  <!-- <script src="bootstrap-5.3.3-dist/js/bootstrap.js"></script> -->
+  <!-- <script src="/static/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+ <script src="/static/node_modules/@popperjs/core/dist/umd/popper.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+    crossorigin="anonymous"></script>
+  <link rel="icon" type="image/x-icon" href="/static/midia/imgs/favicon.ico">
+</head>
+
+<header style="background-color: #4C3566;">
+  <div class="d-flex py-3 container" style="background-color: #4C3566;">
+    <a href="/"
+        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <img src="/static/midia/imgs/logo_pro_tcc.png" alt="Logo_Certificado_Digital" style="height: 50px; width: 50px;margin-right: 15px;">
+        <span class="fs-5 text-white">Certificado Digital</span>
+    </a>
+    <ul class="nav nav-underline">
+        <li class="nav-item mx-1 my-1"><a href="/" class="nav-link link-light">Home</a></li>
+        <li class="nav-item mx-1 my-1"><a href="/certificados" class="nav-link link-light">Certificados</a></li>
+        <li class="nav-item mx-1 my-1"><a href="/cadastrarUsuario" class="nav-link link-light">Cadastrar Usuario</a></li>
+        <li class="nav-item mx-1 my-1"><a href="/ajuda" class="nav-link link-light">Ajuda</a></li>
+        <li class="nav-item mx-1 my-1"><a href="/configurar" class="nav-link link-light active">Configurar Dados</a></li>
+    </ul>
+    <div class="position-absolute top-0 end-0 lh-1" style="margin-right: 90px; margin-top: 22px;">
+      <p class="fw-semibold mb-1 text-white fs-6">{{session['usuario']}}</p>
+      <a href="/logout" style="color: #FFEAAA;">Sair</a>
+    </div>
+</div>
+</header>
+
+<body>
+  <main class="container" style="padding-top: 5%;">
+    <div class="text-center">
+      <div>
+        <p>Clique no botão abaixo para baixar a planilha necessária
+          <br>para a coleta dos dados dos estudantes. 
+        </p>
+      </div>
+        <div>
+          <div>
+            <form action="/baixarPlaninhaBase" method="get" id="forms2" class="index_forms">
+                <input type="submit" value="Baixar Planilha Base" id="index_forms2" class="rounded-4 p-2 mt-4 px-4 fw-bold">
+            </form>
+          </div>
+        <div style="padding-top: 3%">
+          <p>No seguinte botão, clique para adicionar a planilha desejada pela
+            <br>instituição para os certificados dos estudantes. 
+          </p>
+        </div>
+          <div>
+          <button type="button" class="rounded-4 p-2 mt-4 px-4 fw-bold" data-bs-toggle="modal" data-bs-target="#Documento" id="index_forms2">
+            Escolher Modelo
+          </button>
+        </div>
+      </div>
+    </div>
+
+<div class="modal fade" id="Documento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Escolha a Modelo do Certificado:</h1>
+        </div>
+        <div class="modal-body">
+          <form action="/configurar" method="post" name="modelo" enctype="multipart/form-data">
+          {% if modelo != None %}
+            <div class="text-center">
+              <input type="hidden" name="modeloAntigo" value={{modelo}}>
+              <span class="fs-5 text-nowrap border" style="background-color: #FFEAAA;"">Atual Modelo Cadastrado: <strong>{{modelo}}</strong></span>
+              <label for="sheet" class="form-label my-3 fs-5">Para Alterar, escolha um novo arquivo:</label>
+              
+              <input class="form-control" type="file"accept=".doc, .docx" name="modeloNovo" required>
+            </div>
+
+            {% else %}
+            <div class="text-center">
+              <input type="hidden" name="modeloAntigo" value={{modelo}}>
+              <span class="fs-5 text-nowrap border" style="background-color: #FFEAAA;"">Nenhum Modelo Adicionado</span>
+              <label for="sheet" class="form-label my-3 fs-5">Para Adicionar, escolha um novo arquivo:</label>
+              
+              <input class="form-control" type="file" accept=".doc, .docx" name="modeloNovo" required>
+            </div>
+            {% endif %}
+        </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <input type="submit" value="Enviar" class="btn btn-primary">
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class=flashes>
+{% for message in messages %}
+<div class="alert alert-success alert-dismissible fade show w-25 container text-center mx-3 position-absolute top-0 end-0" role="alert" style="margin-top: 5%;">
+  <strong>{{message}}</strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div> 
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+
+</main>
+
+  <style>
+    body {
+      background-color: #FFEAAA;
+    }
+
+    img {
+      width: 9%;
+    }
+
+    p{
+      padding-top: 5%;
+      font-size: 20px;
+    }
+
+    #index_forms2:hover {
+      color: #FFEAAA;
+      background-color: #4C3566;
+    }
+
+  </style>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head meta charset="UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width= device-width, initial-scale=1.0">
+  <title>Certificado Digital</title>
+  <link rel="stylesheet" href="/static/node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="shortcut icon" href="midia/imgs/favicon.ico" type="image/x-icon">
+  <!-- <script src="bootstrap-5.3.3-dist/js/bootstrap.js"></script> -->
+  <!-- <script src="/static/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+ <script src="/static/node_modules/@popperjs/core/dist/umd/popper.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+    crossorigin="anonymous"></script>
+  <link rel="icon" type="image/x-icon" href="/static/midia/imgs/favicon.ico">
+</head>
+
+<header style="background-color: #4C3566;">
+  <div class="d-flex py-3 container" style="background-color: #4C3566;">
+    <a href="/"
+        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <img src="/static/midia/imgs/logo_pro_tcc.png" alt="Logo_Certificado_Digital" style="height: 50px; width: 50px;margin-right: 15px;">
+        <span class="fs-5 text-white">Certificado Digital</span>
+    </a>
+    <ul class="nav nav-underline">
+        <li class="nav-item mx-1 my-1"><a href="/" class="nav-link link-light">Home</a></li>
+        <li class="nav-item mx-1 my-1"><a href="/certificados" class="nav-link link-light">Certificados</a></li>
+        <li class="nav-item mx-1 my-1"><a href="/cadastrarUsuario" class="nav-link link-light">Cadastrar Usuario</a></li>
+        <li class="nav-item mx-1 my-1"><a href="/ajuda" class="nav-link link-light active">Ajuda</a></li>
+        <li class="nav-item mx-1 my-1"><a href="/configurar" class="nav-link link-light">Configurar Dados</a></li>
+    </ul>
+    <div class="position-absolute top-0 end-0 lh-1" style="margin-right: 90px; margin-top: 22px;">
+      <p class="fw-semibold mb-1 text-white fs-6">{{session['usuario']}}</p>
+      <a href="/logout" style="color: #FFEAAA;">Sair</a>
+    </div>
+</div>
+</header>
+
+<body>
+  <main class="container" style="padding-top: 0%;">
+    <div class="text-center">
+      <img src="/static/midia/imgs/LogoCompleta.png" alt="img_certificado" class="mt-5" id="img_certificado"; style="height: 240px; width: 240px">
+        <div style="padding-top: 0%">
+          <p>Este é o <strong style="color: #4C3566;">Certificado Digital</strong>. O site que tem como objetivo automatizar o processo de geração de diplomas, otimizando tempo da sua instituição.
+            <br>
+            <br>Siga os passos abaixo para utilizar o site:
+            <br>1. Primeiramente, acesse a aba <strong style="color: #4C3566;">Configurar Dados</strong>  para acessar todas as opções bases para começar a criação. 
+            <br>2. No botão <strong style="color: #4C3566;">Baixar Planilha Base</strong>, você terá acesso a planilha para ser preenchida com os dados necessários de cada aluno.
+            <br>3. Por meio do botão <strong style="color: #4C3566;">Escolher Modelo</strong>, você adicionará o modelo desejado para a elaboração dos diplomas.
+            <br>4. Por fim, depois de unir todas as informações dos estudantes, acesse a aba <strong style="color: #4C3566;">Home</strong>  para adicionar a planilha modificada.
+          </p>
+        </div>
+    </div>
+      <div class="text-center" style="padding-top: 8%; font-size: 15px;">
+        <p style="font-size: 17px;">Para qualquer dúvida, entre em contato pelo e-mail <strong style="color: #4C3566;">certificado.digital2224@gmail.com </strong></p>
+      </div> 
+
+    <div class="modal fade" id="Documento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Escolha Seu Documento para a Criação dos Certificados:</h1>
+          </div>
+          <div class="modal-body">
+
+            <form action="/adicionarDocCertificado" method="post"  enctype="multipart/form-data">
+              <input class="form-control" type="file" id="formFile" name="documentoCertificado">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <input type="submit" value="Enviar" class="btn btn-primary">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <style>
+    body {
+      background-color: #FFEAAA;
+    }
+
+    img {
+      width: 9%;
+    }
+
+    p{
+      padding-top: 5%;
+      font-size: 20px;
+    }
+
+    #index_forms2:hover {
+      color: #FFEAAA;
+      background-color: #4C3566;
+    }
+
+  </style>
+</body>
+</html>
