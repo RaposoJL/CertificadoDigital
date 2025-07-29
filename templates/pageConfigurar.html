@@ -27,9 +27,10 @@
         <span class="fs-5 text-white">Certificado Digital</span>
     </a>
     <ul class="nav nav-underline">
-        <li class="nav-item mx-1 my-1"><a href="/" class="nav-link link-light">Home</a></li>
+                <li class="nav-item mx-1 my-1"><a href="/inicio" class="nav-link link-light">Início</a></li>
+        <li class="nav-item mx-1 my-1"><a href="/turmas" class="nav-link link-light">Turmas</a></li>
         <li class="nav-item mx-1 my-1"><a href="/certificados" class="nav-link link-light">Certificados</a></li>
-        <li class="nav-item mx-1 my-1"><a href="/cadastrarUsuario" class="nav-link link-light">Cadastrar Usuario</a></li>
+        <li class="nav-item mx-1 my-1"><a href="/cadastrar_usuario" class="nav-link link-light">Cadastrar Usuario</a></li>
         <li class="nav-item mx-1 my-1"><a href="/ajuda" class="nav-link link-light">Ajuda</a></li>
         <li class="nav-item mx-1 my-1"><a href="/configurar" class="nav-link link-light active">Configurar Dados</a></li>
     </ul>
@@ -77,20 +78,20 @@
           <form action="/configurar" method="post" name="modelo" enctype="multipart/form-data">
           {% if modelo != None %}
             <div class="text-center">
-              <input type="hidden" name="modeloAntigo" value={{modelo}}>
+              <input type="hidden" name="modelo_antigo" value={{modelo}}>
               <span class="fs-5 text-nowrap border" style="background-color: #FFEAAA;"">Atual Modelo Cadastrado: <strong>{{modelo}}</strong></span>
               <label for="sheet" class="form-label my-3 fs-5">Para Alterar, escolha um novo arquivo:</label>
               
-              <input class="form-control" type="file"accept=".doc, .docx" name="modeloNovo" required>
+              <input class="form-control" type="file"accept=".doc, .docx" name="modelo_novo" required>
             </div>
 
             {% else %}
             <div class="text-center">
-              <input type="hidden" name="modeloAntigo" value={{modelo}}>
+              <input type="hidden" name="modelo_antigo" value={{modelo}}>
               <span class="fs-5 text-nowrap border" style="background-color: #FFEAAA;"">Nenhum Modelo Adicionado</span>
               <label for="sheet" class="form-label my-3 fs-5">Para Adicionar, escolha um novo arquivo:</label>
               
-              <input class="form-control" type="file" accept=".doc, .docx" name="modeloNovo" required>
+              <input class="form-control" type="file" accept=".doc, .docx" name="modelo_novo" required>
             </div>
             {% endif %}
         </div>

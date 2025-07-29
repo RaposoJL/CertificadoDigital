@@ -1,9 +1,9 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br">
 
-<head>
+<head meta charset="UTF-8">
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width= device-width, initial-scale=1.0">
   <title>Certificado Digital</title>
   <link rel="stylesheet" href="/static/node_modules/bootstrap/dist/css/bootstrap.min.css">
   <link rel="shortcut icon" href="midia/imgs/favicon.ico" type="image/x-icon">
@@ -19,320 +19,155 @@
   <link rel="icon" type="image/x-icon" href="/static/midia/imgs/favicon.ico">
 </head>
 
-<body style="background-color: #FFEAAA; margin: 0px; padding: 0px;">
-  <header style="background-color: #4C3566;">
-    <div class="d-flex py-3 container" style="background-color: #4C3566;">
-      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+<header style="background-color: #4C3566;">
+  <div class="d-flex py-3 container" style="background-color: #4C3566; margin-left: 50px;">
+    <a href="/inicio"
+        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
         <img src="/static/midia/imgs/logo_pro_tcc.png" alt="Logo_Certificado_Digital" style="height: 50px; width: 50px; margin-right: 15px;">
         <span class="fs-5 text-white">Certificado Digital</span>
-      </a>
-      <ul class="nav nav-underline">
-        <li class="nav-item mx-1 my-1"><a href="/" class="nav-link link-light active">Home</a></li>
+    </a>
+    <div style="display: flex; justify-content: center">
+      <ul class="nav nav-underline" >
+        <li class="nav-item mx-1 my-1"><a href="/inicio" class="nav-link link-light active">Início</a></li>
+        <li class="nav-item mx-1 my-1"><a href="/turmas" class="nav-link link-light">Turmas</a></li>
         <li class="nav-item mx-1 my-1"><a href="/certificados" class="nav-link link-light">Certificados</a></li>
-        <li class="nav-item mx-1 my-1"><a href="/cadastrarUsuario" class="nav-link link-light">Cadastrar Usuario</a></li>
+        <li class="nav-item mx-1 my-1"><a href="/cadastrar_usuario" class="nav-link link-light">Cadastrar Usuario</a></li>
         <li class="nav-item mx-1 my-1"><a href="/ajuda" class="nav-link link-light">Ajuda</a></li>
         <li class="nav-item mx-1 my-1"><a href="/configurar" class="nav-link link-light">Configurar Dados</a></li>
       </ul>
-      <div class="position-absolute top-0 end-0 lh-1" style="margin-right: 90px; margin-top: 22px;">
-        <p class="fw-semibold mb-1 text-white">{{session['usuario']}}</p>
-        <a href="/logout" style="color: #FFEAAA;">Sair</a>
-      </div>
     </div>
-  </header>
-  
-  
-  <main class="d-flex justify-content-center">
-    <div class="px-5 py-5 w-75 text-center" id="collapseExample">
+    <div class="position-absolute top-0 end-0 lh-1" style="margin-right: 90px; margin-top: 22px;">
+      <p class="fw-semibold mb-1 text-white fs-6">{{session['usuario']}}</p>
+      <a href="/logout" style="color: #FFEAAA;">Sair</a>
+    </div>
+</div>
+</header>
 
-      <div class="btn-group dropdown">
-        <h1 class="m-4" style="color: #4C3566;">
-          {% if totalAlunos == 0 and pesquisa == False %}
-
-          Nenhum Aluno Adicionado
-          <br>
-          <button type="button" class="btn btn-primary rounded-4 p-2 mt-2 px-4 fw-bold" id="botaoAddAluno"
-              data-bs-toggle="modal" data-bs-target="#exampleModal">
-              Cadastrar Alunos
-          </button>
-          {% else %}
-
-          {% if seletor == None or seletor == "*" %}
-          
-          {{totalAlunos}} Aluno(s) Cadastrado(s):
-          {% elif seletor == "3TDSA" %}
-          {{totalAlunos}} Aluno(s) Cadastrado(s) no 3ºTDS"A":
-          {% elif seletor == "3TDSB" %}
-          {{totalAlunos}} Aluno(s) Cadastrado(s) no 3ºTDS"B":
-          {% elif seletor == "3MKTA" %}
-          {{totalAlunos}} Aluno(s) Cadastrado(s) no 3ºMKT"A":
-          {% elif seletor == "3MKTB" %}
-          {{totalAlunos}} Aluno(s) Cadastrado(s) no 3ºMKT"B":
-          {% endif %}
-
-        </h1>
-        <img src="/static/midia/icons/PageHome/filter_alt_32dp_4C3566_FILL0_wght400_GRAD0_opsz40.svg" alt="Filtrar Alunos" type="button" class="btn btn-secondary bg-transparent border border-0 m-0 p-0" data-bs-toggle="dropdown" aria-expanded="false">
-        <ul class="dropdown-menu p-3" style="width: 500px;">
-          <h1 class="fs-3">Filtrar Turma:</h1>
-          <form action="/" method="get" name="listar">
-            <select class="form-select form-select-lg" aria-label="Default select example" id="seletor" name="seletor" >
-              <option value="*" name="*" selected>Todas</option>
-              <option value="3TDSA" name="3TDSA">3TDSA</option>
-              <option value="3TDSB" name="3TDSB">3TDSB</option>
-              <option value="3MKTA" name="3MKTA">3MKTA</option>
-              <option value="3MKTB" name="3MKTB">3MKTB</option>
-            </select>
-            <input type="submit" value="Filtrar" class="rounded-4 p-2 mt-3 px-4 fw-bold">
-          </form>
-        </ul>
+<body>
+  <main class="container" style="padding-top: 2%;">
+    <div class="text-center">
+      <div>
+        <p class="fw-semibold mb-1 text-black fs-6">{{session['usuario']}}</p>
       </div>
-
-      {% if total_pages > 1 or pesquisa == True%}
-      <div class="mb-3 text-center">
-        <form class="d-flex" role="search" action="/pesquisarAluno" method="post">
-          <input class="form-control me-2" name="nomeAluno" type="search" placeholder="Nome do Aluno:" aria-label="Search" required>
-          <button class="btn btn-outline-success" id="botaoAddAluno" type="submit">Buscar</button>
-        </form>
+      <div>
+        <p>Clique no botão abaixo para baixar a respectiva planilha para o
+          <br>preenchimento das informações necessárias no desenvolvimento do certificado. 
+        </p>
       </div>
-      {% endif %}
-      
-      {% if totalAlunos == 0 or totalAlunos == None %}
-      <h1 class="m-4" style="color: #4C3566;">Nenhum Aluno Encontrado</h1>
-      {% else %}
-      <table class="table table-warning table-bordered table-responsive">
-        <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Instituição</th>
-            <th scope="col">Nome</th>
-            <th scope="col">CPF</th>
-          </tr>
-        </thead>
-        
-        {% for aluno in alunos %}
-        <tbody class="table-group-divider">
-          <tr>
-            <th scope="row">{{aluno[12]}}</th>
-            <td>{{aluno[0]}}</td>
-            <td>{{aluno[1]}}</td>
-            <td>{{aluno[7]}} <a href={{ url_for("paginaEditarAluno_get", id_Aluno=aluno[12] ) }}
-              title="Editar Aluno"><img src="/static/midia/icons/PageHome/edit_24dp_FILL0_wght400_GRAD0_opsz24.svg"
-              alt="EditarAluno"></a>
-              <a href={{ url_for("DeletarAluno", id_Aluno=aluno[12] ) }} title="Deleter Aluno"><img
-                src="/static/midia/icons/PageHome/delete_24dp_FILL0_wght400_GRAD0_opsz24.svg" alt="DeletarAluno" type="button" data-bs-toggle="modal" data-bs-target="#DeletarAluno"  id="bd-theme" type="button" data-bs-toggle="dropdown" ></a>
-                <a href={{ url_for("GerarCertificado", id_Aluno=aluno[12] ) }} title="Gerar Certificado"><img
-                  src="/static/midia/icons/PageHome/workspace_premium_24dp_4C3566_FILL0_wght400_GRAD0_opsz24.svg"
-                  alt="Gerar Certificado Aluno"></a>
-                </td>
-              </tr>
-            </tbody>
-            {% endfor %}
-          </table>
-          
-          {% endif %}
-          <nav aria-label="Page navigation example" 
-          {% if page == 1 %}
-          style="margin-left: 45%;"
-          {% else %}
-          style="margin-left: 42%;"
-          {% endif %}
-          >
-          <ul class="pagination">
-
-            {% if total_pages == 1 %}
-            {% else %}
-            {% for count in range(6)%}
-            
-            {% if page != 1 and count == 0 %}
-            <li class="page-item">
-              <a class="page-link fw-bold" href="{{ url_for('paginaPrincipal', page=page-1) }}" style="color: #4C3566;">Previous</a>
-            </li>
-            {% elif page+1 != total_pages and count == 5 %}
-            <li class="page-item">
-              <a class="page-link fw-bold" href="{{ url_for('paginaPrincipal', page=page+1) }}" style="color: #4C3566;">Next</a>
-            </li>
-            {% elif count > 0 and count < 5 %}
-            {% if page == 1 %}
-
-            {% if count == page %}
-            <li class="page-item " style="color: #4C3566;">
-              <a class="page-link active" href="{{ url_for('paginaPrincipal', page= count) }} " style="background-color: #4C3566; border-color: #4C3566;">{{count}}</a>
-            </li>
-            {% else %}
-            <li class="page-item">
-              <a class="page-link" href="{{ url_for('paginaPrincipal', page= count) }}" style="color: #4C3566;">{{count}}</a>
-            </li>
-            {% endif %}
-
-            {% else %}
-            {% set final = (page >= (total_pages-3)) %}
-            {% if not final %}
-            {% set opcaoNumero = (count+(page-1)) %}
-            
-            {% if opcaoNumero == page %}
-            <li class="page-item">
-              <a class="page-link active"
-              href="{{ url_for('paginaPrincipal', page= opcaoNumero) }}" style="background-color: #4C3566; border-color: #4C3566;">{{opcaoNumero}}</a>
-            </li>
-            {% else %}
-            <li class="page-item">
-              <a class="page-link" href="{{ url_for('paginaPrincipal', page= opcaoNumero) }}" style="color: #4C3566;">{{opcaoNumero}}</a>
-            </li>
-            {% endif %}
-            {% else %}
-            {% set opcaoNumero = ((total_pages-5)+count) %}
-            {% if opcaoNumero == page %}
-            <li class="page-item">
-              <a class="page-link active"
-              href="{{ url_for('paginaPrincipal', page= opcaoNumero) }}" style="background-color: #4C3566; border-color: #4C3566;">{{opcaoNumero}}</a>
-            </li>
-            {% else %}
-            <li class="page-item">
-              <a class="page-link" href="{{ url_for('paginaPrincipal', page= opcaoNumero) }}" style="color: #4C3566;">{{opcaoNumero}}</a>
-            </li>
-            {% endif %}
-            
-            {% endif %}
-            
-            {% endif %}
-
-            
-            {% endif %}
-            {% endfor %}
-            {% endif %}
-          </ul>
-        </nav>
-        {% endif %}
-        
-        
-        {% with errors = get_flashed_messages(category_filter=["concluido"]) %}
-        {% if errors %}
-        <div class="alert-message block-message error">
-          <ul> 
-          {% for msg in errors %}
-          <div class="alert alert-success alert-dismissible fade show container text-center mx-3 position-fixed top-0 end-0" style="margin-top: 5%; width: 18%;" role="alert">
-            <strong>{{ msg }}</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <div>
+          <div>
+            <form action="/baixar_planilha_base_turmas_alunos" method="get" id="forms2" class="index_forms">
+                <input type="submit" value="Baixar Planilha" id="index_forms2" class="rounded-4 p-2 mt-4 px-4 fw-bold">
+            </form>
           </div>
-          {% endfor %}  
-        </ul>
-      </div>
-      {% endif %}
-      {% endwith %}
-      
-      
-      {% with messages = get_flashed_messages(category_filter=["erro"]) %}
-      {% if messages %}
-      <ul class=flashes>
-        {% for message in messages %}
-        <div class="alert-message block-message error">
-          <div class="alert alert-danger alert-dismissible fade show w-25 container text-center mx-3 position-fixed top-0 end-0" style="margin-top: 5%;" role="alert">
-            <strong>{{message}}</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          <div>
+            <form action="/baixar_plalinha_base_curso" method="get" id="forms2" class="index_forms">
+                <input type="submit" value="Baixar Planilha" id="index_forms2" class="rounded-4 p-2 mt-4 px-4 fw-bold">
+            </form>
           </div>
+          <div>
+            <form action="/baixar_planilha_base_turmas_disciplinas_base_comum" method="get" id="forms2" class="index_forms">
+                <input type="submit" value="Baixar Planilha" id="index_forms2" class="rounded-4 p-2 mt-4 px-4 fw-bold">
+            </form>
+          </div>
+          <div>
+            <form action="/baixar_planilha_base_turmas_disciplinas_tecnico" method="get" id="forms2" class="index_forms">
+                <input type="submit" value="Baixar Planilha" id="index_forms2" class="rounded-4 p-2 mt-4 px-4 fw-bold">
+            </form>
+          </div>
+          <div>
+            <form action="/baixar_planilha_base_turmas_disciplinas_trilha" method="get" id="forms2" class="index_forms">
+                <input type="submit" value="Baixar Planilha" id="index_forms2" class="rounded-4 p-2 mt-4 px-4 fw-bold">
+            </form>
+          </div>
+          <div>
+            <form action="/baixar_planilha_base_turmas_disciplinas_eletiva" method="get" id="forms2" class="index_forms">
+                <input type="submit" value="Baixar Planilha" id="index_forms2" class="rounded-4 p-2 mt-4 px-4 fw-bold">
+            </form>
+          </div>
+        <div style="padding-top: 3%">
+          <p>No seguinte botão, clique para adicionar a planilha desejada pela
+            <br>instituição para os certificados dos estudantes. 
+          </p>
         </div>
-        {% endfor %}
-      </ul>
-      {% endif %}
-      {% endwith %}
-      
-    </div>
-  </div>
-  
-  
-  
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
+          <div>
+          <button type="button" class="rounded-4 p-2 mt-4 px-4 fw-bold" data-bs-toggle="modal" data-bs-target="#Documento" id="index_forms2">
+            Escolher Modelo
+          </button>
+        </div>
+      </div>
+    </div>
+
+<div class="modal fade" id="Documento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
         <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Escolha a Planilha:</h1>
-          </div>
-          <div class="modal-body">
-            <form action="/cadastroTurma" method="post" name="cadastrar" enctype="multipart/form-data">
-              <div>
-                <input class="form-control" type="file" id="planilha"
-                  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="planilha" required>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Escolha a Modelo do Certificado:</h1>
+        </div>
+        <div class="modal-body">
+          <form action="/configurar" method="post" name="modelo" enctype="multipart/form-data">
+          {% if modelo != None %}
+            <div class="text-center">
+              <input type="hidden" name="modeloAntigo" value={{modelo}}>
+              <span class="fs-5 text-nowrap border" style="background-color: #FFEAAA;"">Atual Modelo Cadastrado: <strong>{{modelo}}</strong></span>
+              <label for="sheet" class="form-label my-3 fs-5">Para Alterar, escolha um novo arquivo:</label>
+              
+              <input class="form-control" type="file"accept=".doc, .docx" name="modeloNovo" required>
+            </div>
 
-                <label for="sheet" class="form-label mt-3">Nome da Planilha:</label>
-                <input type="text" class="form-control" id="sheet" name="sheet">
-
-                <p class="fs-3 text-center mt-3">OU</p>
-
-                <div class="text-center my-4">
-                  <a href="/CadastrarAlunoUnico" class="rounded-4 p-2 mt-5 px-4 fw-bold link-underline link-underline-opacity-0" id="atualizar">Cadastre um Unico Aluno</a>
-                </div>
-              </div>
-          </div>
+            {% else %}
+            <div class="text-center">
+              <input type="hidden" name="modeloAntigo" value={{modelo}}>
+              <span class="fs-5 text-nowrap border" style="background-color: #FFEAAA;"">Nenhum Modelo Adicionado</span>
+              <label for="sheet" class="form-label my-3 fs-5">Para Adicionar, escolha um novo arquivo:</label>
+              
+              <input class="form-control" type="file" accept=".doc, .docx" name="modeloNovo" required>
+            </div>
+            {% endif %}
+        </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             <input type="submit" value="Enviar" class="btn btn-primary">
-            </form>
           </div>
-        </div>
-      </div>
+        </form>
     </div>
+  </div>
+</div>
 
-    <div class="position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle d-flex" style="margin-top: 100px;">
-      <div class="dropdown">
-        <button class="btn btn-bd-primary py-3 px-4 dropdown-toggle d-flex align-items-center show text-white" id="bd-theme"
-          type="button" data-bs-toggle="dropdown" style="background-color: #4C3566">
-          Menu
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end shadow"
-          style="position: absolute; inset: auto 0px 0px auto; margin: 0px;;"
-          data-popper-placement="top-end">
-          <li>
-            <a href="{{ url_for( 'GerarTodosCertificados', seletor=seletor ) }}"
-              class="link-body-emphasis text-decoration-none">
-              <button type="button" class="dropdown-item d-flex align-items-center" aria-pressed="false">
-                Gerar e Baixar Todos os Certificados
-              </button>
-            </a>
-          </li>
-          <li>
-            <button type="button" class="btn btn-primary bg-transparent text-body border border-0"
-              data-bs-toggle="modal" data-bs-target="#exampleModal">
-              Cadastrar Alunos
-            </button>
-          </li>
-          <li>
-            <a href="{{ url_for( 'DeletarTodosAlunos', seletor=seletor ) }}"
-              class="link-body-emphasis text-decoration-none">
-              <button type="button" class="dropdown-item d-flex align-items-center" aria-pressed="false">
-                Apagar todos os Alunos
-              </button>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class=flashes>
+{% for message in messages %}
+<div class="alert alert-success alert-dismissible fade show w-25 container text-center mx-3 position-absolute top-0 end-0" role="alert" style="margin-top: 5%;">
+  <strong>{{message}}</strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div> 
+{% endfor %}
+{% endif %}
+{% endwith %}
 
-            
 
-  </main>
+</main>
 
   <style>
-    #botaoAddAluno {
-      border-color: #FFEAAA;
-      color: #FFEAAA;
-      background-color: #4C3566;
+    body {
+      background-color: #FFEAAA;
     }
 
-    #botaoAddAluno:hover {
-      border-color: #4C3566;
-      color: #4C3566;
-      background-color: #FFEAAA;
+    img {
+      width: 9%;
     }
-    #atualizar {
-      color: #4C3566;
-      background-color: #FFEAAA;
+
+    p{
+      padding-top: 5%;
+      font-size: 20px;
     }
-  
-    #atualizar:hover {
+
+    #index_forms2:hover {
       color: #FFEAAA;
       background-color: #4C3566;
     }
 
   </style>
 </body>
-
 </html>

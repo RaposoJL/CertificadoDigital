@@ -28,9 +28,10 @@
                 <span class="fs-5 text-white">Certificado Digital</span>
             </a>
             <ul class="nav nav-underline">
-                <li class="nav-item mx-1 my-1"><a href="/" class="nav-link link-light active">Home</a></li>
+                <li class="nav-item mx-1 my-1"><a href="/inicio" class="nav-link link-light">Início</a></li>
+                <li class="nav-item mx-1 my-1"><a href="/turmas" class="nav-link link-light active">Turmas</a></li>
                 <li class="nav-item mx-1 my-1"><a href="/certificados" class="nav-link link-light">Certificados</a></li>
-                <li class="nav-item mx-1 my-1"><a href="/cadastrarUsuario" class="nav-link link-light">Cadastrar Usuario</a></li>
+                <li class="nav-item mx-1 my-1"><a href="/cadastrar_usuario" class="nav-link link-light">Cadastrar Usuario</a></li>
                 <li class="nav-item mx-1 my-1"><a href="/ajuda" class="nav-link link-light">Ajuda</a></li>
                 <li class="nav-item mx-1 my-1"><a href="/configurar" class="nav-link link-light">Configurar Dados</a></li>
             </ul>
@@ -40,19 +41,19 @@
 
         <h1 class="fs-3 mb-4" style="color: #FFEAAA;">Edite os Campos Abaixo:</h1>
         <form action="/editar" method="post">
-            <input type="hidden" name="id_Aluno" value={{aluno[12]}}>
+            <input type="hidden" name="id_aluno" value={{aluno[12]}}>
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1" style="background-color: #FFEAAA;">Nome:</span>
-                <input type="text" class="form-control bg-warning-subtle text-black" value="{{aluno[1]}}" name="nomeAluno"
+                <input type="text" class="form-control bg-warning-subtle text-black" value="{{aluno[1]}}" name="nome_aluno"
                     aria-describedby="basic-addon1" required>
             </div>
 
             <div class="input-group mb-3" name="nome_pais">
-                <span class="input-group-text" style="background-color: #FFEAAA;" id="basic-addon1">Nome do Pai:</span>
-                <input type="text" class="form-control bg-warning-subtle text-black" value="{{aluno[2]}}" name="nome_maeAluno"
+                <span class="input-group-text" style="background-color: #FFEAAA;" id="basic-addon1">Nome da mãe:</span>
+                <input type="text" class="form-control bg-warning-subtle text-black" value="{{aluno[2]}}" name="nome_mae"
                     aria-describedby="basic-addon1" required>
-                <span class="input-group-text" id="basic-addon1" style="background-color: #FFEAAA;">Nome da Mãe:</span>
-                <input type="text" class="form-control bg-warning-subtle text-black" value="{{aluno[3]}}" name="nome_paiAluno" 
+                <span class="input-group-text" id="basic-addon1" style="background-color: #FFEAAA;">Nome do pai:</span>
+                <input type="text" class="form-control bg-warning-subtle text-black" value="{{aluno[3]}}" name="nome_pai" 
                     aria-describedby="basic-addon1" required>
             </div>
 
@@ -64,14 +65,14 @@
 
             <div class="input-group mb-3">
                 <span class="input-group-text" style="background-color: #FFEAAA;" id="basic-addon1">Nacionalidade:</span>
-                <input type="text" class="form-control bg-warning-subtle text-black" value="{{aluno[5]}}" name="nacionalidadeAluno"
+                <input type="text" class="form-control bg-warning-subtle text-black" value="{{aluno[4]}}" name="nacionalidadeAluno"
                     aria-describedby="basic-addon1" required>
             </div>
 
             <div class="input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect02" style="background-color: #FFEAAA;">Turma:</label>
                 <select class="form-select bg-warning-subtle text-black" id="inputGroupSelect02" name="turmaAluno" required>
-                    <option selected>{{aluno[13]}}</option>
+                    <option selected>{{aluno[10]}}</option>
                     <option value="3TDSA" name="3ºTDSA">3ºTDSA</option>
                     <option value="3TDSB" name="3ºTDSB">3ºTDSB</option>
                     <option value="3MKTA" name="3ºMKTA">3ºMKTA</option>
@@ -87,17 +88,17 @@
 
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1" style="background-color: #FFEAAA;">CPF:</span>
-                <input type="text" class="form-control bg-warning-subtle text-black" value="{{aluno[7]}}" name="cpfAluno"
+                <input type="text" class="form-control bg-warning-subtle text-black" value="{{aluno[4]}}" name="cpf_aluno"
                     aria-describedby="basic-addon1" required>
                 <span class="input-group-text" id="basic-addon1" style="background-color: #FFEAAA;">RG:</span>
-                <input type="text" class="form-control bg-warning-subtle text-black" value="{{aluno[8]}}" name="rgAluno"
+                <input type="text" class="form-control bg-warning-subtle text-black" value="{{aluno[8]}}" name="rg_aluno"
                     aria-describedby="basic-addon1" required>
             </div>
 
             <div class="input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect02" style="background-color: #FFEAAA;">Curso:</label>
-                <select class="form-select bg-warning-subtle text-black" id="inputGroupSelect02" name="cursoAluno" required>
-                    <option selected>{{aluno[10]}}</option>
+                <select class="form-select bg-warning-subtle text-black" id="inputGroupSelect02" name="curso_aluno" required>
+                    <option selected>{{curso[1]}}</option>
                     <option value="Técnico em Desenvolvimento de Sistemas" name="TDS" style="background-color: #FFEAAA;">Técnico em Desenvolvimento de
                         Sistemas</option>
                     <option value="Técnico em Marketing" name="MKT">Técnico em Marketing</option>
