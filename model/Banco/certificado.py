@@ -107,11 +107,11 @@ def gerar_todos_certificados(alunos, documento):
 
 
 #Função responsável por realizar a busca por aluno
-def pesquisar_aluno(nome_aluno):
+def pesquisar_aluno(nome_completo):
     conexao_bd = conexao.iniciar_conexao()
     cursor_bd = conexao_bd.cursor()
 
-    cadastrar = f'SELECT * FROM aluno WHERE nome_completo LIKE "{nome_aluno}%"'
+    cadastrar = f'SELECT * FROM aluno WHERE nome_completo LIKE "{nome_completo}%"'
 
     cursor_bd.execute(cadastrar)
     info_aluno = cursor_bd.fetchall()

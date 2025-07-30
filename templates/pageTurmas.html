@@ -94,7 +94,7 @@
       {% if total_pages > 1 or pesquisa == True%}
       <div class="mb-3 text-center">
         <form class="d-flex" role="search" action="/pesquisar_aluno" method="post">
-          <input class="form-control me-2" name="nome_aluno" type="search" placeholder="Nome do Aluno:" aria-label="Search" required>
+          <input class="form-control me-2" name="nome_completo" type="search" placeholder="Nome do Aluno:" aria-label="Search" required>
           <button class="btn btn-outline-success" id="botaoAddAluno" type="submit">Buscar</button>
         </form>
       </div>
@@ -109,6 +109,8 @@
             <th scope="col">Turma</th>
             <th scope="col">Nome</th>
             <th scope="col">CPF</th>
+            <th scope="col">Data de nascimento</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         
@@ -117,7 +119,9 @@
           <tr>
             <td>{{aluno[10]}}</td>
             <td>{{aluno[1]}}</td>
-            <td>{{aluno[4]}} 
+            <td>{{aluno[4]}}</td>
+            <td>{{aluno[7]}}</td>
+            <td>
               <a href={{ url_for("paginaEditarAluno_get", id_aluno=aluno[0] ) }}
               title="Editar Aluno"><img src="/static/midia/icons/PageHome/edit_24dp_FILL0_wght400_GRAD0_opsz24.svg"
               alt="EditarAluno">

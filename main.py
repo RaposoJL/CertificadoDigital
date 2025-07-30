@@ -20,41 +20,14 @@ def adicionarDocCertificado():
 
 @App.get("/")
 def paginaIntroducao():
-        if (verificarLogin(["admin"])):
-            seletor = request.args.get("seletor")
-            lista_alunos = aluno.listar_alunos(seletor)
-            lista_certificados = checarCertificadosCriados()
-            paginacao_pp = paginacao(lista_alunos)
-            total = len(lista_alunos)
-
-            return render_template("pageIntroducao.html", alunos = paginacao_pp[0], 
-                                   total_pages= paginacao_pp[1], 
-                                   page = paginacao_pp[2], 
-                                   seletor = seletor, 
-                                   total_alunos = total,
-                                   certificados = lista_certificados,
-                                   pesquisa = False)
-        else:
-            return redirect(url_for('paginaLogin_get'))   
+    return render_template("pageIntroducao.html") 
 
 
 # Pagina Principal - Pagina Turmas - get
 @App.get("/inicio")
 def paginaInicial():
         if (verificarLogin(["admin"])):
-            seletor = request.args.get("seletor")
-            lista_alunos = aluno.listar_alunos(seletor)
-            lista_certificados = checarCertificadosCriados()
-            paginacao_pp = paginacao(lista_alunos)
-            total = len(lista_alunos)
-
-            return render_template("pageHome.html", alunos = paginacao_pp[0], 
-                                   total_pages= paginacao_pp[1], 
-                                   page = paginacao_pp[2], 
-                                   seletor = seletor, 
-                                   total_alunos = total,
-                                   certificados = lista_certificados,
-                                   pesquisa = False)
+            return render_template("pageHome.html")
         else:
             return redirect(url_for('paginaLogin_get'))        
 
@@ -82,8 +55,8 @@ def paginaTurmas():
 #Responsável por direcionar e realizar a busca pelo aluno 
 @App.post("/pesquisar_aluno")
 def pesquisarAluno():
-    nome_aluno = request.form["nome_completo"]
-    resultado = certificado.pesquisar_aluno(nome_aluno)
+    nome_completo = request.form["nome_completo"]
+    resultado = certificado.pesquisar_aluno(nome_completo)
     paginacao_pp = paginacao(resultado)
     seletor = None
     total = len(resultado)
