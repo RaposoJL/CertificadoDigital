@@ -78,17 +78,18 @@ def paginaTurmas():
         else:
             return redirect(url_for('paginaLogin_get'))     
 
+
 #Responsável por direcionar e realizar a busca pelo aluno 
 @App.post("/pesquisar_aluno")
 def pesquisarAluno():
-    nome_aluno = request.form["nome_aluno"]
-    resultado = aluno.pesquisar_aluno(nome_aluno)
-    paginacao = paginacao(resultado)
+    nome_aluno = request.form["nome_completo"]
+    resultado = certificado.pesquisar_aluno(nome_aluno)
+    paginacao_pp = paginacao(resultado)
     seletor = None
     total = len(resultado)
-    return render_template("pageTurmas.html", alunos = paginacao[0],
-                           total_pages = paginacao[1],
-                           page = paginacao[2],
+    return render_template("pageTurmas.html", alunos = paginacao_pp[0],
+                           total_pages = paginacao_pp[1],
+                           page = paginacao_pp[2],
                            total_alunos = total,
                            seletor = seletor,
                            pesquisa = True)
@@ -139,7 +140,7 @@ def cadastrarCurso():
     sheet = request.form["sheet"]
 
     planilha.save(planilha.filename)
-    cadastro_curso = aluno.cadastrar_curso(planilha.filename)
+    cadastro_curso = aluno.cadastrar_curso(planilha)
 
     if cadastro_curso != False:
         os.remove(planilha.filename)
@@ -158,7 +159,7 @@ def cadastrarDisciplinasBC():
     sheet = request.form["sheet"]
 
     planilha.save(planilha.filename)
-    cadastro_disciplinas_bc = aluno.cadastrar_turma_disciplinas_base_comum(planilha, str(sheet))
+    cadastro_disciplinas_bc = aluno.cadastrar_turma_disciplinas_base_comum(planilha)
 
     if cadastro_disciplinas_bc != False:
         os.remove(planilha.filename)
@@ -235,7 +236,10 @@ def paginaEditarAluno_get():
         id_aluno = request.args.get("id_aluno")
         id_curso = request.args.get("id_curso")
         uptade_aluno = aluno.exibir_aluno(id_aluno, id_curso)
-        return render_template("pageEditar.html", aluno = uptade_aluno, curso = uptade_aluno)
+        uptade_curso = aluno.exibir_aluno(id_aluno, id_curso)
+
+        print(id_curso)
+        return render_template("pageEditar.html", aluno = uptade_aluno, curso = uptade_curso)
     else:
         return redirect(url_for('paginaLogin_get'))
 
@@ -298,7 +302,8 @@ def deletarAluno():
 #Gerar Certificado dos Alunos
 @App.get("/certificado")
 def gerarCertificado():
-    id_aluno = request.args.get("id_Aluno")
+    id_aluno = request.args.get("id_aluno")
+
     modelo = pegarModelo()   
     if modelo == None:
         flash("Modelo não Encotrado, Adicione-o na pagina 'Configurar Dados'", "erro")
@@ -503,11 +508,11 @@ def paginaCadastrarUsuario_post():
 def paginaCertificados():
     if (verificarLogin(["admin"])):
         certificados = checarCertificadosCriados()
-        certificados_alunos =  usuario.certificados(certificados)
-        paginacao = paginacao(certificados_alunos)
-        return render_template("pageCertificado.html", certificados = paginacao[0],
-                               total_pages = paginacao[1],
-                               page = paginacao[2])
+        certificados_alunos =  certificado.certificados(certificados)
+        paginacao_pp = paginacao(certificados_alunos)
+        return render_template("pageCertificado.html", certificados = paginacao_pp[0],
+                               total_pages = paginacao_pp[1],
+                               page = paginacao_pp[2])
     else:
         return redirect(url_for('paginaLogin_get'))
 

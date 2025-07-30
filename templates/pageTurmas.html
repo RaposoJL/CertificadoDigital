@@ -19,29 +19,32 @@
   <link rel="icon" type="image/x-icon" href="/static/midia/imgs/favicon.ico">
 </head>
 
-<body style="background-color: #FFEAAA; margin: 0px; padding: 0px;">
-  <header style="background-color: #4C3566;">
-    <div class="d-flex py-3 container" style="background-color: #4C3566;">
-      <a href="/turmas" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+<header style="background-color: #4C3566;">
+  <div class="d-flex py-3 container" style="background-color: #4C3566; margin-left: 50px;">
+    <a href="/inicio"
+        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
         <img src="/static/midia/imgs/logo_pro_tcc.png" alt="Logo_Certificado_Digital" style="height: 50px; width: 50px; margin-right: 15px;">
         <span class="fs-5 text-white">Certificado Digital</span>
-      </a>
-      <ul class="nav nav-underline">
+    </a>
+    <div style="margin-left: 110px; margin-right: 110px;">
+      <ul class="nav nav-underline" >
         <li class="nav-item mx-1 my-1"><a href="/inicio" class="nav-link link-light">Início</a></li>
         <li class="nav-item mx-1 my-1"><a href="/turmas" class="nav-link link-light active">Turmas</a></li>
         <li class="nav-item mx-1 my-1"><a href="/certificados" class="nav-link link-light">Certificados</a></li>
         <li class="nav-item mx-1 my-1"><a href="/cadastrar_usuario" class="nav-link link-light">Cadastrar Usuario</a></li>
-        <li class="nav-item mx-1 my-1"><a href="/ajuda" class="nav-link link-light">Ajuda</a></li>
         <li class="nav-item mx-1 my-1"><a href="/configurar" class="nav-link link-light">Configurar Dados</a></li>
+        <li class="nav-item mx-1 my-1"><a href="/ajuda" class="nav-link link-light">Ajuda</a></li>
       </ul>
-      <div class="position-absolute top-0 end-0 lh-1" style="margin-right: 90px; margin-top: 22px;">
-        <p class="fw-semibold mb-1 text-white">{{session['usuario']}}</p>
-        <a href="/logout" style="color: #FFEAAA;">Sair</a>
-      </div>
     </div>
-  </header>
-  
-  
+    <div class="position-absolute top-0 end-0 lh-1" style="margin-right: 60px; margin-top: 26px;">
+      <p class="fw-semibold mb-1 text-white fs-6">{{session['usuario']}}</p>
+      <a href="/logout" style="color: #FFEAAA;">Sair</a>
+    </div>
+  </div>
+</header>
+
+
+<body style="background-color: #FFEAAA; margin: 0px; padding: 0px;">
   <main class="d-flex justify-content-center">
     <div class="px-5 py-5 w-75 text-center" id="collapseExample">
 
@@ -87,10 +90,11 @@
         </ul>
       </div>
 
+
       {% if total_pages > 1 or pesquisa == True%}
       <div class="mb-3 text-center">
         <form class="d-flex" role="search" action="/pesquisar_aluno" method="post">
-          <input class="form-control me-2" name="nomeAluno" type="search" placeholder="Nome do Aluno:" aria-label="Search" required>
+          <input class="form-control me-2" name="nome_aluno" type="search" placeholder="Nome do Aluno:" aria-label="Search" required>
           <button class="btn btn-outline-success" id="botaoAddAluno" type="submit">Buscar</button>
         </form>
       </div>
@@ -113,19 +117,22 @@
           <tr>
             <td>{{aluno[10]}}</td>
             <td>{{aluno[1]}}</td>
-            <td>{{aluno[4]}} <a href={{ url_for("paginaEditarAluno_get", id_aluno=aluno[0] ) }}
+            <td>{{aluno[4]}} 
+              <a href={{ url_for("paginaEditarAluno_get", id_aluno=aluno[0] ) }}
               title="Editar Aluno"><img src="/static/midia/icons/PageHome/edit_24dp_FILL0_wght400_GRAD0_opsz24.svg"
-              alt="EditarAluno"></a>
-              <a href={{ url_for("deletarAluno", id_aluno=aluno[0] ) }} title="Deleter Aluno"><img
-                src="/static/midia/icons/PageHome/delete_24dp_FILL0_wght400_GRAD0_opsz24.svg" alt="DeletarAluno" type="button" data-bs-toggle="modal" data-bs-target="#DeletarAluno"  id="bd-theme" type="button" data-bs-toggle="dropdown" ></a>
-                <a href={{ url_for("gerarCertificado", id_aluno=aluno[0] ) }} title="Gerar Certificado"><img
-                  src="/static/midia/icons/PageHome/workspace_premium_24dp_4C3566_FILL0_wght400_GRAD0_opsz24.svg"
-                  alt="Gerar Certificado Aluno"></a>
-                </td>
-              </tr>
-            </tbody>
-            {% endfor %}
-          </table>
+              alt="EditarAluno">
+              </a>
+              <a href={{ url_for("deletarAluno", id_aluno=aluno[0] ) }} title="Deleter Aluno">
+                <img src="/static/midia/icons/PageHome/delete_24dp_FILL0_wght400_GRAD0_opsz24.svg" alt="DeletarAluno" type="button" data-bs-toggle="modal" data-bs-target="#DeletarAluno"  id="bd-theme" type="button" data-bs-toggle="dropdown" >
+              </a>
+              <a href={{ url_for("gerarCertificado", id_aluno=aluno[0] ) }} title="Gerar Certificado">
+                <img src="/static/midia/icons/PageHome/workspace_premium_24dp_4C3566_FILL0_wght400_GRAD0_opsz24.svg" alt="Gerar Certificado Aluno">
+              </a>
+            </td>
+          </tr>
+        </tbody>
+        {% endfor %}
+      </table>
           
           {% endif %}
           <nav aria-label="Page navigation example" 
@@ -295,6 +302,31 @@
         </div>
       </div>
     </div>
+    <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Escolha a Planilha:</h1>
+          </div>
+          <div class="modal-body">
+            <form action="/cadastro_disciplinas_bc" method="post" name="cadastrar_disciplinas_bc" enctype="multipart/form-data">
+              <div>
+                <input class="form-control" type="file" id="planilha"
+                  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="planilha" required>
+
+                <label for="sheet" class="form-label mt-3">Nome da Planilha:</label>
+                <input type="text" class="form-control" id="sheet" name="sheet">
+
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <input type="submit" value="Enviar" class="btn btn-primary">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
     <div class="position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle d-flex" style="margin-top: 100px;">
@@ -322,6 +354,11 @@
           <li>
             <button type="button" class="btn btn-primary bg-transparent text-body border border-0" data-bs-toggle="modal" data-bs-target="#exampleModal2">
               Cadastrar Curso
+            </button>
+          </li>
+          <li>
+            <button type="button" class="btn btn-primary bg-transparent text-body border border-0" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+              Cadastrar Base Comum
             </button>
           </li>
           <li>

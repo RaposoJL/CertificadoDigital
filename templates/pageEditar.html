@@ -57,29 +57,35 @@
                     aria-describedby="basic-addon1" required>
             </div>
 
-            <div class="input-group mb-3">
+            <div class="input-group mb-3" name="localidade">
                 <span class="input-group-text" style="background-color: #FFEAAA;" id="basic-addon1">Municipio:</span>
-                <input type="text" class="form-control bg-warning-subtle text-black" value="{{aluno[4]}}" name="municipioAluno"
+                <input type="text" class="form-control bg-warning-subtle text-black" value="{{aluno[5]}}" name="municipioAluno"
                     aria-describedby="basic-addon1" required>
+                <span class="input-group-text" style="background-color: #FFEAAA;" id="basic-addon1">Estado:</span>
+                <input type="text" class="form-control bg-warning-subtle text-black" value="{{aluno[6]}}" name="estadoAluno"
+                    aria-describedby="basic-addon1" required>    
             </div>
 
-            <div class="input-group mb-3">
-                <span class="input-group-text" style="background-color: #FFEAAA;" id="basic-addon1">Nacionalidade:</span>
-                <input type="text" class="form-control bg-warning-subtle text-black" value="{{aluno[4]}}" name="nacionalidadeAluno"
+            <div class="input-group mb-3" name="localidade">
+                <span class="input-group-text" style="background-color: #FFEAAA;" id="basic-addon1">Municipio:</span>
+                <input type="text" class="form-control bg-warning-subtle text-black" value="{{curso[0]}}" name="municipioAluno"
                     aria-describedby="basic-addon1" required>
+                <span class="input-group-text" style="background-color: #FFEAAA;" id="basic-addon1">Estado:</span>
+                <input type="text" class="form-control bg-warning-subtle text-black" value="{{curso[0]}}" name="nacionalidadeAluno"
+                    aria-describedby="basic-addon1" required>    
             </div>
 
-            <div class="input-group mb-3">
+            <div class="input-group mb-3" name="turma">
                 <label class="input-group-text" for="inputGroupSelect02" style="background-color: #FFEAAA;">Turma:</label>
                 <select class="form-select bg-warning-subtle text-black" id="inputGroupSelect02" name="turmaAluno" required>
-                    <option selected>{{aluno[10]}}</option>
+                    <option selected></option>
                     <option value="3TDSA" name="3ºTDSA">3ºTDSA</option>
                     <option value="3TDSB" name="3ºTDSB">3ºTDSB</option>
                     <option value="3MKTA" name="3ºMKTA">3ºMKTA</option>
                     <option value="3MKTB" name="3ºMKTB">3ºMKTB</option>
                 </select>
             </div>
-
+            
             <!-- <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">Data de Nascimento:</span>
                 <input type="date" class="form-control" value=""
@@ -94,16 +100,11 @@
                 <input type="text" class="form-control bg-warning-subtle text-black" value="{{aluno[8]}}" name="rg_aluno"
                     aria-describedby="basic-addon1" required>
             </div>
-
+            
             <div class="input-group mb-3">
-                <label class="input-group-text" for="inputGroupSelect02" style="background-color: #FFEAAA;">Curso:</label>
-                <select class="form-select bg-warning-subtle text-black" id="inputGroupSelect02" name="curso_aluno" required>
-                    <option selected>{{curso[1]}}</option>
-                    <option value="Técnico em Desenvolvimento de Sistemas" name="TDS" style="background-color: #FFEAAA;">Técnico em Desenvolvimento de
-                        Sistemas</option>
-                    <option value="Técnico em Marketing" name="MKT">Técnico em Marketing</option>
-                </select>
+                
             </div>
+            
 
             <!-- <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">Data de Conclusão de Curso:</span>
