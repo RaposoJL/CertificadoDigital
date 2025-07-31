@@ -26,30 +26,30 @@ def paginaIntroducao():
 # Pagina Principal - Pagina Turmas - get
 @App.get("/inicio")
 def paginaInicial():
-        if (verificarLogin(["admin"])):
-            return render_template("pageHome.html")
-        else:
-            return redirect(url_for('paginaLogin_get'))        
+    if (verificarLogin(["admin"])):
+        return render_template("pageHome.html")
+    else:
+        return redirect(url_for('paginaLogin_get'))        
 
 
 @App.get("/turmas")
 def paginaTurmas():
-        if (verificarLogin(["admin"])):
-            seletor = request.args.get("seletor")
-            lista_alunos = aluno.listar_alunos(seletor)
-            lista_certificados = checarCertificadosCriados()
-            paginacao_pp = paginacao(lista_alunos)
-            total = len(lista_alunos)
+    if (verificarLogin(["admin"])):
+        seletor = request.args.get("seletor")
+        lista_alunos = aluno.listar_alunos(seletor)
+        lista_certificados = checarCertificadosCriados()
+        paginacao_pp = paginacao(lista_alunos)
+        total = len(lista_alunos)
 
-            return render_template("pageTurmas.html", alunos = paginacao_pp[0], 
-                                   total_pages= paginacao_pp[1], 
-                                   page = paginacao_pp[2], 
-                                   seletor = seletor, 
-                                   total_alunos = total,
-                                   certificados = lista_certificados,
-                                   pesquisa = False)
-        else:
-            return redirect(url_for('paginaLogin_get'))     
+        return render_template("pageTurmas.html", alunos = paginacao_pp[0], 
+                                total_pages= paginacao_pp[1], 
+                                page = paginacao_pp[2], 
+                                seletor = seletor, 
+                                total_alunos = total,
+                                certificados = lista_certificados,
+                                pesquisa = False)
+    else:
+        return redirect(url_for('paginaLogin_get'))     
 
 
 #Responsável por direcionar e realizar a busca pelo aluno 
@@ -208,8 +208,8 @@ def paginaEditarAluno_get():
     if (verificarLogin(["admin"])):
         id_aluno = request.args.get("id_aluno")
         id_curso = request.args.get("id_curso")
-        uptade_aluno = aluno.exibir_aluno(id_aluno, id_curso)
-        uptade_curso = aluno.exibir_aluno(id_aluno, id_curso)
+        uptade_aluno = aluno.exibir_aluno(id_aluno)
+        uptade_curso = aluno.exibir_curso(id_curso)
 
         print(id_curso)
         return render_template("pageEditar.html", aluno = uptade_aluno, curso = uptade_curso)
@@ -280,13 +280,13 @@ def gerarCertificado():
     modelo = pegarModelo()   
     if modelo == None:
         flash("Modelo não Encotrado, Adicione-o na pagina 'Configurar Dados'", "erro")
-        return redirect(url_for('paginaInicial'))
+        return redirect(url_for('paginaTurmas'))
     else:
         certificado.gerar_certificado(modelo, id_aluno)
-        info_aluno = certificado.exibir_aluno(id_aluno)
+        info_aluno = aluno.exibir_aluno(id_aluno)
 
         flash(f'Certificado de {info_aluno[1]} Gerado com Sucesso!', "concluido")
-        return redirect(url_for('paginaInicial'))
+        return redirect(url_for('paginaTurmas'))
 
 
 #Gerar os Certificados de Todos os Alunos
@@ -365,7 +365,7 @@ def paginaAjuda():
 #Baixar Planilha Base
 @App.get("/baixar_planilha_base_turmas_alunos")
 def baixarPlaninhaTurmasAlunos():
-    return redirect(url_for('static', filename='midia/PlanilhaBase_Turmas_Alunos.xlsx'))
+    return redirect(url_for('static', filename='/midia/Planilhas base'))
 
 
 @App.get("/baixar_plalinha_base_curso")
@@ -445,7 +445,7 @@ def paginaCadastrarUsuario_get():
         return render_template("pageCadastroUsuario.html", usuarios_cadastrados = usuarios)
     else:
         return redirect(url_for('paginaLogin_get'))
-    
+
 
 #Pagina Cadastro - Deletar Usuario
 @App.route("/deletar_usuario")
@@ -472,7 +472,7 @@ def paginaCadastrarUsuario_post():
     else:
         flash('Usuario ou Senha ja Existentes!', "CadastroUsuario") #Flash para mensagem de erro
         return redirect(url_for('paginaCadastrarUsuario_get'))
-
+    
 #END pageCadastroUsuario---------------------------------------------------------------------------------------------------------------
 
 
@@ -504,7 +504,7 @@ def baixarCertificado():
 @App.get("/deletar_certificado")
 def deletarCertificado():
     id_aluno = request.args.get("id_aluno")
-    nome_certificado = request.args.get("nome_certificado")
+    nome_certificado = request.args.get("nome_completo")
 
     pastaCertificado = "static/Certificados/" + id_aluno + "-" + nome_certificado + ".docx"
 

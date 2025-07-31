@@ -91,7 +91,7 @@ def gerar_certificado(documento, id_aluno):
                     substituicao_em_runs(par, substituicoes)
 
 
-    pasta_certificados = os.path.abspath("static/Certificado/" + str(info_aluno[0]) + "-" + info_aluno[1] +".docx")
+    pasta_certificados = os.path.abspath("static/Certificados/" + str(info_aluno[0]) + "-" + info_aluno[1] +".docx")
     doc.save(pasta_certificados)
 
 
@@ -101,7 +101,7 @@ def gerar_todos_certificados(alunos, documento):
     for aluno in alunos:
         gerar_certificado(documento, aluno[0])
     
-    shutil.make_archive("static/Certificado", 'zip', "static/Certificados/")
+    shutil.make_archive("static/Certificados", 'zip', "static/Certificados/")
 
     return "Certificado"
 
@@ -127,7 +127,7 @@ def certificados(certificados_criados):
     cursor_bd = conexao_bd.cursor()
     
     for id_certificado in certificados_criados:
-        query = "SELECT * FROM certificado WHERE id = " + str(id_certificado)
+        query = "SELECT * FROM aluno WHERE id = " + str(id_certificado)
         cursor_bd.execute(query)
         lista.append(cursor_bd.fetchone())
 

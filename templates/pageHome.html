@@ -44,11 +44,14 @@
 </header>
 
 <body>
-  <main class="container" style="padding-top: 2%;">
+  <main style="padding-top: 2%;">
     <div class="text-center">
-      <div>
-        <p class="fw-semibold mb-1 text-black fs-6">{{session['usuario']}}</p>
+      <div style="margin-left: 40px; padding: 0px;">
+        <h3>
+          Bem-vindo(a), {{session['usuario']}} ao Certificado Digital!
+        </h3>
       </div>
+    <div >
       <div>
         <p>Clique no botão abaixo para baixar a respectiva planilha para o
           <br>preenchimento das informações necessárias no desenvolvimento do certificado. 
@@ -57,31 +60,6 @@
         <div>
           <div>
             <form action="/baixar_planilha_base_turmas_alunos" method="get" id="forms2" class="index_forms">
-                <input type="submit" value="Baixar Planilha" id="index_forms2" class="rounded-4 p-2 mt-4 px-4 fw-bold">
-            </form>
-          </div>
-          <div>
-            <form action="/baixar_plalinha_base_curso" method="get" id="forms2" class="index_forms">
-                <input type="submit" value="Baixar Planilha" id="index_forms2" class="rounded-4 p-2 mt-4 px-4 fw-bold">
-            </form>
-          </div>
-          <div>
-            <form action="/baixar_planilha_base_turmas_disciplinas_base_comum" method="get" id="forms2" class="index_forms">
-                <input type="submit" value="Baixar Planilha" id="index_forms2" class="rounded-4 p-2 mt-4 px-4 fw-bold">
-            </form>
-          </div>
-          <div>
-            <form action="/baixar_planilha_base_turmas_disciplinas_tecnico" method="get" id="forms2" class="index_forms">
-                <input type="submit" value="Baixar Planilha" id="index_forms2" class="rounded-4 p-2 mt-4 px-4 fw-bold">
-            </form>
-          </div>
-          <div>
-            <form action="/baixar_planilha_base_turmas_disciplinas_trilha" method="get" id="forms2" class="index_forms">
-                <input type="submit" value="Baixar Planilha" id="index_forms2" class="rounded-4 p-2 mt-4 px-4 fw-bold">
-            </form>
-          </div>
-          <div>
-            <form action="/baixar_planilha_base_turmas_disciplinas_eletiva" method="get" id="forms2" class="index_forms">
                 <input type="submit" value="Baixar Planilha" id="index_forms2" class="rounded-4 p-2 mt-4 px-4 fw-bold">
             </form>
           </div>
@@ -96,6 +74,8 @@
           </button>
         </div>
       </div>
+    </div>
+      
     </div>
 
 <div class="modal fade" id="Documento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

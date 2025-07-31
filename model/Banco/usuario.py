@@ -60,6 +60,8 @@ def exibir_usuarios():
     cursor_bd.close()
     conexao_bd.close()
 
+    print(lista_usuarios)
+
     return lista_usuarios
 
 #TÉRMINO CRUD FUNCIONÁRIO==============================================================================

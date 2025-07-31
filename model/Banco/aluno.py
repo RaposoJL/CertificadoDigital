@@ -120,7 +120,7 @@ def cadastrar_turma_disciplinas_trilha(planilha, sheet):
         for trilha in materias_trilha:
             conexao_bd = conexao.iniciar_conexao()
             query = "INSERT INTO trilha_disciplinas (nome_disciplina, ano_escolar, ano_realizacao, carga_horaria, frequencia, tuma) VALUES (%s, %s, %s, %s, %s, %s);"
-            parametro = (trilha[2], trilha[3], trilha[4], trilha[5], trilha[6], trilha[7])
+            parametro = (trilha[0], trilha[1], trilha[2], trilha[3], trilha[4], trilha[5])
             cursor_bd = conexao_bd.cursor()
             cursor_bd.execute(query, parametro)
             conexao_bd.commit()
@@ -146,7 +146,7 @@ def cadastrar_turma_disciplinas_eletiva(planilha, sheet):
         for eletiva in materias_eletiva:
             conexao_bd = conexao.iniciar_conexao()
             query = "INSERT INTO eletiva_disciplinas (nome_disciplina, ano_escolar, ano_realizacao, carga_horaria, frequencia, tuma) VALUES (%s, %s, %s, %s, %s, %s);"
-            parametro = (eletiva[2], eletiva[3], eletiva[4], eletiva[5], eletiva[6], eletiva[7])
+            parametro = (eletiva[0], eletiva[1], eletiva[2], eletiva[3], eletiva[4], eletiva[5])
             cursor_bd = conexao_bd.cursor()
             cursor_bd.execute(query, parametro)
             conexao_bd.commit()
@@ -173,7 +173,7 @@ def cadastrar_turma_disciplinas_curso(planilha, sheet):
         for curso in materias_curso:
             conexao_bd = conexao.iniciar_conexao()
             query = "INSERT INTO curso_tecnico_disciplinas (nome_disciplina, ano_escolar, ano_realizacao, carga_horaria, frequencia) VALUES (%s, %s, %s, %s, %s, %s);"
-            parametro = (curso[2], curso[3], curso[4], curso[5], curso[6])
+            parametro = (curso[0], curso[1], curso[2], curso[3], curso[4])
             cursor_bd = conexao_bd.cursor()
             cursor_bd.execute(query, parametro)
             conexao_bd.commit()
@@ -264,7 +264,7 @@ def listar_alunos(seletor):
 
 
 #Função responsável por exibir informações do aluno
-def exibir_aluno(id_aluno, id_curso):
+def exibir_aluno(id_aluno):
     conexao_bd = conexao.iniciar_conexao()
     query = "SELECT * FROM aluno WHERE id = " + str(id_aluno) +";"
     cursor_bd = conexao_bd.cursor()
@@ -274,7 +274,6 @@ def exibir_aluno(id_aluno, id_curso):
     cursor_bd.close()
     conexao_bd.close()
     return info_aluno 
-
 
 #Função responsável por editar as informações dos alunos que já estão cadastrados
 def editar_aluno(nome_aluno, nome_mae, nome_pai, cpf_aluno, municipio_aluno, estado_aluno, rg_aluno, turma_aluno, nome_curso, eixo_tecnologico):
@@ -297,7 +296,7 @@ def editar_aluno(nome_aluno, nome_mae, nome_pai, cpf_aluno, municipio_aluno, est
 #Função responsável por deletar um aluno
 def deletar_aluno(id_aluno):
     conexao_bd = conexao.iniciar_conexao()
-    query = 'DELETE FROM bdalunos WHERE id = %s;'
+    query = 'DELETE FROM alunos WHERE id = %s;'
     parametro = [id_aluno]
     cursor_bd = conexao_bd.cursor()
 
