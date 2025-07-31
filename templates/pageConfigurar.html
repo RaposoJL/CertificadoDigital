@@ -26,7 +26,7 @@
         <img src="/static/midia/imgs/logo_pro_tcc.png" alt="Logo_Certificado_Digital" style="height: 50px; width: 50px; margin-right: 15px;">
         <span class="fs-5 text-white">Certificado Digital</span>
     </a>
-    <div style="margin-left: 110px; margin-right: 110px;">
+    <div style="margin-left: 130px; margin-right: 130px;">
       <ul class="nav nav-underline" >
         <li class="nav-item mx-1 my-1"><a href="/inicio" class="nav-link link-light">Início</a></li>
         <li class="nav-item mx-1 my-1"><a href="/turmas" class="nav-link link-light">Turmas</a></li>
@@ -36,7 +36,7 @@
         <li class="nav-item mx-1 my-1"><a href="/ajuda" class="nav-link link-light">Ajuda</a></li>
       </ul>
     </div>
-    <div class="position-absolute top-0 end-0 lh-1" style="margin-right: 60px; margin-top: 26px;">
+    <div class="position-absolute top-0 end-0 lh-1" style="margin-right: 60px; margin-top: 18px;">
       <p class="fw-semibold mb-1 text-white fs-6">{{session['usuario']}}</p>
       <a href="/logout" style="color: #FFEAAA;">Sair</a>
     </div>
@@ -44,102 +44,147 @@
 </header>
 
 <body>
-  <main class="container" style="padding-top: 5%;">
+  <main class="container1" style="padding-top: 0.5%;">
     <div class="text-center">
       <div>
-        <p>Clique no botão abaixo para baixar a planilha necessária
-          <br>para a coleta dos dados dos estudantes. 
-        </p>
-      </div>
-        <div>
-          <div>
-            <form action="/baixarPlaninhaBase" method="get" id="forms2" class="index_forms">
-                <input type="submit" value="Baixar Planilha Base" id="index_forms2" class="rounded-4 p-2 mt-4 px-4 fw-bold">
-            </form>
-          </div>
-        <div style="padding-top: 3%">
-          <p>No seguinte botão, clique para adicionar a planilha desejada pela
-            <br>instituição para os certificados dos estudantes. 
+        <div class="bloco bloco1">
+          <p>
+            Clique em cada botão abaixo para baixar cada uma das planilhas necessárias na <br> 
+            realização do cadastro das respectivas informações necessárias para o <br>
+            preenchimento do certificado.
           </p>
+          <form action="/baixarPlaninhaBase" method="get" id="forms2" class="index_forms">
+              <input type="submit" value="    Baixar Planilha Base - Alunos    " 
+                id="index_forms2" class="rounded-4 p-2 mt-4 px-4 fw-bold">
+          </form>
+          <form action="/baixarPlaninhaBase" method="get" id="forms2" class="index_forms">
+              <input type="submit" value="     Baixar Planilha Base Curso -     
+Técnico" 
+                id="index_forms2" class="rounded-4 p-2 mt-4 px-4 fw-bold">
+          </form>
+          <form action="/baixarPlaninhaBase" method="get" id="forms2" class="index_forms">
+              <input type="submit" value="Baixar Planilha Base - Disciplinas 
+Curso Técnico" 
+                id="index_forms2" class="rounded-4 p-2 mt-4 px-4 fw-bold">
+          </form>
+          <form action="/baixarPlaninhaBase" method="get" id="forms2" class="index_forms">
+              <input type="submit" value="Baixar Planilha Base - Disciplinas 
+Base Comum" 
+                id="index_forms2" class="rounded-4 p-2 mt-4 px-4 fw-bold">
+          </form>
+          <form action="/baixarPlaninhaBase" method="get" id="forms2" class="index_forms">
+              <input type="submit" value="Baixar Planilha Base - Disciplinas
+Trilhas" 
+                id="index_forms2" class="rounded-4 p-2 mt-4 px-4 fw-bold">
+          </form>
+          <form action="/baixarPlaninhaBase" method="get" id="forms2" class="index_forms">
+              <input type="submit" value="Baixar Planilha Base - Disciplinas
+Eletivas" 
+                id="index_forms2" class="rounded-4 p-2 mt-4 px-4 fw-bold">
+          </form>
         </div>
-          <div>
-          <button type="button" class="rounded-4 p-2 mt-4 px-4 fw-bold" data-bs-toggle="modal" data-bs-target="#Documento" id="index_forms2">
-            Escolher Modelo
+        <div class="bloco bloco2">
+          <p>
+            Clique no botão <strong>Escolher Modelo Certificado</strong> para cadastrar o modelo do <br>
+            diploma que deseja utilizar para a sua instituição. <br> <br>
+            <strong>Lembre-se</strong> que o modelo deve possuir as modificações nos campos que <br>
+            serão preenchidos.
+          </p>
+          <button type="button" class="rounded-4 p-2 mt-4 px-4 fw-bold" data-bs-toggle="modal" data-bs-target="#Documento" id="index_forms2" style="font-size: 20px;">
+            Escolher Modelo Certificado
           </button>
         </div>
       </div>
-    </div>
-
-<div class="modal fade" id="Documento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Escolha a Modelo do Certificado:</h1>
-        </div>
-        <div class="modal-body">
-          <form action="/configurar" method="post" name="modelo" enctype="multipart/form-data">
-          {% if modelo != None %}
-            <div class="text-center">
-              <input type="hidden" name="modelo_antigo" value={{modelo}}>
-              <span class="fs-5 text-nowrap border" style="background-color: #FFEAAA;"">Atual Modelo Cadastrado: <strong>{{modelo}}</strong></span>
-              <label for="sheet" class="form-label my-3 fs-5">Para Alterar, escolha um novo arquivo:</label>
-              
-              <input class="form-control" type="file"accept=".doc, .docx" name="modelo_novo" required>
-            </div>
-
-            {% else %}
-            <div class="text-center">
-              <input type="hidden" name="modelo_antigo" value={{modelo}}>
-              <span class="fs-5 text-nowrap border" style="background-color: #FFEAAA;"">Nenhum Modelo Adicionado</span>
-              <label for="sheet" class="form-label my-3 fs-5">Para Adicionar, escolha um novo arquivo:</label>
-              
-              <input class="form-control" type="file" accept=".doc, .docx" name="modelo_novo" required>
-            </div>
-            {% endif %}
-        </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <input type="submit" value="Enviar" class="btn btn-primary">
-          </div>
-        </form>
     </div>
-  </div>
-</div>
 
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-<ul class=flashes>
-{% for message in messages %}
-<div class="alert alert-success alert-dismissible fade show w-25 container text-center mx-3 position-absolute top-0 end-0" role="alert" style="margin-top: 5%;">
-  <strong>{{message}}</strong>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div> 
-{% endfor %}
-{% endif %}
-{% endwith %}
+    <div class="modal fade" id="Documento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Escolha a Modelo do Certificado:</h1>
+            </div>
+            <div class="modal-body">
+              <form action="/configurar" method="post" name="modelo" enctype="multipart/form-data">
+              {% if modelo != None %}
+                <div class="text-center">
+                  <input type="hidden" name="modelo_antigo" value={{modelo}}>
+                  <span class="fs-5 text-nowrap border" style="background-color: #FFEAAA;">Atual Modelo Cadastrado: <strong>{{modelo}}</strong></span>
+                  <label for="sheet" class="form-label my-3 fs-5">Para Alterar, escolha um novo arquivo:</label>
+                  
+                  <input class="form-control" type="file"accept=".doc, .docx" name="modelo_novo" required>
+                </div>
+
+                {% else %}
+                <div class="text-center">
+                  <input type="hidden" name="modelo_antigo" value={{modelo}}>
+                  <span class="fs-5 text-nowrap border" style="background-color: #FFEAAA;">Nenhum Modelo Adicionado</span>
+                  <label for="sheet" class="form-label my-3 fs-5">Para Adicionar, escolha um novo arquivo:</label>
+                  
+                  <input class="form-control" type="file" accept=".doc, .docx" name="modelo_novo" required>
+                </div>
+                {% endif %}
+            </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <input type="submit" value="Enviar" class="btn btn-primary">
+              </div>
+            </form>
+        </div>
+      </div>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show w-25 container text-center mx-3 position-absolute top-0 end-0" role="alert" style="margin-top: 5%;">
+      <strong>{{message}}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div> 
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
 
 
-</main>
+  </main>
 
-  <style>
-    body {
-      background-color: #FFEAAA;
-    }
+    <style>
+      body {
+        background-color: #FFEAAA;
+      }
+      
+      .bloco { 
+        width: 100%; 
+        overflow: hidden; 
+      }  
+      
+      .bloco1 { 
+        float: left; 
+        width: 50%;  
+        font-size: 20px;
+      } 
 
-    img {
-      width: 9%;
-    }
+      .bloco2 { 
+        float: right; 
+        width: 50%;  
+        text-align: center;
+        padding-top: 11%;
+      } 
 
-    p{
-      padding-top: 5%;
-      font-size: 20px;
-    }
+      img {
+        width: 9%;
+      }
 
-    #index_forms2:hover {
-      color: #FFEAAA;
-      background-color: #4C3566;
-    }
+      p{
+        padding-top: 5%;
+        font-size: 20px;
+      }
 
-  </style>
-</body>
+      #index_forms2:hover {
+        color: #ffffff;
+        background-color: #4C3566;
+      }
+
+    </style>
+  </body>
 </html>
